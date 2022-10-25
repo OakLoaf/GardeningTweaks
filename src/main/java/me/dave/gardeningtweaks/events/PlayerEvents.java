@@ -1,7 +1,6 @@
 package me.dave.gardeningtweaks.events;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.gardeningtweaks.utilities.GrowthDance;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -22,7 +21,7 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onPlayerSneak(PlayerToggleSneakEvent event) {
-        if (event.isSneaking() && GardeningTweaks.configManager.getGrowthDanceMode() != GrowthDance.OFF) {
+        if (event.isSneaking() && GardeningTweaks.configManager.getGrowthDanceMode()) {
             Player player = event.getPlayer();
             if (cooldownList.contains(player.getUniqueId())) return;
             cooldownList.add(player.getUniqueId());

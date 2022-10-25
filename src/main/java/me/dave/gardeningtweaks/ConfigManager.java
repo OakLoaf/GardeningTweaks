@@ -1,6 +1,5 @@
 package me.dave.gardeningtweaks;
 
-import me.dave.gardeningtweaks.utilities.GrowthDance;
 import me.dave.gardeningtweaks.utilities.RandomCollection;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -23,7 +22,7 @@ public class ConfigManager {
     private boolean dynamicTrampleCreative;
     private boolean fastLeafDecay;
     private boolean decoarsify;
-    private GrowthDance growthDance;
+    private boolean growthDance;
     private final List<Material> grassDrops = new ArrayList<>();
     private final HashMap<String, TreeData> treeMap = new HashMap<>();
     private TreeData defaultTreeData;
@@ -46,7 +45,7 @@ public class ConfigManager {
         fastLeafDecay = config.getBoolean("fast-leaf-decay", false);
         config.getStringList("custom-grass-drops").forEach(string -> grassDrops.add(Material.valueOf(string.toUpperCase())));
         decoarsify = config.getBoolean("decoarsify", false);
-        growthDance = GrowthDance.valueOf(config.getString("growth-dance", "DEFAULT").toUpperCase());
+        growthDance = config.getBoolean("growth-dance", false);
 
         ConfigurationSection treesSection = config.getConfigurationSection("trees");
         if (treesSection != null) {
@@ -109,7 +108,7 @@ public class ConfigManager {
         return decoarsify;
     }
 
-    public GrowthDance getGrowthDanceMode() {
+    public boolean getGrowthDanceMode() {
         return growthDance;
     }
 

@@ -1,0 +1,12 @@
+name: GardeningTweaks
+version: '${project.version}'
+main: me.dave.gardeningtweaks.GardeningTweaks
+api-version: 1.19
+authors: [ Dav_e_ ]
+description: Spruces up your gardening
+softdepend: [ ProtocolLib, RealisticBiomes ]
+commands:
+  gardeningtweaks:
+    description: The main GardeningTweaks Command.
+    aliases: gt
+    usage: /gardeningtweaks

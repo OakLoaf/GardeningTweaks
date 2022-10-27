@@ -1,23 +1,33 @@
 package me.dave.gardeningtweaks.events;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.PacketContainer;
 import me.dave.gardeningtweaks.GardeningTweaks;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.inventory.ItemStack;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.UUID;
 
 public class PlayerEvents implements Listener {
     private final GardeningTweaks plugin = GardeningTweaks.getInstance();
+    private final ProtocolManager protocolManager;
     private final HashSet<UUID> cooldownList = new HashSet<>();
     private final Random random = new Random();
+
+    public PlayerEvents(ProtocolManager protocolManager) {
+        this.protocolManager = protocolManager;
+    }
 
     @EventHandler
     public void onPlayerSneak(PlayerToggleSneakEvent event) {
@@ -54,5 +64,44 @@ public class PlayerEvents implements Listener {
             }
             currLocation.add(-5, 1, 0);
         }
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        Block block = event.getClickedBlock();
+        if (block == null) return;
+        if (block.getType() == Material.DEAD_BUSH) {
+            if (GardeningTweaks.configManager.getRejuvenatedBushes()) {
+                Player player = event.getPlayer();
+                ItemStack mainHand = player.getInventory().getItemInMainHand();
+                switch(mainHand.getType()) {
+                    case WHEAT_SEEDS -> bushToSapling(player, mainHand, block, Material.OAK_SAPLING);
+                    case BEETROOT_SEEDS -> bushToSapling(player, mainHand, block, Material.ACACIA_SAPLING);
+                    case MELON_SEEDS -> bushToSapling(player, mainHand, block, Material.SPRUCE_SAPLING);
+                    case PUMPKIN_SEEDS -> bushToSapling(player, mainHand, block, Material.BIRCH_SAPLING);
+                }
+            }
+        }
+    }
+
+    public void bushToSapling(Player player, ItemStack mainHand, Block block, Material saplingType) {
+        if (player.getGameMode() != GameMode.CREATIVE) mainHand.setAmount(mainHand.getAmount() - 1);
+        block.setType(saplingType);
+        if (protocolManager != null) {
+            PacketContainer armAnimation = new PacketContainer(PacketType.Play.Server.ANIMATION);
+            armAnimation.getIntegers()
+                .write(0, player.getEntityId())
+                .write(1, 0);
+
+            try {
+                protocolManager.sendServerPacket(player, armAnimation);
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+        World world = block.getWorld();
+        Location location = block.getLocation();
+        world.spawnParticle(Particle.VILLAGER_HAPPY, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3);
+        world.playSound(location, Sound.BLOCK_AMETHYST_BLOCK_CHIME, 2f, 1f);
     }
 }

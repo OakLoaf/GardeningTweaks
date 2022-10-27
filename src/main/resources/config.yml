@@ -24,6 +24,9 @@ decoarsify: false
 # (DEFAULT: Grows on crouch, ENCHANT: Grows on crouch if a piece of armour is Enchanted, OFF: Disables Growth Dance)
 growth-dance-mode: DEFAULT
 
+# rejuvenated-bushes: Dead bushes can be changed into saplings by right-clicking with different seeds
+rejuvenated-bushes: true
+
 # custom-grass-drops: Changes the drops of grass (Leave empty for Default)
 custom-grass-drops:
   - "WHEAT_SEEDS"

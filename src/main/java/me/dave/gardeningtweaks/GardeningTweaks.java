@@ -34,7 +34,7 @@ public final class GardeningTweaks extends JavaPlugin {
         Listener[] listeners = new Listener[] {
             new BlockEvents(),
             new CropEvents(protocolManager),
-            new PlayerEvents(),
+            new PlayerEvents(protocolManager),
             new TreeEvents(realisticBiomesHook)
         };
         registerEvents(listeners);

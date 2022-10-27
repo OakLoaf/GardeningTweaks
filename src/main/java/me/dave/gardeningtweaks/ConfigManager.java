@@ -23,6 +23,7 @@ public class ConfigManager {
     private boolean fastLeafDecay;
     private boolean decoarsify;
     private boolean growthDance;
+    private boolean rejuvenatedBushes;
     private final List<Material> grassDrops = new ArrayList<>();
     private final HashMap<String, TreeData> treeMap = new HashMap<>();
     private TreeData defaultTreeData;
@@ -46,6 +47,7 @@ public class ConfigManager {
         config.getStringList("custom-grass-drops").forEach(string -> grassDrops.add(Material.valueOf(string.toUpperCase())));
         decoarsify = config.getBoolean("decoarsify", false);
         growthDance = config.getBoolean("growth-dance", false);
+        rejuvenatedBushes = config.getBoolean("rejuvenated-bushes", false);
 
         ConfigurationSection treesSection = config.getConfigurationSection("trees");
         if (treesSection != null) {
@@ -110,6 +112,10 @@ public class ConfigManager {
 
     public boolean getGrowthDanceMode() {
         return growthDance;
+    }
+
+    public boolean getRejuvenatedBushes() {
+        return rejuvenatedBushes;
     }
 
     public List<Material> getGrassDrops() {

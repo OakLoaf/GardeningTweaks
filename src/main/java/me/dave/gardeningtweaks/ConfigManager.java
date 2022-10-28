@@ -1,30 +1,25 @@
 package me.dave.gardeningtweaks;
 
-import me.dave.gardeningtweaks.utilities.RandomCollection;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.TreeType;
-import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.util.BoundingBox;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
 public class ConfigManager {
     private final GardeningTweaks plugin = GardeningTweaks.getInstance();
-    private String prefix;
-    private boolean interactiveHarvest;
-    private boolean dynamicTrampleFeatherFall;
-    private boolean dynamicTrampleCreative;
-    private boolean fastLeafDecay;
-    private boolean decoarsify;
-    private boolean growthDance;
-    private boolean rejuvenatedBushes;
-    private final List<Material> grassDrops = new ArrayList<>();
+
+    private CustomGrassDrops customGrassDrops;
+    private Decoarsify decoarsify;
+    private DynamicTrample dynamicTrample;
+    private FastLeafDecay fastLeafDecay;
+    private GrowthDance growthDance;
+    private InteractiveHarvest interactiveHarvest;
+    private Lumberjack lumberjack;
+    private RejuvenatedBushes rejuvenatedBushes;
+
     private final HashMap<String, TreeData> treeMap = new HashMap<>();
     private TreeData defaultTreeData;
 
@@ -37,18 +32,17 @@ public class ConfigManager {
         plugin.reloadConfig();
         FileConfiguration config = plugin.getConfig();
         treeMap.clear();
+
+        interactiveHarvest = new InteractiveHarvest(config.getBoolean("interactive-harvest.enabled", false), config.getStringList("interactive-harvest.blocks").stream().map(Material::valueOf).toList());
+        dynamicTrample = new DynamicTrample(config.getBoolean("dynamic-trample.enabled", false), config.getBoolean("dynamic-trample.feather-falling", false), config.getBoolean("dynamic-trample.creative-mode", false));
+        lumberjack = new Lumberjack(GardeningMode.valueOf(config.getString("lumberjack.mode", "DEFAULT").toUpperCase()), config.getStringList("lumberjack.blocks").stream().map(Material::valueOf).toList());
+        fastLeafDecay = new FastLeafDecay(config.getBoolean("fast-leaf-decay.enabled", false));
+        decoarsify = new Decoarsify(config.getBoolean("decoarsify.enabled", false));
+        growthDance = new GrowthDance(GardeningMode.valueOf(config.getString("growth-dance.enabled", "DEFAULT")), config.getStringList("growth-dance.blocks").stream().map(Material::valueOf).toList());
+        rejuvenatedBushes = new RejuvenatedBushes(config.getBoolean("rejuvenated-bushes.enabled", false));
+        customGrassDrops = new CustomGrassDrops(config.getBoolean("custom-grass-drops.enabled", false), config.getStringList("custom-grass-drops.blocks").stream().map(Material::valueOf).toList());
+
         defaultTreeData = new TreeData("DEFAULT", List.of("GRASS_BLOCK"), List.of("DIRT", "COARSE_DIRT"), new HashMap<>());
-
-        prefix = ChatColor.translateAlternateColorCodes('&', config.getString("prefix", ""));
-        interactiveHarvest = config.getBoolean("interactive-harvest", false);
-        dynamicTrampleFeatherFall = config.getBoolean("dynamic-trample.feather-falling", false);
-        dynamicTrampleCreative = config.getBoolean("dynamic-trample.creative-mode", false);
-        fastLeafDecay = config.getBoolean("fast-leaf-decay", false);
-        config.getStringList("custom-grass-drops").forEach(string -> grassDrops.add(Material.valueOf(string.toUpperCase())));
-        decoarsify = config.getBoolean("decoarsify", false);
-        growthDance = config.getBoolean("growth-dance", false);
-        rejuvenatedBushes = config.getBoolean("rejuvenated-bushes", false);
-
         ConfigurationSection treesSection = config.getConfigurationSection("trees");
         if (treesSection != null) {
             ConfigurationSection treeTypeSection = treesSection.getConfigurationSection("DEFAULT");
@@ -86,64 +80,69 @@ public class ConfigManager {
         }
     }
 
-    public String getPrefix() {
-        return prefix;
+    public boolean isInteractiveHarvestEnabled() {
+        return interactiveHarvest.enabled;
     }
 
-    public boolean hasInteractiveHarvest() {
+    public InteractiveHarvest getInteractiveHarvestConfig() {
         return interactiveHarvest;
     }
 
-    public boolean hasDynamicTrampleFeatherFall() {
-        return dynamicTrampleFeatherFall;
+    public boolean isDynamicTrampleEnabled() {
+        return dynamicTrample.enabled;
     }
 
-    public boolean hasDynamicTrampleCreative() {
-        return dynamicTrampleCreative;
+    public DynamicTrample getDynamicTrampleConfig() {
+        return dynamicTrample;
     }
 
-    public boolean hasFastLeafDecay() {
-        return fastLeafDecay;
+    public GardeningMode getLumberjackMode() {
+        return lumberjack.mode;
     }
 
-    public boolean hasDecoarsify() {
-        return decoarsify;
+    public Lumberjack getLumberjackConfig() {
+        return lumberjack;
     }
 
-    public boolean getGrowthDanceMode() {
+    public boolean isFastLeafDecayEnabled() {
+        return fastLeafDecay.enabled;
+    }
+
+    public boolean isDecoarsifyEnabled() {
+        return decoarsify.enabled;
+    }
+
+    public GardeningMode getGrowthDanceMode() {
+        return growthDance.mode;
+    }
+
+    public GrowthDance getGrowthDanceConfig() {
         return growthDance;
     }
 
-    public boolean getRejuvenatedBushes() {
-        return rejuvenatedBushes;
+    public boolean isRejuvenatedBushesEnabled() {
+        return rejuvenatedBushes.enabled;
     }
 
-    public List<Material> getGrassDrops() {
-        return grassDrops;
+    public boolean isCustomGrassDropsEnabled() {
+        return customGrassDrops.enabled;
     }
 
-    public List<Material> getTreeSpreadBlock(TreeType treeType) {
-        return treeMap.getOrDefault(treeType.toString(), defaultTreeData).getSpreadBlocks();
+    public CustomGrassDrops getCustomGrassDropsConfig() {
+        return customGrassDrops;
     }
 
-    public boolean doesSpreadBlocks(TreeType treeType) {
-        return treeMap.getOrDefault(treeType.toString(), defaultTreeData).getSpreadBlocks().size() > 0;
+    public TreeData getTreeData(TreeType treeType) {
+        return treeMap.getOrDefault(treeType.toString(), defaultTreeData);
     }
 
-    public boolean isSpreadableMaterial(TreeType treeType, Block block) {
-        List<Material> spreadOnList = treeMap.getOrDefault(treeType.toString(), defaultTreeData).getSpreadBlocksOn();
-        if (spreadOnList.size() == 0) {
-            Collection<BoundingBox> boundingBoxes = block.getCollisionShape().getBoundingBoxes();
-            if (boundingBoxes.size() == 1) {
-                BoundingBox boundingBox = boundingBoxes.iterator().next();
-                return boundingBox.getWidthX() == 1.0 && boundingBox.getWidthZ() == 1.0 && boundingBox.getHeight() == 1.0;
-            }
-        }
-        return spreadOnList.contains(block.getType());
-    }
 
-    public RandomCollection<Material> getTreeFlowers(TreeType treeType) {
-        TreeData treeData = treeMap.getOrDefault(treeType.toString(), defaultTreeData);
-        return treeData.getFlowerCollection();
-    }
+    public record CustomGrassDrops(boolean enabled, List<Material> blocks) {}
+    public record Decoarsify(boolean enabled) {}
+    public record DynamicTrample(boolean enabled, boolean featherFalling, boolean creativeMode) {}
+    public record FastLeafDecay(boolean enabled) {}
+    public record GrowthDance(GardeningMode mode, List<Material> blocks) {}
+    public record InteractiveHarvest(boolean enabled, List<Material> blocks) {}
+    public record Lumberjack(GardeningMode mode, List<Material> blocks) {}
+    public record RejuvenatedBushes(boolean enabled) {}
 }

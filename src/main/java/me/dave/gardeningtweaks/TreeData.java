@@ -2,13 +2,17 @@ package me.dave.gardeningtweaks;
 
 import me.dave.gardeningtweaks.utilities.RandomCollection;
 import org.bukkit.Material;
+import org.bukkit.TreeType;
+import org.bukkit.block.Block;
+import org.bukkit.util.BoundingBox;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
 public class TreeData {
-    private final String treeTypeName;
+    public final String treeTypeName;
     private final List<Material> spreadBlocks = new ArrayList<>();
     private final List<Material> spreadBlocksOn = new ArrayList<>();
     private final RandomCollection<Material> flowerList = new RandomCollection<>();
@@ -20,16 +24,23 @@ public class TreeData {
         flowerList.forEach((string, weight) -> this.flowerList.add(Material.valueOf(string), weight));
     }
 
-    public String getTreeTypeName() {
-        return treeTypeName;
+    public boolean spreadsBlocks() {
+        return spreadBlocks.size() > 0;
     }
 
-    public List<Material> getSpreadBlocks() {
+    public List<Material> getSpreadMaterials() {
         return spreadBlocks;
     }
 
-    public List<Material> getSpreadBlocksOn() {
-        return spreadBlocksOn;
+    public boolean isSpreadableMaterial(Block block) {
+        if (spreadBlocksOn.size() == 0) {
+            Collection<BoundingBox> boundingBoxes = block.getCollisionShape().getBoundingBoxes();
+            if (boundingBoxes.size() == 1) {
+                BoundingBox boundingBox = boundingBoxes.iterator().next();
+                return boundingBox.getWidthX() == 1.0 && boundingBox.getWidthZ() == 1.0 && boundingBox.getHeight() == 1.0;
+            }
+        }
+        return spreadBlocksOn.contains(block.getType());
     }
 
     public RandomCollection<Material> getFlowerCollection() {

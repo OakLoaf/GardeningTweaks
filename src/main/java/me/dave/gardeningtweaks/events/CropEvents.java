@@ -3,6 +3,7 @@ package me.dave.gardeningtweaks.events;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
+import me.dave.gardeningtweaks.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -33,46 +34,46 @@ public class CropEvents implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Action action = event.getAction();
-        // Interactive Harvest
-        if (action == Action.RIGHT_CLICK_BLOCK) {
-            if (GardeningTweaks.configManager.hasInteractiveHarvest()) {
-                Block block = event.getClickedBlock();
-                if (block == null || !(block.getBlockData() instanceof Ageable crop) || crop.getAge() != crop.getMaximumAge())
-                    return;
-                Player player = event.getPlayer();
-                UUID playerUUID = player.getUniqueId();
-                if (harvestCooldownSet.contains(playerUUID)) return;
-                harvestCooldownSet.add(playerUUID);
-                Bukkit.getScheduler().runTaskLater(plugin, () -> harvestCooldownSet.remove(playerUUID), 2);
-                ItemStack mainHand = player.getInventory().getItemInMainHand();
-                ItemStack offHand = player.getInventory().getItemInOffHand();
-                if (mainHand.getType() == Material.BONE_MEAL || offHand.getType() == Material.BONE_MEAL)
-                    event.setCancelled(true);
-                Material material = block.getType();
-                Collection<ItemStack> drops = block.getDrops(mainHand);
-                block.setType(material);
-                Location location = block.getLocation();
-                World world = location.getWorld();
-                if (world != null) {
-                    for (ItemStack drop : drops) {
-                        if (drop.getType().toString().contains("SEEDS")) drop.setAmount(drop.getAmount() - 1);
-                        world.dropItemNaturally(location.clone().add(0.5, 0.5, 0.5), drop);
-                    }
-                    if (protocolManager != null) {
-                        PacketContainer armAnimation = new PacketContainer(PacketType.Play.Server.ANIMATION);
-                        armAnimation.getIntegers()
-                            .write(0, player.getEntityId())
-                            .write(1, 0);
 
-                        try {
-                            protocolManager.sendServerPacket(player, armAnimation);
-                        } catch (InvocationTargetException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    world.spawnParticle(Particle.BLOCK_DUST, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3, crop);
-                    world.playSound(location, Sound.BLOCK_CROP_BREAK, 1f, 1f);
+        // Interactive Harvest
+        ConfigManager.InteractiveHarvest interactiveHarvestConfig = GardeningTweaks.configManager.getInteractiveHarvestConfig();
+        if (action == Action.RIGHT_CLICK_BLOCK && interactiveHarvestConfig.enabled()) {
+            Block block = event.getClickedBlock();
+            if (block == null || !(block.getBlockData() instanceof Ageable crop) || crop.getAge() != crop.getMaximumAge())
+                return;
+            Player player = event.getPlayer();
+            UUID playerUUID = player.getUniqueId();
+            if (harvestCooldownSet.contains(playerUUID)) return;
+            harvestCooldownSet.add(playerUUID);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> harvestCooldownSet.remove(playerUUID), 2);
+            ItemStack mainHand = player.getInventory().getItemInMainHand();
+            ItemStack offHand = player.getInventory().getItemInOffHand();
+            if (mainHand.getType() == Material.BONE_MEAL || offHand.getType() == Material.BONE_MEAL)
+                event.setCancelled(true);
+            Material material = block.getType();
+            Collection<ItemStack> drops = block.getDrops(mainHand);
+            block.setType(material);
+            Location location = block.getLocation();
+            World world = location.getWorld();
+            if (world != null) {
+                for (ItemStack drop : drops) {
+                    if (drop.getType().toString().contains("SEEDS")) drop.setAmount(drop.getAmount() - 1);
+                    world.dropItemNaturally(location.clone().add(0.5, 0.5, 0.5), drop);
                 }
+                if (protocolManager != null) {
+                    PacketContainer armAnimation = new PacketContainer(PacketType.Play.Server.ANIMATION);
+                    armAnimation.getIntegers()
+                        .write(0, player.getEntityId())
+                        .write(1, 0);
+
+                    try {
+                        protocolManager.sendServerPacket(player, armAnimation);
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                }
+                world.spawnParticle(Particle.BLOCK_DUST, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3, crop);
+                world.playSound(location, Sound.BLOCK_CROP_BREAK, 1f, 1f);
             }
         }
 

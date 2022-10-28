@@ -1,12 +1,12 @@
 package me.dave.gardeningtweaks.events;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.gardeningtweaks.TreeData;
 import me.dave.gardeningtweaks.dependencies.RealisticBiomesHook;
 import me.dave.gardeningtweaks.utilities.RandomCollection;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.TreeType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
@@ -27,16 +27,16 @@ public class TreeEvents implements Listener {
 
     @EventHandler
     public void onTreeGrow(StructureGrowEvent event) {
-        TreeType treeType = event.getSpecies();
+        TreeData treeData = GardeningTweaks.configManager.getTreeData(event.getSpecies());
         Location location = event.getLocation();
 
-        if (GardeningTweaks.configManager.doesSpreadBlocks(treeType)) spreadBlocks(treeType, location);
+        if (treeData.spreadsBlocks()) spreadBlocks(treeData, location);
 
-        RandomCollection<Material> flowerCollection = GardeningTweaks.configManager.getTreeFlowers(treeType);
+        RandomCollection<Material> flowerCollection = treeData.getFlowerCollection();
         if (flowerCollection != null) growFlowers(location, flowerCollection);
     }
 
-    public void spreadBlocks(TreeType treeType, Location saplingLocation) {
+    public void spreadBlocks(TreeData treeData, Location saplingLocation) {
         Location currLocation = saplingLocation.clone().add(-2, -1, -2);
 
         for (int i = 0; i < 5; i++) {
@@ -44,14 +44,14 @@ public class TreeEvents implements Listener {
                 Block currBlock = currLocation.getBlock();
 
                 if ((i >= 1 && i <= 3) && (j >= 1 && j <= 3)) {
-                    if (GardeningTweaks.configManager.isSpreadableMaterial(treeType, currBlock) && currBlock.getRelative(BlockFace.UP).isPassable()) {
-                        List<Material> spreadBlocks = GardeningTweaks.configManager.getTreeSpreadBlock(treeType);
+                    if (treeData.isSpreadableMaterial(currBlock) && currBlock.getRelative(BlockFace.UP).isPassable()) {
+                        List<Material> spreadBlocks = treeData.getSpreadMaterials();
                         setBlockMaterial(currBlock, spreadBlocks.get(random.nextInt(spreadBlocks.size())));
                     }
                 } else if ((i != 0 && i != 4) || (j != 0 && j != 4)) {
                     if (random.nextBoolean()) {
-                        if (GardeningTweaks.configManager.isSpreadableMaterial(treeType, currBlock) && currBlock.getRelative(BlockFace.UP).isPassable()) {
-                            List<Material> spreadBlocks = GardeningTweaks.configManager.getTreeSpreadBlock(treeType);
+                        if (treeData.isSpreadableMaterial(currBlock) && currBlock.getRelative(BlockFace.UP).isPassable()) {
+                            List<Material> spreadBlocks = treeData.getSpreadMaterials();
                             setBlockMaterial(currBlock, spreadBlocks.get(random.nextInt(spreadBlocks.size())));
                         }
                     }

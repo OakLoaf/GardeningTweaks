@@ -14,11 +14,10 @@ public class GardeningTweaksCmd implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String args[]) {
-        String prefix = GardeningTweaks.configManager.getPrefix();
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("reload")) {
                 if (!sender.hasPermission("gardeningtweaks.admin.reload")) {
-                    sender.sendMessage(prefix + "§7You have insufficient permissions.");
+                    sender.sendMessage("§cYou have insufficient permissions.");
                     return true;
                 }
                 GardeningTweaks.configManager.reloadConfig();

@@ -1,38 +1,90 @@
 # Minecraft names their Trees weirdly so here is a list of the tree types:
 # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/TreeType.html
 
-# prefix: Text to go before plugin messages
-prefix: "&a&lGardeningTweaks &8» &r"
-
 # interactive-harvest: Right Click fully grown crops to harvest
-interactive-harvest: true
+interactive-harvest:
+  # enabled: Whether Interactive Harvest is enabled
+  enabled: true
+  # blocks: A list of blocks that will be effected by Interactive Harvest
+  blocks:
+    - "BEETROOTS"
+    - "CARROTS"
+    - "NETHER_WART"
+    - "POTATOES"
+    - "SWEET_BERRY_BUSH"
+    - "WHEAT"
 
 # dynamic-trample: Adds trample options for your farmland for when jumped on by a player
 dynamic-trample:
-  # feather-falling: Feather Falling stops farmland from breaking when jumped on by a player
+  # enabled: Whether Dynamic Trample is enabled
+  enabled: true
+  # feather-falling: Whether Feather Falling stops users from trampling farmland
   feather-falling: true
-  # creative-mode: Stop Creative users from trampling
+  # creative-mode: Whether Creative Mode stops users from trampling farmland
   creative-mode: true
 
+# lumberjack: Break the entirety of a tree at once (All connected logs)
+lumberjack:
+  # mode: (DEFAULT: Breaks connected logs, ENCHANT: Breaks connected logs if a piece of armour has the "Lumberjack" Enchant, OFF: Disables Lumberjack)
+  mode: DEFAULT
+  # blocks: A list of blocks that will be effected by Lumberjack
+  blocks:
+    - "OAK_LOG"
+    - "SPRUCE_LOG"
+    - "BIRCH_LOG"
+    - "JUNGLE_LOG"
+    - "ACACIA_LOG"
+    - "DARK_OAK_LOG"
+    - "MANGROVE_LOG"
+    - "CRIMSON_STEM"
+    - "WARPED_STEM"
+
 # fast-leaf-decay: Leaves disappear as soon as the last log has been broken
-fast-leaf-decay: true
+fast-leaf-decay:
+  # enabled: Whether Fast Leaf Decay is enabled
+  enabled: true
 
 # decoarsify: Coarse Dirt drops normal dirt
-decoarsify: false
+decoarsify:
+  # enabled: Whether Decoarsify is enabled
+  enabled: false
 
 # growth-dance: Crouch near your crops to help give them a growth boost!
-# (DEFAULT: Grows on crouch, ENCHANT: Grows on crouch if a piece of armour is Enchanted, OFF: Disables Growth Dance)
-growth-dance-mode: DEFAULT
+growth-dance:
+  # mode: (DEFAULT: Grows on crouch, ENCHANT: Grows on crouch if a piece of armour has the "Growth Dance" Enchant, OFF: Disables Growth Dance)
+  mode: true
+  # blocks: A list of blocks that will be effected by Growth Dance
+  blocks:
+    - "BEETROOTS"
+    - "CACTUS"
+    - "CARROTS"
+    - "CHORUS_FLOWER"
+    - "KELP"
+    - "MELON_STEM"
+    - "NETHER_WART"
+    - "POTATOES"
+    - "PUMPKIN_STEM"
+    - "SUGAR_CANES"
+    - "SWEET_BERRY_BUSH"
+    - "TWISTING_VINES"
+    - "WEEPING_VINES"
+    - "WHEAT"
 
 # rejuvenated-bushes: Dead bushes can be changed into saplings by right-clicking with different seeds
-rejuvenated-bushes: true
+rejuvenated-bushes:
+  # enabled: Whether Rejuvenated Bushes is enabled
+  enabled: true
 
 # custom-grass-drops: Changes the drops of grass (Leave empty for Default)
 custom-grass-drops:
-  - "WHEAT_SEEDS"
-  - "BEETROOT_SEEDS"
-  - "PUMPKIN_SEEDS"
-  - "MELON_SEEDS"
+  # enabled: Whether Custom Grass Drops is enabled
+  enabled: true
+  # items: A list of items that will have a chance of being dropped by grass
+  items:
+    - "WHEAT_SEEDS"
+    - "BEETROOT_SEEDS"
+    - "PUMPKIN_SEEDS"
+    - "MELON_SEEDS"
 
 # trees: General Configuration for different Tree Types
 trees:

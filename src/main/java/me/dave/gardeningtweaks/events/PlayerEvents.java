@@ -3,6 +3,7 @@ package me.dave.gardeningtweaks.events;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
+import me.dave.gardeningtweaks.GardeningMode;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -31,7 +32,7 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onPlayerSneak(PlayerToggleSneakEvent event) {
-        if (event.isSneaking() && GardeningTweaks.configManager.getGrowthDanceMode()) {
+        if (event.isSneaking() && GardeningTweaks.configManager.getGrowthDanceMode() != GardeningMode.DISABLED) {
             Player player = event.getPlayer();
             if (cooldownList.contains(player.getUniqueId())) return;
             cooldownList.add(player.getUniqueId());

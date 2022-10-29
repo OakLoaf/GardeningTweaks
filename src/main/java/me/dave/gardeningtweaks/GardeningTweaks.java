@@ -1,12 +1,8 @@
 package me.dave.gardeningtweaks;
 
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
+import me.dave.gardeningtweaks.dependencies.ProtocolLibHook;
 import me.dave.gardeningtweaks.dependencies.RealisticBiomesHook;
-import me.dave.gardeningtweaks.events.BlockEvents;
-import me.dave.gardeningtweaks.events.CropEvents;
-import me.dave.gardeningtweaks.events.PlayerEvents;
-import me.dave.gardeningtweaks.events.TreeEvents;
+import me.dave.gardeningtweaks.events.*;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,21 +16,27 @@ public final class GardeningTweaks extends JavaPlugin {
         plugin = this;
         configManager = new ConfigManager();
 
-        RealisticBiomesHook realisticBiomesHook = null;
         PluginManager pluginManager = getServer().getPluginManager();
+
+        RealisticBiomesHook realisticBiomesHook = null;
         if (pluginManager.getPlugin("RealisticBiomes") != null) realisticBiomesHook = new RealisticBiomesHook();
         else getLogger().info("RealisticBiomes plugin not found. Continuing without RealisticBiomes Support.");
 
-        ProtocolManager protocolManager = null;
-        if (pluginManager.getPlugin("ProtocolLib") != null) protocolManager = ProtocolLibrary.getProtocolManager();
+        ProtocolLibHook protocolLibHook = null;
+        if (pluginManager.getPlugin("ProtocolLib") != null) protocolLibHook = new ProtocolLibHook();
         else getLogger().info("ProtocolLib plugin not found. Continuing without ProtocolLib Support.");
 
         getCommand("gardeningtweaks").setExecutor(new GardeningTweaksCmd());
 
         Listener[] listeners = new Listener[] {
-            new BlockEvents(),
-            new CropEvents(protocolManager),
-            new PlayerEvents(protocolManager),
+            new BonemealFlowers(protocolLibHook),
+            new CustomGrassDrops(),
+            new Decoarsify(),
+            new DynamicTrample(),
+            new GrowthDance(),
+            new InteractiveHarvest(protocolLibHook),
+            new Lumberjack(),
+            new RejuvenatedBushes(protocolLibHook),
             new TreeEvents(realisticBiomesHook)
         };
         registerEvents(listeners);

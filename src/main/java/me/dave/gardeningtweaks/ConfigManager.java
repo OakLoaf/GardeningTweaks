@@ -11,6 +11,7 @@ import java.util.List;
 public class ConfigManager {
     private final GardeningTweaks plugin = GardeningTweaks.getInstance();
 
+    private BonemealFlowers bonemealFlowers;
     private CustomGrassDrops customGrassDrops;
     private Decoarsify decoarsify;
     private DynamicTrample dynamicTrample;
@@ -33,14 +34,15 @@ public class ConfigManager {
         FileConfiguration config = plugin.getConfig();
         treeMap.clear();
 
-        interactiveHarvest = new InteractiveHarvest(config.getBoolean("interactive-harvest.enabled", false), config.getStringList("interactive-harvest.blocks").stream().map(Material::valueOf).toList());
-        dynamicTrample = new DynamicTrample(config.getBoolean("dynamic-trample.enabled", false), config.getBoolean("dynamic-trample.feather-falling", false), config.getBoolean("dynamic-trample.creative-mode", false));
-        lumberjack = new Lumberjack(GardeningMode.valueOf(config.getString("lumberjack.mode", "DEFAULT").toUpperCase()), config.getStringList("lumberjack.blocks").stream().map(Material::valueOf).toList());
-        fastLeafDecay = new FastLeafDecay(config.getBoolean("fast-leaf-decay.enabled", false));
-        decoarsify = new Decoarsify(config.getBoolean("decoarsify.enabled", false));
-        growthDance = new GrowthDance(GardeningMode.valueOf(config.getString("growth-dance.enabled", "DEFAULT")), config.getStringList("growth-dance.blocks").stream().map(Material::valueOf).toList());
-        rejuvenatedBushes = new RejuvenatedBushes(config.getBoolean("rejuvenated-bushes.enabled", false));
+        bonemealFlowers = new BonemealFlowers(config.getBoolean("bonemeal-flowers.enabled", false));
         customGrassDrops = new CustomGrassDrops(config.getBoolean("custom-grass-drops.enabled", false), config.getStringList("custom-grass-drops.blocks").stream().map(Material::valueOf).toList());
+        decoarsify = new Decoarsify(config.getBoolean("decoarsify.enabled", false));
+        dynamicTrample = new DynamicTrample(config.getBoolean("dynamic-trample.enabled", false), config.getBoolean("dynamic-trample.feather-falling", false), config.getBoolean("dynamic-trample.creative-mode", false));
+        fastLeafDecay = new FastLeafDecay(config.getBoolean("fast-leaf-decay.enabled", false));
+        growthDance = new GrowthDance(GardeningMode.valueOf(config.getString("growth-dance.enabled", "DEFAULT")), config.getStringList("growth-dance.blocks").stream().map(Material::valueOf).toList());
+        interactiveHarvest = new InteractiveHarvest(config.getBoolean("interactive-harvest.enabled", false), config.getStringList("interactive-harvest.blocks").stream().map(Material::valueOf).toList());
+        lumberjack = new Lumberjack(GardeningMode.valueOf(config.getString("lumberjack.mode", "DEFAULT").toUpperCase()), config.getStringList("lumberjack.blocks").stream().map(Material::valueOf).toList());
+        rejuvenatedBushes = new RejuvenatedBushes(config.getBoolean("rejuvenated-bushes.enabled", false));
 
         defaultTreeData = new TreeData("DEFAULT", List.of("GRASS_BLOCK"), List.of("DIRT", "COARSE_DIRT"), new HashMap<>());
         ConfigurationSection treesSection = config.getConfigurationSection("trees");
@@ -80,63 +82,41 @@ public class ConfigManager {
         }
     }
 
-    public boolean isInteractiveHarvestEnabled() {
-        return interactiveHarvest.enabled;
+    public BonemealFlowers getBonemealFlowersConfig() {
+        return bonemealFlowers;
     }
-
-    public InteractiveHarvest getInteractiveHarvestConfig() {
-        return interactiveHarvest;
-    }
-
-    public boolean isDynamicTrampleEnabled() {
-        return dynamicTrample.enabled;
-    }
-
-    public DynamicTrample getDynamicTrampleConfig() {
-        return dynamicTrample;
-    }
-
-    public GardeningMode getLumberjackMode() {
-        return lumberjack.mode;
-    }
-
-    public Lumberjack getLumberjackConfig() {
-        return lumberjack;
-    }
-
-    public boolean isFastLeafDecayEnabled() {
-        return fastLeafDecay.enabled;
-    }
-
-    public boolean isDecoarsifyEnabled() {
-        return decoarsify.enabled;
-    }
-
-    public GardeningMode getGrowthDanceMode() {
-        return growthDance.mode;
-    }
-
-    public GrowthDance getGrowthDanceConfig() {
-        return growthDance;
-    }
-
-    public boolean isRejuvenatedBushesEnabled() {
-        return rejuvenatedBushes.enabled;
-    }
-
-    public boolean isCustomGrassDropsEnabled() {
-        return customGrassDrops.enabled;
-    }
-
     public CustomGrassDrops getCustomGrassDropsConfig() {
         return customGrassDrops;
     }
+    public Decoarsify getDecoarsifyConfig() {
+        return decoarsify;
+    }
+    public DynamicTrample getDynamicTrampleConfig() {
+        return dynamicTrample;
+    }
+    public FastLeafDecay getFastLeafDecayConfig() {
+        return fastLeafDecay;
+    }
+    public GrowthDance getGrowthDanceConfig() {
+        return growthDance;
+    }
+    public InteractiveHarvest getInteractiveHarvestConfig() {
+        return interactiveHarvest;
+    }
+    public Lumberjack getLumberjackConfig() {
+        return lumberjack;
+    }
+    public RejuvenatedBushes getRejuvenatedBushesConfig() {
+        return rejuvenatedBushes;
+    }
+
 
     public TreeData getTreeData(TreeType treeType) {
         return treeMap.getOrDefault(treeType.toString(), defaultTreeData);
     }
 
 
+    public record BonemealFlowers(boolean enabled) {}
     public record CustomGrassDrops(boolean enabled, List<Material> blocks) {}
     public record Decoarsify(boolean enabled) {}
     public record DynamicTrample(boolean enabled, boolean featherFalling, boolean creativeMode) {}

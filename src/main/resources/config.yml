@@ -1,5 +1,64 @@
+# GardeningTweaks Plugin config.yml
+# For ease of use this config has been sorted in Alphabetical Order
+
 # Minecraft names their Trees weirdly so here is a list of the tree types:
 # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/TreeType.html
+
+# bonemeal-flowers: Grow *some* small flowers into taller versions by bonemealing them
+bonemeal-flowers:
+  # enabled: Whether Bonemeal Flowers is enabled
+  enabled: true
+
+# custom-grass-drops: Changes the drops of grass (Leave empty for Default)
+custom-grass-drops:
+  # enabled: Whether Custom Grass Drops is enabled
+  enabled: true
+  # items: A list of items that will have a chance of being dropped by grass
+  items:
+    - "WHEAT_SEEDS"
+    - "BEETROOT_SEEDS"
+    - "PUMPKIN_SEEDS"
+    - "MELON_SEEDS"
+
+# decoarsify: Coarse Dirt drops normal dirt
+decoarsify:
+  # enabled: Whether Decoarsify is enabled
+  enabled: false
+
+# dynamic-trample: Adds trample options for your farmland for when jumped on by a player
+dynamic-trample:
+  # enabled: Whether Dynamic Trample is enabled
+  enabled: true
+  # feather-falling: Whether Feather Falling stops users from trampling farmland
+  feather-falling: true
+  # creative-mode: Whether Creative Mode stops users from trampling farmland
+  creative-mode: true
+
+# fast-leaf-decay: Leaves disappear as soon as the last log has been broken
+fast-leaf-decay:
+  # enabled: Whether Fast Leaf Decay is enabled
+  enabled: true
+
+# growth-dance: Crouch near your crops to help give them a growth boost!
+growth-dance:
+  # mode: (DEFAULT: Grows on crouch, ENCHANT: Grows on crouch if a piece of armour has the "Growth Dance" Enchant, OFF: Disables Growth Dance)
+  mode: true
+  # blocks: A list of blocks that will be effected by Growth Dance
+  blocks:
+    - "BEETROOTS"
+    - "CACTUS"
+    - "CARROTS"
+    - "CHORUS_FLOWER"
+    - "KELP"
+    - "MELON_STEM"
+    - "NETHER_WART"
+    - "POTATOES"
+    - "PUMPKIN_STEM"
+    - "SUGAR_CANE"
+    - "SWEET_BERRY_BUSH"
+    - "TWISTING_VINES"
+    - "WEEPING_VINES"
+    - "WHEAT"
 
 # interactive-harvest: Right Click fully grown crops to harvest
 interactive-harvest:
@@ -13,15 +72,6 @@ interactive-harvest:
     - "POTATOES"
     - "SWEET_BERRY_BUSH"
     - "WHEAT"
-
-# dynamic-trample: Adds trample options for your farmland for when jumped on by a player
-dynamic-trample:
-  # enabled: Whether Dynamic Trample is enabled
-  enabled: true
-  # feather-falling: Whether Feather Falling stops users from trampling farmland
-  feather-falling: true
-  # creative-mode: Whether Creative Mode stops users from trampling farmland
-  creative-mode: true
 
 # lumberjack: Break the entirety of a tree at once (All connected logs)
 lumberjack:
@@ -39,52 +89,10 @@ lumberjack:
     - "CRIMSON_STEM"
     - "WARPED_STEM"
 
-# fast-leaf-decay: Leaves disappear as soon as the last log has been broken
-fast-leaf-decay:
-  # enabled: Whether Fast Leaf Decay is enabled
-  enabled: true
-
-# decoarsify: Coarse Dirt drops normal dirt
-decoarsify:
-  # enabled: Whether Decoarsify is enabled
-  enabled: false
-
-# growth-dance: Crouch near your crops to help give them a growth boost!
-growth-dance:
-  # mode: (DEFAULT: Grows on crouch, ENCHANT: Grows on crouch if a piece of armour has the "Growth Dance" Enchant, OFF: Disables Growth Dance)
-  mode: true
-  # blocks: A list of blocks that will be effected by Growth Dance
-  blocks:
-    - "BEETROOTS"
-    - "CACTUS"
-    - "CARROTS"
-    - "CHORUS_FLOWER"
-    - "KELP"
-    - "MELON_STEM"
-    - "NETHER_WART"
-    - "POTATOES"
-    - "PUMPKIN_STEM"
-    - "SUGAR_CANES"
-    - "SWEET_BERRY_BUSH"
-    - "TWISTING_VINES"
-    - "WEEPING_VINES"
-    - "WHEAT"
-
 # rejuvenated-bushes: Dead bushes can be changed into saplings by right-clicking with different seeds
 rejuvenated-bushes:
   # enabled: Whether Rejuvenated Bushes is enabled
   enabled: true
-
-# custom-grass-drops: Changes the drops of grass (Leave empty for Default)
-custom-grass-drops:
-  # enabled: Whether Custom Grass Drops is enabled
-  enabled: true
-  # items: A list of items that will have a chance of being dropped by grass
-  items:
-    - "WHEAT_SEEDS"
-    - "BEETROOT_SEEDS"
-    - "PUMPKIN_SEEDS"
-    - "MELON_SEEDS"
 
 # trees: General Configuration for different Tree Types
 trees:

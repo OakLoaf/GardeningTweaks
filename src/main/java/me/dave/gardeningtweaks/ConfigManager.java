@@ -44,7 +44,7 @@ public class ConfigManager {
         lumberjack = new Lumberjack(GardeningMode.valueOf(config.getString("lumberjack.mode", "DEFAULT").toUpperCase()), config.getStringList("lumberjack.blocks").stream().map(Material::valueOf).toList());
         rejuvenatedBushes = new RejuvenatedBushes(config.getBoolean("rejuvenated-bushes.enabled", false));
 
-        defaultTreeData = new TreeData("DEFAULT", List.of("GRASS_BLOCK"), List.of("DIRT", "COARSE_DIRT"), new HashMap<>());
+        defaultTreeData = new TreeData(List.of("GRASS_BLOCK"), List.of("DIRT", "COARSE_DIRT"), new HashMap<>());
         ConfigurationSection treesSection = config.getConfigurationSection("trees");
         if (treesSection != null) {
             ConfigurationSection treeTypeSection = treesSection.getConfigurationSection("DEFAULT");
@@ -55,7 +55,7 @@ public class ConfigManager {
                     for (String flowerStr : flowerSection.getKeys(false)) {
                         flowerMap.put(flowerStr, flowerSection.getDouble(flowerStr));
                     }
-                    defaultTreeData = new TreeData("DEFAULT", treeTypeSection.getStringList("spread-blocks"), treeTypeSection.getStringList("spread-blocks-on"), flowerMap);
+                    defaultTreeData = new TreeData(treeTypeSection.getStringList("spread-blocks"), treeTypeSection.getStringList("spread-blocks-on"), flowerMap);
                 }
             }
 
@@ -69,7 +69,7 @@ public class ConfigManager {
                         for (String flowerStr : flowerSection.getKeys(false)) {
                             flowerMap.put(flowerStr, flowerSection.getDouble(flowerStr));
                         }
-                        TreeData treeData = new TreeData(treeType, treeTypeSection.getStringList("spread-blocks"), treeTypeSection.getStringList("spread-blocks-on"), flowerMap);
+                        TreeData treeData = new TreeData(treeTypeSection.getStringList("spread-blocks"), treeTypeSection.getStringList("spread-blocks-on"), flowerMap);
                         if (treeType.equals("OAK")) {
                             treeMap.put("TREE", treeData);
                             treeMap.put("BIG_TREE", treeData);

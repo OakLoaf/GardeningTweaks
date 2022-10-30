@@ -2,7 +2,6 @@ package me.dave.gardeningtweaks;
 
 import me.dave.gardeningtweaks.utilities.RandomCollection;
 import org.bukkit.Material;
-import org.bukkit.TreeType;
 import org.bukkit.block.Block;
 import org.bukkit.util.BoundingBox;
 
@@ -12,13 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TreeData {
-    public final String treeTypeName;
     private final List<Material> spreadBlocks = new ArrayList<>();
     private final List<Material> spreadBlocksOn = new ArrayList<>();
     private final RandomCollection<Material> flowerList = new RandomCollection<>();
 
-    public TreeData(String treeTypeName, List<String> spreadBlocks, List<String> spreadBlocksOn, HashMap<String, Double> flowerList) {
-        this.treeTypeName = treeTypeName;
+    public TreeData(List<String> spreadBlocks, List<String> spreadBlocksOn, HashMap<String, Double> flowerList) {
         spreadBlocks.forEach(string -> this.spreadBlocks.add(Material.valueOf(string)));
         spreadBlocksOn.forEach(string -> this.spreadBlocksOn.add(Material.valueOf(string)));
         flowerList.forEach((string, weight) -> this.flowerList.add(Material.valueOf(string), weight));

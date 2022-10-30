@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 public class ProtocolLibHook {
     private final ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
 
-    public boolean armInteractAnimation(Player player) {
+    public void armInteractAnimation(Player player) {
         if (protocolManager != null) {
             PacketContainer armAnimation = new PacketContainer(PacketType.Play.Server.ANIMATION);
             armAnimation.getIntegers()
@@ -20,12 +20,9 @@ public class ProtocolLibHook {
 
             try {
                 protocolManager.sendServerPacket(player, armAnimation);
-                return true;
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
-                return false;
             }
         }
-        return false;
     }
 }

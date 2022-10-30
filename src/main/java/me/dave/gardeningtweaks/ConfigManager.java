@@ -38,7 +38,7 @@ public class ConfigManager {
         customGrassDrops = new CustomGrassDrops(config.getBoolean("custom-grass-drops.enabled", false), config.getStringList("custom-grass-drops.blocks").stream().map(Material::valueOf).toList());
         decoarsify = new Decoarsify(config.getBoolean("decoarsify.enabled", false));
         dynamicTrample = new DynamicTrample(config.getBoolean("dynamic-trample.enabled", false), config.getBoolean("dynamic-trample.feather-falling", false), config.getBoolean("dynamic-trample.creative-mode", false));
-        fastLeafDecay = new FastLeafDecay(config.getBoolean("fast-leaf-decay.enabled", false));
+        fastLeafDecay = new FastLeafDecay(config.getBoolean("fast-leaf-decay.enabled", false), config.getBoolean("fast-leaf-decay.sounds", false), config.getBoolean("fast-leaf-decay.particles", false));
         growthDance = new GrowthDance(GardeningMode.valueOf(config.getString("growth-dance.enabled", "DEFAULT")), config.getStringList("growth-dance.blocks").stream().map(Material::valueOf).toList());
         interactiveHarvest = new InteractiveHarvest(config.getBoolean("interactive-harvest.enabled", false), config.getStringList("interactive-harvest.blocks").stream().map(Material::valueOf).toList());
         lumberjack = new Lumberjack(GardeningMode.valueOf(config.getString("lumberjack.mode", "DEFAULT").toUpperCase()), config.getStringList("lumberjack.blocks").stream().map(Material::valueOf).toList());
@@ -120,7 +120,7 @@ public class ConfigManager {
     public record CustomGrassDrops(boolean enabled, List<Material> blocks) {}
     public record Decoarsify(boolean enabled) {}
     public record DynamicTrample(boolean enabled, boolean featherFalling, boolean creativeMode) {}
-    public record FastLeafDecay(boolean enabled) {}
+    public record FastLeafDecay(boolean enabled, boolean sounds, boolean particles) {}
     public record GrowthDance(GardeningMode mode, List<Material> blocks) {}
     public record InteractiveHarvest(boolean enabled, List<Material> blocks) {}
     public record Lumberjack(GardeningMode mode, List<Material> blocks) {}

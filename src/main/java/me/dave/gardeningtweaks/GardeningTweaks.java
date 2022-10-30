@@ -33,6 +33,7 @@ public final class GardeningTweaks extends JavaPlugin {
             new CustomGrassDrops(),
             new Decoarsify(),
             new DynamicTrample(),
+            new FastLeafDecay(),
             new GrowthDance(),
             new InteractiveHarvest(protocolLibHook),
             new Lumberjack(),

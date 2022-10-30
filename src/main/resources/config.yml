@@ -38,6 +38,10 @@ dynamic-trample:
 fast-leaf-decay:
   # enabled: Whether Fast Leaf Decay is enabled
   enabled: true
+  # sounds: Whether a sound will be made when leaves decay
+  sounds: false
+  # particles: Whether particles will appear when leaves decay
+  particles: false
 
 # growth-dance: Crouch near your crops to help give them a growth boost!
 growth-dance:

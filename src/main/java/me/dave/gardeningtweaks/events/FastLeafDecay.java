@@ -13,12 +13,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashMap;
 
 public class FastLeafDecay implements Listener {
     private final GardeningTweaks plugin = GardeningTweaks.getInstance();
     private ConfigManager.FastLeafDecay fastLeafDecay;
-    private final Deque<Block> blockSchedule = new ArrayDeque<>();
-    private boolean scheduleRunning;
+    private final HashMap<Integer, Deque<Block>> blockScheduleMap = new HashMap<>();
 
     @EventHandler
     public void onBlockPhysics(BlockPhysicsEvent event) {
@@ -29,21 +29,26 @@ public class FastLeafDecay implements Listener {
 
         if (leaves.isPersistent()) return;
         if (leaves.getDistance() >= 7) {
-            if (!blockSchedule.contains(block)) blockSchedule.add(block);
-            if (!scheduleRunning) {
-                scheduleRunning = true;
-                breakLeaves();
+            int currTick = GardeningTweaks.getCurrentTick();
+            if (blockScheduleMap.containsKey(currTick)) {
+                Deque<Block> blockSchedule = blockScheduleMap.get(currTick);
+                if (!blockSchedule.contains(block)) blockSchedule.add(block);
+            } else {
+                Deque<Block> blockSchedule = new ArrayDeque<>();
+                blockSchedule.add(block);
+                blockScheduleMap.put(currTick, blockSchedule);
+                breakLeaves(currTick);
             }
         }
     }
 
-    private void breakLeaves() {
-        scheduleRunning = true;
+    private void breakLeaves(int tick) {
+        Deque<Block> blockSchedule = blockScheduleMap.get(tick);
         new BukkitRunnable() {
             @Override
             public void run() {
                 if (blockSchedule.isEmpty()) {
-                    scheduleRunning = false;
+                    blockScheduleMap.remove(tick);
                     cancel();
                     return;
                 }
@@ -57,6 +62,6 @@ public class FastLeafDecay implements Listener {
                 if (fastLeafDecay.sounds()) world.playSound(location.clone().add(0.5, 0.5, 0.5), blockData.getSoundGroup().getBreakSound(), 1f, 1f);
                 if (fastLeafDecay.particles()) world.spawnParticle(Particle.BLOCK_DUST, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3, blockData);
             }
-        }.runTaskTimer(plugin, 0,3);
+        }.runTaskTimer(plugin, 3,3);
     }
 }

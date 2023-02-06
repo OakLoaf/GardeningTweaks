@@ -1,7 +1,7 @@
 name: GardeningTweaks
 version: '${project.version}'
 main: me.dave.gardeningtweaks.GardeningTweaks
-api-version: 1.19
+api-version: 1.16
 authors: [ Dav_e_ ]
 description: Spruces up your gardening
 softdepend: [ ProtocolLib, RealisticBiomes ]

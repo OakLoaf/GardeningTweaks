@@ -45,7 +45,7 @@ fast-leaf-decay:
 
 # growth-dance: Crouch near your crops to help give them a growth boost!
 growth-dance:
-  # mode: (DEFAULT: Grows on crouch, ENCHANT: Grows on crouch if a piece of armour has the "Growth Dance" Enchant, OFF: Disables Growth Dance)
+  # mode: (DEFAULT: Grows on crouch, OFF: Disables Growth Dance)
   mode: true
   # blocks: A list of blocks that will be effected by Growth Dance
   blocks:
@@ -79,7 +79,7 @@ interactive-harvest:
 
 # lumberjack: Break the entirety of a tree at once (All connected logs)
 lumberjack:
-  # mode: (DEFAULT: Breaks connected logs, ENCHANT: Breaks connected logs if a piece of armour has the "Lumberjack" Enchant, OFF: Disables Lumberjack)
+  # mode: (DEFAULT: Breaks connected logs, OFF: Disables Lumberjack)
   mode: DEFAULT
   # blocks: A list of blocks that will be effected by Lumberjack
   blocks:

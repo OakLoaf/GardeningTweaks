@@ -6,7 +6,7 @@
 
     <groupId>me.dave</groupId>
     <artifactId>GardeningTweaks</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>GardeningTweaks</name>
@@ -81,6 +81,11 @@
             <artifactId>spigot-api</artifactId>
             <version>1.19.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.CoolDCB</groupId>
+            <artifactId>ChatColorHandler</artifactId>
+            <version>v1.2</version>
         </dependency>
         <dependency>
             <groupId>com.github.Maroon28</groupId>

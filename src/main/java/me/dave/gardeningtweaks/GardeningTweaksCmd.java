@@ -1,5 +1,6 @@
 package me.dave.gardeningtweaks;
 
+import me.dave.chatcolorhandler.ChatColorHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,11 +18,11 @@ public class GardeningTweaksCmd implements CommandExecutor, TabCompleter {
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("reload")) {
                 if (!sender.hasPermission("gardeningtweaks.admin.reload")) {
-                    sender.sendMessage("§cYou have insufficient permissions.");
+                    sender.sendMessage(ChatColorHandler.translateAlternateColorCodes("&cYou have insufficient permissions."));
                     return true;
                 }
                 GardeningTweaks.configManager.reloadConfig();
-                sender.sendMessage(ChatColor.GREEN + "GardeningTweaks has been reloaded.");
+                sender.sendMessage(ChatColorHandler.translateAlternateColorCodes("&#feb5ff✿ &#96D590GardeningTweaks has been reloaded."));
                 return true;
             }
         }

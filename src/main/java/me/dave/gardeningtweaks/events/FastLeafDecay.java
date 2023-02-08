@@ -54,6 +54,8 @@ public class FastLeafDecay implements Listener {
                 }
                 Block block = blockSchedule.pop();
                 if (!Tag.LEAVES.isTagged(block.getType())) return;
+                if (!(block.getBlockData() instanceof Leaves leaves)) return;
+                if (leaves.getDistance() <= 7) return;
 
                 BlockData blockData = block.getType().createBlockData();
                 Location location = block.getLocation();

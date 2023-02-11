@@ -85,7 +85,7 @@
         <dependency>
             <groupId>com.github.CoolDCB</groupId>
             <artifactId>ChatColorHandler</artifactId>
-            <version>v1.2</version>
+            <version>v1.2.3</version>
         </dependency>
         <dependency>
             <groupId>com.github.Maroon28</groupId>

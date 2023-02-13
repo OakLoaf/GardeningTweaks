@@ -2,7 +2,6 @@ package me.dave.gardeningtweaks.events;
 
 import me.dave.gardeningtweaks.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.gardeningtweaks.dependencies.ProtocolLibHook;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
@@ -19,12 +18,7 @@ import java.util.UUID;
 
 public class InteractiveHarvest implements Listener {
     private final GardeningTweaks plugin = GardeningTweaks.getInstance();
-    private final ProtocolLibHook protocolLibHook;
     private final HashSet<UUID> harvestCooldownSet = new HashSet<>();
-
-    public InteractiveHarvest(ProtocolLibHook protocolLibHook) {
-        this.protocolLibHook = protocolLibHook;
-    }
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
@@ -52,7 +46,7 @@ public class InteractiveHarvest implements Listener {
                     world.dropItemNaturally(location.clone().add(0.5, 0.5, 0.5), drop);
                 }
 
-                protocolLibHook.armInteractAnimation(player);
+                if (GardeningTweaks.protocolLibHook != null) GardeningTweaks.protocolLibHook.armInteractAnimation(player);
                 world.spawnParticle(Particle.BLOCK_DUST, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3, crop);
                 world.playSound(location, crop.getSoundGroup().getBreakSound(), 1f, 1f);
             }

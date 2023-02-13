@@ -18,12 +18,7 @@ import java.util.Random;
 
 public class TreeEvents implements Listener {
     private final GardeningTweaks plugin = GardeningTweaks.getInstance();
-    private final RealisticBiomesHook realisticBiomesHook;
     private final Random random = new Random();
-
-    public TreeEvents(RealisticBiomesHook realisticBiomesHook) {
-        this.realisticBiomesHook = realisticBiomesHook;
-    }
 
     @EventHandler
     public void onTreeGrow(StructureGrowEvent event) {
@@ -89,7 +84,7 @@ public class TreeEvents implements Listener {
     }
 
     private void setBlockMaterial(Block block, Material material) {
-        if (realisticBiomesHook != null) realisticBiomesHook.setBlockType(block, material);
+        if (GardeningTweaks.realisticBiomesHook != null) GardeningTweaks.realisticBiomesHook.setBlockType(block, material);
         else block.setType(material);
     }
 }

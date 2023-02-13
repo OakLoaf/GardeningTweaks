@@ -2,7 +2,6 @@ package me.dave.gardeningtweaks.events;
 
 import me.dave.gardeningtweaks.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.gardeningtweaks.dependencies.ProtocolLibHook;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -16,12 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Random;
 
 public class BonemealFlowers implements Listener {
-    private final ProtocolLibHook protocolLibHook;
     private final Random random = new Random();
-
-    public BonemealFlowers(ProtocolLibHook protocolLibHook) {
-        this.protocolLibHook = protocolLibHook;
-    }
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
@@ -51,7 +45,7 @@ public class BonemealFlowers implements Listener {
         Location location = block.getLocation();
 
         if (player.getGameMode() != GameMode.CREATIVE) mainHand.setAmount(mainHand.getAmount() - 1);
-        protocolLibHook.armInteractAnimation(player);
+        if (GardeningTweaks.protocolLibHook != null) GardeningTweaks.protocolLibHook.armInteractAnimation(player);
         world.spawnParticle(Particle.VILLAGER_HAPPY, location.clone().add(0.5, 0.2, 0.5), 10, 0.2, 0.2, 0.2);
         world.playSound(location, Sound.ITEM_BONE_MEAL_USE, 0.4f, 1.4f);
 

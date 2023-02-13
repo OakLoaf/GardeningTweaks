@@ -2,7 +2,6 @@ package me.dave.gardeningtweaks.events;
 
 import me.dave.gardeningtweaks.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.gardeningtweaks.dependencies.ProtocolLibHook;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -13,11 +12,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class RejuvenatedBushes implements Listener {
-    private final ProtocolLibHook protocolLibHook;
-
-    public RejuvenatedBushes(ProtocolLibHook protocolLibHook) {
-        this.protocolLibHook = protocolLibHook;
-    }
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
@@ -43,7 +37,7 @@ public class RejuvenatedBushes implements Listener {
     public void bushToSapling(Player player, ItemStack mainHand, Block block, Material saplingType) {
         if (player.getGameMode() != GameMode.CREATIVE) mainHand.setAmount(mainHand.getAmount() - 1);
         block.setType(saplingType);
-        protocolLibHook.armInteractAnimation(player);
+        if (GardeningTweaks.protocolLibHook != null) GardeningTweaks.protocolLibHook.armInteractAnimation(player);
         World world = block.getWorld();
         Location location = block.getLocation();
         world.spawnParticle(Particle.VILLAGER_HAPPY, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3);

@@ -11,6 +11,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class GardeningTweaks extends JavaPlugin {
     private static GardeningTweaks plugin;
     public static ConfigManager configManager;
+    public static ProtocolLibHook protocolLibHook = null;
+    public static RealisticBiomesHook realisticBiomesHook = null;
     private static int currTick = 0;
 
     @Override
@@ -20,27 +22,25 @@ public final class GardeningTweaks extends JavaPlugin {
 
         PluginManager pluginManager = getServer().getPluginManager();
 
-        RealisticBiomesHook realisticBiomesHook = null;
-        if (pluginManager.getPlugin("RealisticBiomes") != null) realisticBiomesHook = new RealisticBiomesHook();
-        else getLogger().info("RealisticBiomes plugin not found. Continuing without RealisticBiomes Support.");
-
-        ProtocolLibHook protocolLibHook = null;
         if (pluginManager.getPlugin("ProtocolLib") != null) protocolLibHook = new ProtocolLibHook();
         else getLogger().info("ProtocolLib plugin not found. Continuing without ProtocolLib Support.");
+
+        if (pluginManager.getPlugin("RealisticBiomes") != null) realisticBiomesHook = new RealisticBiomesHook();
+        else getLogger().info("RealisticBiomes plugin not found. Continuing without RealisticBiomes Support.");
 
         getCommand("gardeningtweaks").setExecutor(new GardeningTweaksCmd());
 
         Listener[] listeners = new Listener[] {
-            new BonemealFlowers(protocolLibHook),
+            new BonemealFlowers(),
             new CustomGrassDrops(),
             new Decoarsify(),
             new DynamicTrample(),
             new FastLeafDecay(),
             new GrowthDance(),
-            new InteractiveHarvest(protocolLibHook),
+            new InteractiveHarvest(),
             new Lumberjack(),
-            new RejuvenatedBushes(protocolLibHook),
-            new TreeEvents(realisticBiomesHook)
+            new RejuvenatedBushes(),
+            new TreeEvents()
         };
         registerEvents(listeners);
 

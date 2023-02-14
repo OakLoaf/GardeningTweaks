@@ -23,7 +23,7 @@ public class CustomGrassDrops implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         ConfigManager.CustomGrassDrops customGrassDrops = GardeningTweaks.configManager.getCustomGrassDropsConfig();
-        if (!customGrassDrops.enabled() || customGrassDrops.blocks().size() == 0) return;
+        if (!customGrassDrops.enabled() || customGrassDrops.items().size() == 0) return;
 
         Player player = event.getPlayer();
         ItemStack mainHand = player.getInventory().getItemInMainHand();
@@ -33,7 +33,7 @@ public class CustomGrassDrops implements Listener {
 
         if (player.getGameMode() == GameMode.CREATIVE || mainHand.getType() == Material.SHEARS) return;
         event.setDropItems(false);
-        List<Material> grassDrops = customGrassDrops.blocks();
+        List<Material> grassDrops = customGrassDrops.items();
         World world = block.getWorld();
         Location location = block.getLocation();
 

@@ -5,10 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.util.BoundingBox;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class TreeData {
     private final List<Material> spreadBlocks = new ArrayList<>();
@@ -16,8 +13,36 @@ public class TreeData {
     private final RandomCollection<Material> flowerList = new RandomCollection<>();
 
     public TreeData(List<String> spreadBlocks, List<String> spreadBlocksOn, HashMap<String, Double> flowerList) {
-        spreadBlocks.forEach(string -> this.spreadBlocks.add(Material.valueOf(string)));
-        spreadBlocksOn.forEach(string -> this.spreadBlocksOn.add(Material.valueOf(string)));
+        spreadBlocks.forEach(string -> {
+            Material material;
+            try {
+                material = Material.valueOf(string);
+            } catch (IllegalArgumentException err) {
+                GardeningTweaks.getInstance().getLogger().warning("Ignoring " + string + ", that is not a valid material.");
+                return;
+            }
+            this.spreadBlocks.add(material);
+        });
+        spreadBlocksOn.forEach(string -> {
+            Material material;
+            try {
+                material = Material.valueOf(string);
+            } catch (IllegalArgumentException err) {
+                GardeningTweaks.getInstance().getLogger().warning("Ignoring " + string + ", that is not a valid material.");
+                return;
+            }
+            this.spreadBlocksOn.add(material);
+        });
+        flowerList.forEach((string, weight) -> {
+            Material material;
+            try {
+                material = Material.valueOf(string);
+            } catch (IllegalArgumentException err) {
+                GardeningTweaks.getInstance().getLogger().warning("Ignoring " + string + ", that is not a valid material.");
+                return;
+            }
+            this.flowerList.add(material, weight);
+        });
         flowerList.forEach((string, weight) -> this.flowerList.add(Material.valueOf(string), weight));
     }
 

@@ -23,10 +23,10 @@ public final class GardeningTweaks extends JavaPlugin {
         PluginManager pluginManager = getServer().getPluginManager();
 
         if (pluginManager.getPlugin("ProtocolLib") != null) protocolLibHook = new ProtocolLibHook();
-        else getLogger().info("ProtocolLib plugin not found. Continuing without ProtocolLib Support.");
+        else plugin.getLogger().info("ProtocolLib plugin not found. Continuing without ProtocolLib Support.");
 
         if (pluginManager.getPlugin("RealisticBiomes") != null) realisticBiomesHook = new RealisticBiomesHook();
-        else getLogger().info("RealisticBiomes plugin not found. Continuing without RealisticBiomes Support.");
+        else plugin.getLogger().info("RealisticBiomes plugin not found. Continuing without RealisticBiomes Support.");
 
         getCommand("gardeningtweaks").setExecutor(new GardeningTweaksCmd());
 

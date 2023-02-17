@@ -6,10 +6,12 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Collection;
@@ -22,6 +24,8 @@ public class InteractiveHarvest implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.getHand() == EquipmentSlot.OFF_HAND) return;
+        if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY) return;
         ConfigManager.InteractiveHarvest interactiveHarvest = GardeningTweaks.configManager.getInteractiveHarvestConfig();
         if (!interactiveHarvest.enabled()) return;
         Action action = event.getAction();

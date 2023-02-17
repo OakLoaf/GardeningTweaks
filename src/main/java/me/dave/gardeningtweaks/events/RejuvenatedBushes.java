@@ -5,6 +5,7 @@ import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -15,6 +16,8 @@ public class RejuvenatedBushes implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY) return;
+
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         ConfigManager.RejuvenatedBushes rejuvenatedBushes = GardeningTweaks.configManager.getRejuvenatedBushesConfig();
         if (!rejuvenatedBushes.enabled()) return;

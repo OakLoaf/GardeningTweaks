@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -18,6 +19,8 @@ public class DynamicTrample implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY) return;
+
         ConfigManager.DynamicTrample dynamicTrample = GardeningTweaks.configManager.getDynamicTrampleConfig();
         if (!dynamicTrample.enabled()) return;
         Action action = event.getAction();

@@ -7,6 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -19,6 +20,8 @@ public class BonemealFlowers implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY) return;
+
         ConfigManager.BonemealFlowers bonemealFlowers = GardeningTweaks.configManager.getBonemealFlowersConfig();
         if (!bonemealFlowers.enabled()) return;
 

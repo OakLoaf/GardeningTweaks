@@ -47,6 +47,8 @@ fast-leaf-decay:
 growth-dance:
   # mode: (DEFAULT: Grows on crouch, DISABLED: Disables Growth Dance)
   mode: true
+  # growth-rate: The amount of times a crop can have a chance of receiving a boost per second (maximum of 20)
+  growth-rate: 2
   # blocks: A list of blocks that will be effected by Growth Dance
   blocks:
     - "BEETROOTS"

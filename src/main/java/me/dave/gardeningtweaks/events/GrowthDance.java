@@ -5,6 +5,7 @@ import me.dave.gardeningtweaks.GardeningMode;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
@@ -29,12 +30,12 @@ public class GrowthDance implements Listener {
         Player player = event.getPlayer();
         if (cooldownList.contains(player.getUniqueId())) return;
         cooldownList.add(player.getUniqueId());
-        Bukkit.getScheduler().runTaskLater(plugin, () -> cooldownList.remove(player.getUniqueId()), 10);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> cooldownList.remove(player.getUniqueId()), growthDance.cooldownLength());
         growCrops(growthDance, player.getLocation());
     }
 
     private void growCrops(ConfigManager.GrowthDance growthDance, Location location) {
-        Location currLocation = location.clone().add(-2, 0, -2);
+        Location currLocation = location.clone();
 
         for (int indexY = 0; indexY < 2; indexY++) {
             for (int indexX = -2; indexX < 3; indexX++) {

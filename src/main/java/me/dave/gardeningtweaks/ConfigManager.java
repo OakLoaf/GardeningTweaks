@@ -47,7 +47,7 @@ public class ConfigManager {
         decoarsify = new Decoarsify(config.getBoolean("decoarsify.enabled", false));
         dynamicTrample = new DynamicTrample(config.getBoolean("dynamic-trample.enabled", false), config.getBoolean("dynamic-trample.feather-falling", false), config.getBoolean("dynamic-trample.creative-mode", false));
         fastLeafDecay = new FastLeafDecay(config.getBoolean("fast-leaf-decay.enabled", false), config.getBoolean("fast-leaf-decay.sounds", false), config.getBoolean("fast-leaf-decay.particles", false));
-        growthDance = new GrowthDance(parseGardeningMode(config.getString("growth-dance.enabled", "DEFAULT")), config.getStringList("growth-dance.blocks").stream().map((string) -> {
+        growthDance = new GrowthDance(parseGardeningMode(config.getString("growth-dance.enabled", "DEFAULT")), (int) Math.round(20 / (double) config.getInt("growth-dance.growth-rate")), config.getStringList("growth-dance.blocks").stream().map((string) -> {
             try {
                 return Material.valueOf(string);
             } catch (IllegalArgumentException err) {
@@ -160,7 +160,7 @@ public class ConfigManager {
     public record Decoarsify(boolean enabled) {}
     public record DynamicTrample(boolean enabled, boolean featherFalling, boolean creativeMode) {}
     public record FastLeafDecay(boolean enabled, boolean sounds, boolean particles) {}
-    public record GrowthDance(GardeningMode mode, List<Material> blocks) {}
+    public record GrowthDance(GardeningMode mode, int cooldownLength, List<Material> blocks) {}
     public record InteractiveHarvest(boolean enabled, List<Material> blocks) {}
     public record Lumberjack(GardeningMode mode, List<Material> blocks) {}
     public record RejuvenatedBushes(boolean enabled) {}

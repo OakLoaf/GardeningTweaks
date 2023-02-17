@@ -9,6 +9,32 @@ bonemeal-flowers:
   # enabled: Whether Bonemeal Flowers is enabled
   enabled: true
 
+# composter-spreader: Composter uses its contents to fertilize nearby crops
+composter-spreader:
+  # enabled: Whether Composter Spreader is enabled
+  enabled: true
+  # timer: Number of seconds between each chance of growing surrounding crops (Requires restart to change)
+  timer: 10
+  # chance: Percentage chance of crop growth being triggered
+  chance: 50
+  # blocks: A list of blocks that will be effected by Composter Spreader
+  blocks:
+    - "BEETROOTS"
+    - "CACTUS"
+    - "CARROTS"
+    - "CHORUS_FLOWER"
+    - "KELP"
+    - "MELON_STEM"
+    - "NETHER_WART"
+    - "POTATOES"
+    - "PUMPKIN_STEM"
+    - "SUGAR_CANE"
+    - "SWEET_BERRY_BUSH"
+    - "TWISTING_VINES"
+    - "WEEPING_VINES"
+    - "WHEAT"
+
+
 # custom-grass-drops: Changes the drops of grass (Leave empty for Default)
 custom-grass-drops:
   # enabled: Whether Custom Grass Drops is enabled

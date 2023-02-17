@@ -32,6 +32,7 @@ public final class GardeningTweaks extends JavaPlugin {
 
         Listener[] listeners = new Listener[] {
             new BonemealFlowers(),
+            new ComposterSpreader(),
             new CustomGrassDrops(),
             new Decoarsify(),
             new DynamicTrample(),

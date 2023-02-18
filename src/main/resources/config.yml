@@ -34,6 +34,17 @@ composter-spreader:
     - "WEEPING_VINES"
     - "WHEAT"
 
+# custom-composter-output: Changes the output of a composter (Leave empty for Default)
+custom-composter-output:
+  # enabled: Whether Custom Grass Drops is enabled
+  enabled: true
+  # items: A list of items that will have a chance of being output by the composter
+  items:
+    - "BONE_MEAL"
+    - "WHEAT_SEEDS"
+    - "BEETROOT_SEEDS"
+    - "PUMPKIN_SEEDS"
+    - "MELON_SEEDS"
 
 # custom-grass-drops: Changes the drops of grass (Leave empty for Default)
 custom-grass-drops:

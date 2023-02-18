@@ -14,6 +14,7 @@ public class ConfigManager {
 
     private BonemealFlowers bonemealFlowers;
     private ComposterSpreader composterSpreader;
+    private CustomComposterOutput customComposterOutput;
     private CustomGrassDrops customGrassDrops;
     private Decoarsify decoarsify;
     private DynamicTrample dynamicTrample;
@@ -38,6 +39,14 @@ public class ConfigManager {
 
         bonemealFlowers = new BonemealFlowers(config.getBoolean("bonemeal-flowers.enabled", false));
         composterSpreader = new ComposterSpreader(config.getBoolean("composter-spreader.enabled", false), config.getInt("composter-spreader.timer", 10) * 20, (int) Math.round(config.getDouble("composter-spreader.chance", 50)), config.getStringList("composter-spreader.blocks").stream().map((string) -> {
+            try {
+                return Material.valueOf(string);
+            } catch (IllegalArgumentException err) {
+                plugin.getLogger().warning("Ignoring " + string + ", that is not a valid material.");
+                return null;
+            }
+        }).filter(Objects::nonNull).toList());
+        customComposterOutput = new CustomComposterOutput(config.getBoolean("custom-composter-output.enabled", false), config.getStringList("custom-composter-output.items").stream().map((string) -> {
             try {
                 return Material.valueOf(string);
             } catch (IllegalArgumentException err) {
@@ -127,6 +136,11 @@ public class ConfigManager {
     public ComposterSpreader getComposterSpreader() {
         return composterSpreader;
     }
+
+    public CustomComposterOutput getCustomComposterOutput() {
+        return customComposterOutput;
+    }
+
     public CustomGrassDrops getCustomGrassDropsConfig() {
         return customGrassDrops;
     }
@@ -170,6 +184,7 @@ public class ConfigManager {
 
     public record BonemealFlowers(boolean enabled) {}
     public record ComposterSpreader(boolean enabled, int timer, int chance, List<Material> blocks) {}
+    public record CustomComposterOutput(boolean enabled, List<Material> items) {}
     public record CustomGrassDrops(boolean enabled, List<Material> items) {}
     public record Decoarsify(boolean enabled) {}
     public record DynamicTrample(boolean enabled, boolean featherFalling, boolean creativeMode) {}

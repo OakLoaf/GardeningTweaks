@@ -79,8 +79,8 @@ fast-leaf-decay:
   sounds: false
   # particles: Whether particles will appear when leaves decay
   particles: false
-  # ignore-persistence: Whether persistent leaves should decay
-  ignore-persistence: false
+  # ignore-persistence: Whether persistent leaves should decay (Leaves placed by players will not decay)
+  ignore-persistence: false # WARNING: Enabling this will cause leaves previously placed by players to decay.
 
 # growth-dance: Crouch near your crops to help give them a growth boost!
 growth-dance:

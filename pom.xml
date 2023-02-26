@@ -6,7 +6,7 @@
 
     <groupId>me.dave</groupId>
     <artifactId>GardeningTweaks</artifactId>
-    <version>1.1</version>
+    <version>1.1.1</version>
     <packaging>jar</packaging>
 
     <name>GardeningTweaks</name>
@@ -83,20 +83,28 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.enchantedskies</groupId>
+            <artifactId>EnchantedStorage</artifactId>
+            <version>1.0.6-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>com.github.CoolDCB</groupId>
             <artifactId>ChatColorHandler</artifactId>
             <version>v1.2.3</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.Maroon28</groupId>
-            <artifactId>RealisticBiomes</artifactId>
-            <version>3d292ea32a</version>
-            <scope>provided</scope>
-        </dependency>
+        <!-- ProtocolLib Hook -->
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
             <version>4.7.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- RealisticBiomes Hook -->
+        <dependency>
+            <groupId>com.github.Maroon28</groupId>
+            <artifactId>RealisticBiomes</artifactId>
+            <version>3d292ea32a</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

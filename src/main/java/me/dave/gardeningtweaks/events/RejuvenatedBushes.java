@@ -1,6 +1,6 @@
 package me.dave.gardeningtweaks.events;
 
-import me.dave.gardeningtweaks.ConfigManager;
+import me.dave.gardeningtweaks.datamanager.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -19,7 +19,7 @@ public class RejuvenatedBushes implements Listener {
         if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY) return;
 
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-        ConfigManager.RejuvenatedBushes rejuvenatedBushes = GardeningTweaks.configManager.getRejuvenatedBushesConfig();
+        ConfigManager.RejuvenatedBushes rejuvenatedBushes = GardeningTweaks.getConfigManager().getRejuvenatedBushesConfig();
         if (!rejuvenatedBushes.enabled()) return;
 
         Block block = event.getClickedBlock();

@@ -1,5 +1,6 @@
 package me.dave.gardeningtweaks;
 
+import me.dave.gardeningtweaks.datamanager.ConfigManager;
 import me.dave.gardeningtweaks.dependencies.ProtocolLibHook;
 import me.dave.gardeningtweaks.dependencies.RealisticBiomesHook;
 import me.dave.gardeningtweaks.events.*;
@@ -10,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class GardeningTweaks extends JavaPlugin {
     private static GardeningTweaks plugin;
-    public static ConfigManager configManager;
+    private static ConfigManager configManager;
     public static ProtocolLibHook protocolLibHook = null;
     public static RealisticBiomesHook realisticBiomesHook = null;
     private static int currTick = 0;
@@ -49,9 +50,20 @@ public final class GardeningTweaks extends JavaPlugin {
         Bukkit.getScheduler().runTaskTimer(this, () -> currTick += 1, 1, 1);
     }
 
-    public static GardeningTweaks getInstance() { return plugin; }
+    @Override
+    public void onDisable() {
 
-    public void registerEvents(Listener[] listeners) {
+    }
+
+    public static GardeningTweaks getInstance() {
+        return plugin;
+    }
+
+    public static ConfigManager getConfigManager() {
+        return configManager;
+    }
+
+    private void registerEvents(Listener[] listeners) {
         for (Listener listener : listeners) {
             getServer().getPluginManager().registerEvents(listener, this);
         }

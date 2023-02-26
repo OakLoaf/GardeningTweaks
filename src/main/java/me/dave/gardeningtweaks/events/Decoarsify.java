@@ -1,6 +1,6 @@
 package me.dave.gardeningtweaks.events;
 
-import me.dave.gardeningtweaks.ConfigManager;
+import me.dave.gardeningtweaks.datamanager.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -17,7 +17,7 @@ public class Decoarsify implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
-        ConfigManager.Decoarsify decoarsify = GardeningTweaks.configManager.getDecoarsifyConfig();
+        ConfigManager.Decoarsify decoarsify = GardeningTweaks.getConfigManager().getDecoarsifyConfig();
         if (!decoarsify.enabled()) return;
         Block block = event.getBlock();
         Player player = event.getPlayer();

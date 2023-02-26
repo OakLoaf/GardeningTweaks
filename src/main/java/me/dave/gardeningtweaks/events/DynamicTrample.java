@@ -1,6 +1,6 @@
 package me.dave.gardeningtweaks.events;
 
-import me.dave.gardeningtweaks.ConfigManager;
+import me.dave.gardeningtweaks.datamanager.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -21,7 +21,7 @@ public class DynamicTrample implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY) return;
 
-        ConfigManager.DynamicTrample dynamicTrample = GardeningTweaks.configManager.getDynamicTrampleConfig();
+        ConfigManager.DynamicTrample dynamicTrample = GardeningTweaks.getConfigManager().getDynamicTrampleConfig();
         if (!dynamicTrample.enabled()) return;
         Action action = event.getAction();
         if (action != Action.PHYSICAL) return;

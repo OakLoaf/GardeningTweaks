@@ -1,6 +1,6 @@
 package me.dave.gardeningtweaks.events;
 
-import me.dave.gardeningtweaks.ConfigManager;
+import me.dave.gardeningtweaks.datamanager.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -22,7 +22,7 @@ public class BonemealFlowers implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY) return;
 
-        ConfigManager.BonemealFlowers bonemealFlowers = GardeningTweaks.configManager.getBonemealFlowersConfig();
+        ConfigManager.BonemealFlowers bonemealFlowers = GardeningTweaks.getConfigManager().getBonemealFlowersConfig();
         if (!bonemealFlowers.enabled()) return;
 
         Block block = event.getClickedBlock();

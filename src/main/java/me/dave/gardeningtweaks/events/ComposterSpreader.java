@@ -1,6 +1,6 @@
 package me.dave.gardeningtweaks.events;
 
-import me.dave.gardeningtweaks.ConfigManager;
+import me.dave.gardeningtweaks.datamanager.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -23,7 +23,7 @@ public class ComposterSpreader implements Listener {
     public ComposterSpreader() {
         GardeningTweaks plugin = GardeningTweaks.getInstance();
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
-            ConfigManager.ComposterSpreader composterSpreader = GardeningTweaks.configManager.getComposterSpreader();
+            ConfigManager.ComposterSpreader composterSpreader = GardeningTweaks.getConfigManager().getComposterSpreader();
             composterLocationList.forEach(location -> {
                 Block block = location.getBlock();
 
@@ -50,7 +50,7 @@ public class ComposterSpreader implements Listener {
                     }
                 }
             });
-        }, 600, GardeningTweaks.configManager.getComposterSpreader().timer());
+        }, 600, GardeningTweaks.getConfigManager().getComposterSpreader().timer());
     }
 
     @EventHandler

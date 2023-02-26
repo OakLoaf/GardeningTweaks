@@ -1,5 +1,6 @@
-package me.dave.gardeningtweaks;
+package me.dave.gardeningtweaks.datamanager;
 
+import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.utilities.RandomCollection;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

@@ -1,6 +1,6 @@
 package me.dave.gardeningtweaks.events;
 
-import me.dave.gardeningtweaks.ConfigManager;
+import me.dave.gardeningtweaks.datamanager.ConfigManager;
 import me.dave.gardeningtweaks.GardeningMode;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
@@ -24,7 +24,7 @@ public class Lumberjack implements Listener {
         Block block = event.getBlock();
         Material blockType = block.getType();
 
-        ConfigManager.Lumberjack lumberjack = GardeningTweaks.configManager.getLumberjackConfig();
+        ConfigManager.Lumberjack lumberjack = GardeningTweaks.getConfigManager().getLumberjackConfig();
         GardeningMode lumberjackMode = lumberjack.mode();
         if (lumberjackMode != GardeningMode.DISABLED && lumberjack.blocks().contains(blockType)) {
             Player player = event.getPlayer();

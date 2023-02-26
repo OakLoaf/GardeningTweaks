@@ -1,6 +1,6 @@
 package me.dave.gardeningtweaks.events;
 
-import me.dave.gardeningtweaks.ConfigManager;
+import me.dave.gardeningtweaks.datamanager.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -26,7 +26,7 @@ public class CustomComposterOutput implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         if (event.isCancelled()) return;
-        ConfigManager.CustomComposterOutput customComposterOutput = GardeningTweaks.configManager.getCustomComposterOutput();
+        ConfigManager.CustomComposterOutput customComposterOutput = GardeningTweaks.getConfigManager().getCustomComposterOutput();
         if (!customComposterOutput.enabled() || customComposterOutput.items().size() == 0) return;
         Block block = event.getBlock();
         if (block.getType() != Material.COMPOSTER) return;
@@ -47,7 +47,7 @@ public class CustomComposterOutput implements Listener {
     @EventHandler
     public void onInventoryMoveItem(InventoryMoveItemEvent event) {
         if (event.isCancelled()) return;
-        ConfigManager.CustomComposterOutput customComposterOutput = GardeningTweaks.configManager.getCustomComposterOutput();
+        ConfigManager.CustomComposterOutput customComposterOutput = GardeningTweaks.getConfigManager().getCustomComposterOutput();
         if (!customComposterOutput.enabled() || customComposterOutput.items().size() == 0) return;
         Inventory source = event.getSource();
         if (source.getType() != InventoryType.COMPOSTER) return;
@@ -71,7 +71,7 @@ public class CustomComposterOutput implements Listener {
         composterData.setLevel(0);
         block.setBlockData(composterData);
 
-        ConfigManager.CustomComposterOutput customComposterOutput = GardeningTweaks.configManager.getCustomComposterOutput();
+        ConfigManager.CustomComposterOutput customComposterOutput = GardeningTweaks.getConfigManager().getCustomComposterOutput();
         List<Material> newDrops = customComposterOutput.items();
         Location location = block.getLocation().clone().add(0, 0.5, 0);
         World world = block.getWorld();

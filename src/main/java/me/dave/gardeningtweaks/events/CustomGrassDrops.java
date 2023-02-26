@@ -1,6 +1,6 @@
 package me.dave.gardeningtweaks.events;
 
-import me.dave.gardeningtweaks.ConfigManager;
+import me.dave.gardeningtweaks.datamanager.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -22,7 +22,7 @@ public class CustomGrassDrops implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
-        ConfigManager.CustomGrassDrops customGrassDrops = GardeningTweaks.configManager.getCustomGrassDropsConfig();
+        ConfigManager.CustomGrassDrops customGrassDrops = GardeningTweaks.getConfigManager().getCustomGrassDropsConfig();
         if (!customGrassDrops.enabled() || customGrassDrops.items().size() == 0) return;
 
         Player player = event.getPlayer();

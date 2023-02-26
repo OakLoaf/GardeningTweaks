@@ -1,11 +1,10 @@
 package me.dave.gardeningtweaks.events;
 
-import me.dave.gardeningtweaks.ConfigManager;
+import me.dave.gardeningtweaks.datamanager.ConfigManager;
 import me.dave.gardeningtweaks.GardeningMode;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
@@ -24,7 +23,7 @@ public class GrowthDance implements Listener {
 
     @EventHandler
     public void onPlayerSneak(PlayerToggleSneakEvent event) {
-        ConfigManager.GrowthDance growthDance = GardeningTweaks.configManager.getGrowthDanceConfig();
+        ConfigManager.GrowthDance growthDance = GardeningTweaks.getConfigManager().getGrowthDanceConfig();
         if (growthDance.mode() == GardeningMode.DISABLED) return;
         if (!event.isSneaking()) return;
         Player player = event.getPlayer();

@@ -1,6 +1,6 @@
 package me.dave.gardeningtweaks.events;
 
-import me.dave.gardeningtweaks.ConfigManager;
+import me.dave.gardeningtweaks.datamanager.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -26,7 +26,7 @@ public class InteractiveHarvest implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getHand() == EquipmentSlot.OFF_HAND) return;
         if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY) return;
-        ConfigManager.InteractiveHarvest interactiveHarvest = GardeningTweaks.configManager.getInteractiveHarvestConfig();
+        ConfigManager.InteractiveHarvest interactiveHarvest = GardeningTweaks.getConfigManager().getInteractiveHarvestConfig();
         if (!interactiveHarvest.enabled()) return;
         Action action = event.getAction();
         if (action != Action.RIGHT_CLICK_BLOCK) return;

@@ -1,8 +1,7 @@
 package me.dave.gardeningtweaks.events;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.gardeningtweaks.TreeData;
-import me.dave.gardeningtweaks.dependencies.RealisticBiomesHook;
+import me.dave.gardeningtweaks.datamanager.TreeData;
 import me.dave.gardeningtweaks.utilities.RandomCollection;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -22,7 +21,7 @@ public class TreeEvents implements Listener {
 
     @EventHandler
     public void onTreeGrow(StructureGrowEvent event) {
-        TreeData treeData = GardeningTweaks.configManager.getTreeData(event.getSpecies());
+        TreeData treeData = GardeningTweaks.getConfigManager().getTreeData(event.getSpecies());
         Location location = event.getLocation();
 
         if (treeData.spreadsBlocks()) spreadBlocks(treeData, location);

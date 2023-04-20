@@ -24,6 +24,7 @@ public class ComposterSpreader implements Listener {
         GardeningTweaks plugin = GardeningTweaks.getInstance();
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             ConfigManager.ComposterSpreader composterSpreader = GardeningTweaks.getConfigManager().getComposterSpreader();
+            if (!composterSpreader.enabled()) return;
             composterLocationList.forEach(location -> {
                 Block block = location.getBlock();
 
@@ -55,24 +56,32 @@ public class ComposterSpreader implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
+        ConfigManager.ComposterSpreader composterSpreader = GardeningTweaks.getConfigManager().getComposterSpreader();
+        if (!composterSpreader.enabled()) return;
         Block block = event.getBlockPlaced();
         if (block.getType() == Material.COMPOSTER) composterLocationList.add(block.getLocation());
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
+        ConfigManager.ComposterSpreader composterSpreader = GardeningTweaks.getConfigManager().getComposterSpreader();
+        if (!composterSpreader.enabled()) return;
         Block block = event.getBlock();
         if (block.getType() == Material.COMPOSTER) composterLocationList.remove(block.getLocation());
     }
 
     @EventHandler
     public void onBlockPhysicsUpdate(BlockPhysicsEvent event) {
+        ConfigManager.ComposterSpreader composterSpreader = GardeningTweaks.getConfigManager().getComposterSpreader();
+        if (!composterSpreader.enabled()) return;
         Block block = event.getBlock();
         if (block.getType() == Material.COMPOSTER) composterLocationList.add(block.getLocation());
     }
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
+        ConfigManager.ComposterSpreader composterSpreader = GardeningTweaks.getConfigManager().getComposterSpreader();
+        if (!composterSpreader.enabled()) return;
         Block block = event.getClickedBlock();
         if (block != null && block.getType() == Material.COMPOSTER) composterLocationList.add(block.getLocation());
     }

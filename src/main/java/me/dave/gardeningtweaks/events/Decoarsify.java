@@ -17,6 +17,7 @@ public class Decoarsify implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
+        if (event.isCancelled()) return;
         ConfigManager.Decoarsify decoarsify = GardeningTweaks.getConfigManager().getDecoarsifyConfig();
         if (!decoarsify.enabled()) return;
         Block block = event.getBlock();

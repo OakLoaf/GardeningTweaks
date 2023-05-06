@@ -1,7 +1,7 @@
 package me.dave.gardeningtweaks.datamanager;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.gardeningtweaks.utilities.RandomCollection;
+import me.dave.gardeningtweaks.utils.RandomCollection;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.util.BoundingBox;

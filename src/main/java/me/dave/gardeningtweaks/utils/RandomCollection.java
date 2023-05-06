@@ -1,4 +1,4 @@
-package me.dave.gardeningtweaks.utilities;
+package me.dave.gardeningtweaks.utils;
 
 import java.util.NavigableMap;
 import java.util.Random;

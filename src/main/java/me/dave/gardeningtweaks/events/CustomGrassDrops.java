@@ -22,6 +22,7 @@ public class CustomGrassDrops implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
+        if (event.isCancelled()) return;
         ConfigManager.CustomGrassDrops customGrassDrops = GardeningTweaks.getConfigManager().getCustomGrassDropsConfig();
         if (!customGrassDrops.enabled() || customGrassDrops.items().size() == 0) return;
 

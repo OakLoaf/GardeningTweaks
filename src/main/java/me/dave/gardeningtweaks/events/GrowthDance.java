@@ -23,6 +23,7 @@ public class GrowthDance implements Listener {
 
     @EventHandler
     public void onPlayerSneak(PlayerToggleSneakEvent event) {
+        if (event.isCancelled()) return;
         ConfigManager.GrowthDance growthDance = GardeningTweaks.getConfigManager().getGrowthDanceConfig();
         if (growthDance.mode() == GardeningMode.DISABLED) return;
         if (!event.isSneaking()) return;

@@ -21,6 +21,7 @@ public class Lumberjack implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
+        if (event.isCancelled()) return;
         Block block = event.getBlock();
         Material blockType = block.getType();
 

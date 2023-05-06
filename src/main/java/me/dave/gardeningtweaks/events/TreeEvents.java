@@ -2,7 +2,7 @@ package me.dave.gardeningtweaks.events;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.datamanager.TreeData;
-import me.dave.gardeningtweaks.utilities.RandomCollection;
+import me.dave.gardeningtweaks.utils.RandomCollection;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -21,6 +21,7 @@ public class TreeEvents implements Listener {
 
     @EventHandler
     public void onTreeGrow(StructureGrowEvent event) {
+        if (event.isCancelled()) return;
         TreeData treeData = GardeningTweaks.getConfigManager().getTreeData(event.getSpecies());
         Location location = event.getLocation();
 

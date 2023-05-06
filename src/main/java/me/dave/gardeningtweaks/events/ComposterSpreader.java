@@ -6,6 +6,7 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.block.data.Levelled;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -56,6 +57,7 @@ public class ComposterSpreader implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
+        if (event.isCancelled()) return;
         ConfigManager.ComposterSpreader composterSpreader = GardeningTweaks.getConfigManager().getComposterSpreader();
         if (!composterSpreader.enabled()) return;
         Block block = event.getBlockPlaced();
@@ -64,6 +66,7 @@ public class ComposterSpreader implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
+        if (event.isCancelled()) return;
         ConfigManager.ComposterSpreader composterSpreader = GardeningTweaks.getConfigManager().getComposterSpreader();
         if (!composterSpreader.enabled()) return;
         Block block = event.getBlock();
@@ -72,6 +75,7 @@ public class ComposterSpreader implements Listener {
 
     @EventHandler
     public void onBlockPhysicsUpdate(BlockPhysicsEvent event) {
+        if (event.isCancelled()) return;
         ConfigManager.ComposterSpreader composterSpreader = GardeningTweaks.getConfigManager().getComposterSpreader();
         if (!composterSpreader.enabled()) return;
         Block block = event.getBlock();
@@ -80,6 +84,7 @@ public class ComposterSpreader implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY) return;
         ConfigManager.ComposterSpreader composterSpreader = GardeningTweaks.getConfigManager().getComposterSpreader();
         if (!composterSpreader.enabled()) return;
         Block block = event.getClickedBlock();

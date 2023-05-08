@@ -7,10 +7,13 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Collection;
@@ -20,23 +23,23 @@ import java.util.Random;
 public class CustomGrassDrops implements Listener {
     private final Random random = new Random();
 
-    @EventHandler
-    public void onBlockBreak(BlockBreakEvent event) {
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onBlockDropItem(BlockDropItemEvent event) {
         if (event.isCancelled()) return;
         ConfigManager.CustomGrassDrops customGrassDrops = GardeningTweaks.getConfigManager().getCustomGrassDropsConfig();
         if (!customGrassDrops.enabled() || customGrassDrops.items().size() == 0) return;
 
         Player player = event.getPlayer();
         ItemStack mainHand = player.getInventory().getItemInMainHand();
-        Block block = event.getBlock();
-        Collection<ItemStack> drops = block.getDrops(mainHand);
-        if (block.getType() != Material.GRASS || drops.size() == 0) return;
+        BlockState blockState = event.getBlockState();
+        List<ItemStack> drops = event.getItems().stream().map(Item::getItemStack).toList();
+        if (blockState.getType() != Material.GRASS || drops.size() == 0) return;
 
         if (player.getGameMode() == GameMode.CREATIVE || mainHand.getType() == Material.SHEARS) return;
-        event.setDropItems(false);
+        event.setCancelled(true);
         List<Material> grassDrops = customGrassDrops.items();
-        World world = block.getWorld();
-        Location location = block.getLocation();
+        World world = blockState.getWorld();
+        Location location = blockState.getLocation();
 
         for (int i = 0; i < drops.iterator().next().getAmount(); i++) {
             world.dropItemNaturally(location, new ItemStack(grassDrops.get(random.nextInt(grassDrops.size()))));

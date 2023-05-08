@@ -4,11 +4,13 @@ import me.dave.gardeningtweaks.datamanager.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.data.Levelled;
+import org.bukkit.entity.Item;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -24,17 +26,17 @@ public class CustomComposterOutput implements Listener {
     private final Random random = new Random();
 
     @EventHandler
-    public void onBlockBreak(BlockBreakEvent event) {
+    public void onBlockDropItem(BlockDropItemEvent event) {
         if (event.isCancelled()) return;
         ConfigManager.CustomComposterOutput customComposterOutput = GardeningTweaks.getConfigManager().getCustomComposterOutput();
         if (!customComposterOutput.enabled() || customComposterOutput.items().size() == 0) return;
-        Block block = event.getBlock();
-        if (block.getType() != Material.COMPOSTER) return;
+        BlockState blockState = event.getBlockState();
+        if (blockState.getType() != Material.COMPOSTER) return;
         if (event.getPlayer().getGameMode() == GameMode.CREATIVE) return;
-        event.setDropItems(false);
-        Collection<ItemStack> drops = block.getDrops();
-        Location location = block.getLocation();
-        World world = block.getWorld();
+        event.setCancelled(true);
+        List<ItemStack> drops = event.getItems().stream().map(Item::getItemStack).toList();
+        Location location = blockState.getLocation();
+        World world = blockState.getWorld();
         for (ItemStack item : drops) {
             if (item.getType() == Material.BONE_MEAL) {
                 List<Material> newDrops = customComposterOutput.items();
@@ -66,7 +68,6 @@ public class CustomComposterOutput implements Listener {
         if (block == null || block.getType() != Material.COMPOSTER) return;
         if (!(block.getBlockData() instanceof Levelled composterData)) return;
         if (composterData.getLevel() != composterData.getMaximumLevel()) return;
-
         event.setCancelled(true);
         composterData.setLevel(0);
         block.setBlockData(composterData);

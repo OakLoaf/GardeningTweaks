@@ -85,7 +85,7 @@ fast-leaf-decay:
 # growth-dance: Crouch near your crops to help give them a growth boost!
 growth-dance:
   # mode: (DEFAULT: Grows on crouch, DISABLED: Disables Growth Dance)
-  mode: true
+  mode: DEFAULT
   # growth-rate: The amount of times a crop can have a chance of receiving a boost per second (maximum of 20)
   growth-rate: 2
   # blocks: A list of blocks that will be effected by Growth Dance

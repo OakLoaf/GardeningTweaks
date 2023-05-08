@@ -6,7 +6,6 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -16,14 +15,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
 public class CustomGrassDrops implements Listener {
     private final Random random = new Random();
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler
     public void onBlockDropItem(BlockDropItemEvent event) {
         if (event.isCancelled()) return;
         ConfigManager.CustomGrassDrops customGrassDrops = GardeningTweaks.getConfigManager().getCustomGrassDropsConfig();

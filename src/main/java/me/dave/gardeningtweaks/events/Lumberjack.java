@@ -8,6 +8,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -32,16 +34,18 @@ public class Lumberjack implements Listener {
             ItemStack mainHand = player.getInventory().getItemInMainHand();
             if (!axes.contains(mainHand.getType()) || player.isSneaking()) return;
             Block blockAbove = block.getRelative(BlockFace.UP);
-            if (blockAbove.getType() == blockType) Bukkit.getScheduler().runTaskLater(plugin, () -> new LogLumber(plugin, blockAbove), 5);
+            if (blockAbove.getType() == blockType) Bukkit.getScheduler().runTaskLater(plugin, () -> new LogLumber(plugin, blockAbove, player), 5);
         }
     }
 
     private static class LogLumber {
         private final GardeningTweaks plugin;
+        private final Player player;
         private int blocksBroken = 0;
 
-        public LogLumber(GardeningTweaks plugin, Block startBlock) {
+        public LogLumber(GardeningTweaks plugin, Block startBlock, Player player) {
             this.plugin = plugin;
+            this.player = player;
 
             breakConnectedLogs(startBlock);
         }
@@ -52,6 +56,7 @@ public class Lumberjack implements Listener {
             World world = block.getWorld();
 
             if (blocksBroken >= 32) return;
+            if (!callEvent(new BlockBreakEvent(block, player))) return;
             block.breakNaturally();
             blocksBroken += 1;
             BlockData blockData = currType.createBlockData();
@@ -72,6 +77,15 @@ public class Lumberjack implements Listener {
                     }
                 }
             }, 5);
+        }
+
+        private boolean callEvent(Event event) {
+            Bukkit.getPluginManager().callEvent(event);
+            if (event instanceof Cancellable) {
+                return !((Cancellable) event).isCancelled();
+            } else {
+                return true;
+            }
         }
     }
 }

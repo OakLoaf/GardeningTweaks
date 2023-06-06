@@ -64,7 +64,7 @@ public class InteractiveHarvest implements Listener {
         }
     }
 
-    public boolean callEvent(Event event) {
+    private boolean callEvent(Event event) {
         Bukkit.getPluginManager().callEvent(event);
         if (event instanceof Cancellable) {
             return !((Cancellable) event).isCancelled();

@@ -4,12 +4,14 @@ import me.dave.gardeningtweaks.datamanager.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
+import org.bukkit.event.*;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -22,7 +24,7 @@ public class InteractiveHarvest implements Listener {
     private final GardeningTweaks plugin = GardeningTweaks.getInstance();
     private final HashSet<UUID> harvestCooldownSet = new HashSet<>();
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getHand() == EquipmentSlot.OFF_HAND) return;
         if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY) return;
@@ -40,6 +42,10 @@ public class InteractiveHarvest implements Listener {
                 ItemStack mainHand = player.getInventory().getItemInMainHand();
                 ItemStack offHand = player.getInventory().getItemInOffHand();
                 if (mainHand.getType() == Material.BONE_MEAL || offHand.getType() == Material.BONE_MEAL) event.setCancelled(true);
+
+                if (!callEvent(new BlockBreakEvent(block, player))) return;
+                if (!callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.AIR), player, true, event.getHand()))) return;
+
                 Material material = block.getType();
                 Collection<ItemStack> drops = block.getDrops(mainHand);
                 block.setType(material);
@@ -54,6 +60,16 @@ public class InteractiveHarvest implements Listener {
                 world.spawnParticle(Particle.BLOCK_DUST, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3, crop);
                 world.playSound(location, crop.getSoundGroup().getBreakSound(), 1f, 1f);
             }
+
+        }
+    }
+
+    public boolean callEvent(Event event) {
+        Bukkit.getPluginManager().callEvent(event);
+        if (event instanceof Cancellable) {
+            return !((Cancellable) event).isCancelled();
+        } else {
+            return true;
         }
     }
 }

@@ -57,6 +57,16 @@ custom-grass-drops:
     - "PUMPKIN_SEEDS"
     - "MELON_SEEDS"
 
+# custom-sniffer-drops: Changes what the Sniffer sniffs out of the ground (1.20 ONLY)
+custom-sniffer-drops:
+  # enabled: Whether Custom Sniffer Drops is enabled
+  enabled: true
+  # items: A list of items that will have a chance of being sniffed
+  items:
+    - "POTATO"
+    - "CARROT"
+    - "BEETROOT"
+
 # decoarsify: Coarse Dirt drops normal dirt
 decoarsify:
   # enabled: Whether Decoarsify is enabled

@@ -18,6 +18,7 @@ public class ConfigManager {
     private ComposterSpreader composterSpreader;
     private CustomComposterOutput customComposterOutput;
     private CustomGrassDrops customGrassDrops;
+    private CustomSnifferDrops customSnifferDrops;
     private Decoarsify decoarsify;
     private DynamicTrample dynamicTrample;
     private FastLeafDecay fastLeafDecay;
@@ -57,6 +58,14 @@ public class ConfigManager {
             }
         }).filter(Objects::nonNull).toList());
         customGrassDrops = new CustomGrassDrops(config.getBoolean("custom-grass-drops.enabled", false), config.getStringList("custom-grass-drops.items").stream().map((string) -> {
+            try {
+                return Material.valueOf(string);
+            } catch (IllegalArgumentException err) {
+                plugin.getLogger().warning("Ignoring " + string + ", that is not a valid material.");
+                return null;
+            }
+        }).filter(Objects::nonNull).toList());
+        customSnifferDrops = new CustomSnifferDrops(config.getBoolean("custom-sniffer-drops.enabled", false), config.getStringList("custom-sniffer-drops.items").stream().map((string) -> {
             try {
                 return Material.valueOf(string);
             } catch (IllegalArgumentException err) {
@@ -134,17 +143,17 @@ public class ConfigManager {
     public BonemealFlowers getBonemealFlowersConfig() {
         return bonemealFlowers;
     }
-
     public ComposterSpreader getComposterSpreader() {
         return composterSpreader;
     }
-
     public CustomComposterOutput getCustomComposterOutput() {
         return customComposterOutput;
     }
-
     public CustomGrassDrops getCustomGrassDropsConfig() {
         return customGrassDrops;
+    }
+    public CustomSnifferDrops getCustomSnifferDrops() {
+        return customSnifferDrops;
     }
     public Decoarsify getDecoarsifyConfig() {
         return decoarsify;
@@ -188,6 +197,7 @@ public class ConfigManager {
     public record ComposterSpreader(boolean enabled, int timer, int chance, List<Material> blocks) {}
     public record CustomComposterOutput(boolean enabled, List<Material> items) {}
     public record CustomGrassDrops(boolean enabled, List<Material> items) {}
+    public record CustomSnifferDrops(boolean enabled, List<Material> items) {}
     public record Decoarsify(boolean enabled) {}
     public record DynamicTrample(boolean enabled, boolean featherFalling, boolean creativeMode) {}
     public record FastLeafDecay(boolean enabled, boolean sounds, boolean particles, boolean ignorePersistence) {}

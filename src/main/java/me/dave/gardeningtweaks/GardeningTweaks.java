@@ -47,6 +47,11 @@ public final class GardeningTweaks extends JavaPlugin {
         };
         registerEvents(listeners);
 
+        // Version Specific Features
+        if (Bukkit.getVersion().contains("1.20")) {
+            getServer().getPluginManager().registerEvents(new CustomSnifferDrops(), this);
+        }
+
         Bukkit.getScheduler().runTaskTimer(this, () -> currTick += 1, 1, 1);
     }
 

@@ -1,11 +1,10 @@
 package me.dave.gardeningtweaks.events;
 
-import me.dave.gardeningtweaks.datamanager.ConfigManager;
+import me.dave.gardeningtweaks.data.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.*;

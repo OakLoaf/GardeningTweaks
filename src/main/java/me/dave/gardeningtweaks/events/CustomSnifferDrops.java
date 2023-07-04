@@ -1,7 +1,7 @@
 package me.dave.gardeningtweaks.events;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.gardeningtweaks.datamanager.ConfigManager;
+import me.dave.gardeningtweaks.data.ConfigManager;
 import org.bukkit.entity.Sniffer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

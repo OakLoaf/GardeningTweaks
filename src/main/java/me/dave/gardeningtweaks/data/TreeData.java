@@ -1,4 +1,4 @@
-package me.dave.gardeningtweaks.datamanager;
+package me.dave.gardeningtweaks.data;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.utils.RandomCollection;

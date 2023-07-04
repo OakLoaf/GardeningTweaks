@@ -1,7 +1,7 @@
 package me.dave.gardeningtweaks.events;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.gardeningtweaks.datamanager.TreeData;
+import me.dave.gardeningtweaks.data.TreeData;
 import me.dave.gardeningtweaks.utils.RandomCollection;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

@@ -1,6 +1,6 @@
 package me.dave.gardeningtweaks.events;
 
-import me.dave.gardeningtweaks.datamanager.ConfigManager;
+import me.dave.gardeningtweaks.data.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -11,7 +11,6 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;

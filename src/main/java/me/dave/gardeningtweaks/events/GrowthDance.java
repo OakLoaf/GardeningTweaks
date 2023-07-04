@@ -1,6 +1,6 @@
 package me.dave.gardeningtweaks.events;
 
-import me.dave.gardeningtweaks.datamanager.ConfigManager;
+import me.dave.gardeningtweaks.data.ConfigManager;
 import me.dave.gardeningtweaks.GardeningMode;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.Bukkit;

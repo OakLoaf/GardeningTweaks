@@ -1,4 +1,4 @@
-package me.dave.gardeningtweaks.dependencies;
+package me.dave.gardeningtweaks.hooks;
 
 import me.maroon28.realisticbiomes.api.BlockAddEvent;
 import me.maroon28.realisticbiomes.api.BlockRemoveEvent;

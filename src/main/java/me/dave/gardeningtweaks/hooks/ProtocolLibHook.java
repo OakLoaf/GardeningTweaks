@@ -1,4 +1,4 @@
-package me.dave.gardeningtweaks.dependencies;
+package me.dave.gardeningtweaks.hooks;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;

@@ -99,7 +99,7 @@ public class ConfigManager {
                 plugin.getLogger().warning("Ignoring " + string + ", that is not a valid material.");
                 return null;
             }
-        }).filter(Objects::nonNull).toList());
+        }).filter(Objects::nonNull).toList(), config.getBoolean("lumberjack.ignore-placed", false));
         rejuvenatedBushes = new RejuvenatedBushes(config.getBoolean("rejuvenated-bushes.enabled", false));
 
         defaultTreeData = new TreeData(List.of("GRASS_BLOCK"), List.of("DIRT", "COARSE_DIRT"), new HashMap<>());
@@ -203,6 +203,6 @@ public class ConfigManager {
     public record FastLeafDecay(boolean enabled, boolean sounds, boolean particles, boolean ignorePersistence) {}
     public record GrowthDance(GardeningMode mode, int cooldownLength, List<Material> blocks) {}
     public record InteractiveHarvest(boolean enabled, List<Material> blocks) {}
-    public record Lumberjack(GardeningMode mode, List<Material> blocks) {}
+    public record Lumberjack(GardeningMode mode, List<Material> blocks, boolean ignorePlaced) {}
     public record RejuvenatedBushes(boolean enabled) {}
 }

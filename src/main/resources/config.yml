@@ -132,6 +132,8 @@ interactive-harvest:
 lumberjack:
   # mode: (DEFAULT: Breaks connected logs, DISABLED: Disables Lumberjack)
   mode: DEFAULT
+  # ignore-placed: Whether to ignore blocks that are not naturally generated (Requires CoreProtect)
+  ignore-placed: false
   # blocks: A list of blocks that will be effected by Lumberjack
   blocks:
     - "OAK_LOG"

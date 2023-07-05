@@ -1,8 +1,9 @@
 package me.dave.gardeningtweaks;
 
-import me.dave.gardeningtweaks.datamanager.ConfigManager;
-import me.dave.gardeningtweaks.dependencies.ProtocolLibHook;
-import me.dave.gardeningtweaks.dependencies.RealisticBiomesHook;
+import me.dave.gardeningtweaks.data.ConfigManager;
+import me.dave.gardeningtweaks.hooks.CoreProtectHook;
+import me.dave.gardeningtweaks.hooks.ProtocolLibHook;
+import me.dave.gardeningtweaks.hooks.RealisticBiomesHook;
 import me.dave.gardeningtweaks.events.*;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -14,6 +15,7 @@ public final class GardeningTweaks extends JavaPlugin {
     private static ConfigManager configManager;
     public static ProtocolLibHook protocolLibHook = null;
     public static RealisticBiomesHook realisticBiomesHook = null;
+    public static CoreProtectHook coreProtectHook = null;
     private static int currTick = 0;
 
     @Override
@@ -23,11 +25,20 @@ public final class GardeningTweaks extends JavaPlugin {
 
         PluginManager pluginManager = getServer().getPluginManager();
 
-        if (pluginManager.getPlugin("ProtocolLib") != null) protocolLibHook = new ProtocolLibHook();
-        else plugin.getLogger().info("ProtocolLib plugin not found. Continuing without ProtocolLib Support.");
+        if (pluginManager.getPlugin("CoreProtect") != null) {
+            coreProtectHook = new CoreProtectHook();
+            plugin.getLogger().info("Found plugin \"CoreProtect\". CoreProtect support enabled.");
+        }
 
-        if (pluginManager.getPlugin("RealisticBiomes") != null) realisticBiomesHook = new RealisticBiomesHook();
-        else plugin.getLogger().info("RealisticBiomes plugin not found. Continuing without RealisticBiomes Support.");
+        if (pluginManager.getPlugin("ProtocolLib") != null) {
+            protocolLibHook = new ProtocolLibHook();
+            plugin.getLogger().info("Found plugin \"ProtocolLib\". ProtocolLib support enabled.");
+        }
+
+        if (pluginManager.getPlugin("RealisticBiomes") != null) {
+            realisticBiomesHook = new RealisticBiomesHook();
+            plugin.getLogger().info("Found plugin \"RealisticBiomes\". RealisticBiomes support enabled.");
+        }
 
         getCommand("gardeningtweaks").setExecutor(new GardeningTweaksCmd());
 
@@ -53,11 +64,6 @@ public final class GardeningTweaks extends JavaPlugin {
         }
 
         Bukkit.getScheduler().runTaskTimer(this, () -> currTick += 1, 1, 1);
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 
     public static GardeningTweaks getInstance() {

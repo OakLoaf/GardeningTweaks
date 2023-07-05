@@ -56,6 +56,7 @@ public class Lumberjack implements Listener {
             World world = block.getWorld();
 
             if (blocksBroken >= 32) return;
+            if (GardeningTweaks.coreProtectHook != null && !GardeningTweaks.coreProtectHook.isBlockNatural(block.getLocation())) return;
             if (!callEvent(new BlockBreakEvent(block, player))) return;
             block.breakNaturally();
             blocksBroken += 1;

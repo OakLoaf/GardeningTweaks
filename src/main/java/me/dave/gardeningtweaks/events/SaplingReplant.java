@@ -2,9 +2,7 @@ package me.dave.gardeningtweaks.events;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.api.events.SaplingReplantEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Tag;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Item;
@@ -86,7 +84,6 @@ public class SaplingReplant implements Listener {
                     block.getWorld().spawnParticle(Particle.COMPOSTER, block.getLocation().add(0.5, 0.5, 0.5), 20, 0.4, 0, 0.4);
 
                     cancel();
-                    return;
                 }
             }
         }.runTaskTimer(GardeningTweaks.getInstance(), 0, 20);

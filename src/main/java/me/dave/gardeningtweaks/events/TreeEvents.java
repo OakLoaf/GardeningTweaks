@@ -1,6 +1,7 @@
 package me.dave.gardeningtweaks.events;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.gardeningtweaks.api.events.TreeSpreadBlockEvent;
 import me.dave.gardeningtweaks.data.TreeData;
 import me.dave.gardeningtweaks.utils.RandomCollection;
 import org.bukkit.Bukkit;
@@ -28,11 +29,11 @@ public class TreeEvents implements Listener {
         if (treeData.spreadsBlocks()) spreadBlocks(treeData, location);
 
         RandomCollection<Material> flowerCollection = treeData.getFlowerCollection();
-        if (flowerCollection != null) growFlowers(location, flowerCollection);
+        if (flowerCollection != null) growFlowers(flowerCollection, location);
     }
 
-    public void spreadBlocks(TreeData treeData, Location saplingLocation) {
-        Location currLocation = saplingLocation.clone().add(-2, -1, -2);
+    public void spreadBlocks(TreeData treeData, Location saplingLoc) {
+        Location currLocation = saplingLoc.clone().add(-2, -1, -2);
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -40,14 +41,18 @@ public class TreeEvents implements Listener {
 
                 if ((i >= 1 && i <= 3) && (j >= 1 && j <= 3)) {
                     if (treeData.isSpreadableMaterial(currBlock) && currBlock.getRelative(BlockFace.UP).isPassable()) {
-                        List<Material> spreadBlocks = treeData.getSpreadMaterials();
-                        setBlockMaterial(currBlock, spreadBlocks.get(random.nextInt(spreadBlocks.size())));
+                        List<Material> spreadMaterials = treeData.getSpreadMaterials();
+                        Material spreadMaterial = spreadMaterials.get(random.nextInt(spreadMaterials.size()));
+                        if (!GardeningTweaks.callEvent(new TreeSpreadBlockEvent(currBlock, spreadMaterial, saplingLoc.getBlock()))) continue;
+                        setBlockMaterial(currBlock, spreadMaterial);
                     }
                 } else if ((i != 0 && i != 4) || (j != 0 && j != 4)) {
                     if (random.nextBoolean()) {
                         if (treeData.isSpreadableMaterial(currBlock) && currBlock.getRelative(BlockFace.UP).isPassable()) {
-                            List<Material> spreadBlocks = treeData.getSpreadMaterials();
-                            setBlockMaterial(currBlock, spreadBlocks.get(random.nextInt(spreadBlocks.size())));
+                            List<Material> spreadMaterials = treeData.getSpreadMaterials();
+                            Material spreadMaterial = spreadMaterials.get(random.nextInt(spreadMaterials.size()));
+                            if (!GardeningTweaks.callEvent(new TreeSpreadBlockEvent(currBlock, spreadMaterial, saplingLoc.getBlock()))) continue;
+                            setBlockMaterial(currBlock, spreadMaterial);
                         }
                     }
                 }
@@ -58,9 +63,9 @@ public class TreeEvents implements Listener {
         }
     }
 
-    public void growFlowers(Location saplingLocation, RandomCollection<Material> flowerCollection) {
+    public void growFlowers(RandomCollection<Material> flowerCollection, Location saplingLoc) {
         Random random = new Random();
-        Location currLocation = saplingLocation.clone().add(-1, 0, -1);
+        Location currLocation = saplingLoc.clone().add(-1, 0, -1);
 
 
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
@@ -72,6 +77,7 @@ public class TreeEvents implements Listener {
                     if (random.nextInt(2) < 1) {
                         Material flowerMaterial = flowerCollection.next();
                         if (currBlock.isEmpty() && flowerMaterial.createBlockData().isSupported(currBlock)) {
+                            if (!GardeningTweaks.callEvent(new TreeSpreadBlockEvent(currBlock, flowerMaterial, saplingLoc.getBlock()))) continue;
                             setBlockMaterial(currBlock, flowerMaterial);
                         }
                     }

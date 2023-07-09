@@ -1,5 +1,6 @@
 package me.dave.gardeningtweaks.events;
 
+import me.dave.gardeningtweaks.api.events.BlockLumberEvent;
 import me.dave.gardeningtweaks.data.ConfigManager;
 import me.dave.gardeningtweaks.GardeningMode;
 import me.dave.gardeningtweaks.GardeningTweaks;
@@ -8,8 +9,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -58,6 +57,8 @@ public class Lumberjack implements Listener {
             if (blocksBroken >= 32) return;
             if (GardeningTweaks.getConfigManager().getLumberjackConfig().ignorePlaced() && GardeningTweaks.coreProtectHook != null && !GardeningTweaks.coreProtectHook.isBlockNatural(block.getLocation())) return;
             if (!GardeningTweaks.callEvent(new BlockBreakEvent(block, player))) return;
+            if (!GardeningTweaks.callEvent(new BlockLumberEvent(block, player))) return;
+
             block.breakNaturally();
             blocksBroken += 1;
             BlockData blockData = currType.createBlockData();

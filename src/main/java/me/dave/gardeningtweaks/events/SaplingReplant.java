@@ -1,6 +1,7 @@
 package me.dave.gardeningtweaks.events;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.gardeningtweaks.api.events.SaplingReplantEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -49,6 +50,11 @@ public class SaplingReplant implements Listener {
 
                 if (plantableBlocks.contains(block.getRelative(BlockFace.DOWN).getType())) {
                     if (!GardeningTweaks.callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), itemEntity.getItemStack(), player, true, EquipmentSlot.HAND))) {
+                        cancel();
+                        return;
+                    }
+
+                    if (!GardeningTweaks.callEvent(new SaplingReplantEvent(block, player, itemEntity, material))) {
                         cancel();
                         return;
                     }

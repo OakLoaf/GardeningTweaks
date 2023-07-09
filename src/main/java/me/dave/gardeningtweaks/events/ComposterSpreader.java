@@ -1,5 +1,6 @@
 package me.dave.gardeningtweaks.events;
 
+import me.dave.gardeningtweaks.api.events.ComposterCropGrowEvent;
 import me.dave.gardeningtweaks.data.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
@@ -102,6 +103,7 @@ public class ComposterSpreader implements Listener {
                 if (currBlock.getBlockData() instanceof Ageable crop && composterSpreader.blocks().contains(currBlock.getType())) {
                     if (random.nextBoolean()) {
                         if (crop.getAge() == crop.getMaximumAge()) continue;
+                        if (!GardeningTweaks.callEvent(new ComposterCropGrowEvent(currBlock))) continue;
                         int newAge = crop.getAge() + 1 + random.nextInt(3);
                         int maxAge = crop.getMaximumAge();
                         if (newAge > maxAge) newAge = maxAge;

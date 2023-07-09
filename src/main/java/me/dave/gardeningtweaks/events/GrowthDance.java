@@ -1,5 +1,6 @@
 package me.dave.gardeningtweaks.events;
 
+import me.dave.gardeningtweaks.api.events.GrowthDanceCropGrowEvent;
 import me.dave.gardeningtweaks.data.ConfigManager;
 import me.dave.gardeningtweaks.GardeningMode;
 import me.dave.gardeningtweaks.GardeningTweaks;
@@ -44,6 +45,8 @@ public class GrowthDance implements Listener {
 
                     if (currBlock.getBlockData() instanceof Ageable crop && growthDance.blocks().contains(currBlock.getType())) {
                         if (random.nextBoolean()) {
+                            if (!GardeningTweaks.callEvent(new GrowthDanceCropGrowEvent(currBlock))) return;
+
                             int newAge = crop.getAge() + random.nextInt(3);
                             int maxAge = crop.getMaximumAge();
                             if (newAge > maxAge) newAge = maxAge;

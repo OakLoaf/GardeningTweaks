@@ -1,5 +1,7 @@
 ![Banner](https://imgur.com/lCyzngG.png)
 # GardeningTweaks
+![Version Number](https://img.shields.io/jitpack/version/com.github.cooldcb/GardeningTweaks?label=Version&color=4EC921)
+
 Make your gardening life become so much easier with Gardening Tweaks. From crops to trees, Gardening Tweaks adds lots of new features to your server to make it feel that little bit nicer, whilst still keeping the same Minecraft feel to it.
 
 **Download Link:** https://www.spigotmc.org/resources/gardening-tweaks.107892/
@@ -49,6 +51,7 @@ gardeningtweaks.admin.reload - Reload the plugin
     </dependency>
 </dependencies>
 ```
+**Javadocs:** https://cooldcb.github.io/GardeningTweaks/
 
 <br/><br/>
 If you have a bug to report or need help setting up your plugin join the Discord Support Server

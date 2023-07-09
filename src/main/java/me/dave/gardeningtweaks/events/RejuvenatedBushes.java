@@ -34,6 +34,7 @@ public class RejuvenatedBushes implements Listener {
             case BEETROOT_SEEDS -> bushToSapling(player, mainHand, block, Material.ACACIA_SAPLING);
             case MELON_SEEDS -> bushToSapling(player, mainHand, block, Material.SPRUCE_SAPLING);
             case PUMPKIN_SEEDS -> bushToSapling(player, mainHand, block, Material.BIRCH_SAPLING);
+            case TORCHFLOWER_SEEDS -> bushToSapling(player, mainHand, block, Material.CHERRY_SAPLING);
         }
     }
 

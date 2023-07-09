@@ -1,1 +1,1 @@
-rootProject.name = 'GardeningTweaks'
+rootProject.name = "GardeningTweaks"

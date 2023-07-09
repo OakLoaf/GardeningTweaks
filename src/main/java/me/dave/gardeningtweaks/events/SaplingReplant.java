@@ -20,7 +20,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
-public class Replant implements Listener {
+public class SaplingReplant implements Listener {
     private final List<Material> plantableBlocks = List.of(new Material[]{Material.DIRT, Material.COARSE_DIRT, Material.GRASS_BLOCK, Material.MOSS_BLOCK});
     private final int maximumAttempts = 10;
 

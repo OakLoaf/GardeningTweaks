@@ -23,7 +23,7 @@ dependencies {
     compileOnly("net.coreprotect:coreprotect:21.3")
     compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
     compileOnly("com.github.Maroon28:RealisticBiomes:3d292ea32a")
-    shadow("org.enchantedskies:EnchantedStorage:1.0.6-SNAPSHOT")
+    shadow(files("EnchantedStorage.jar"))
     shadow("com.github.CoolDCB:ChatColorHandler:v1.2.3")
 }
 

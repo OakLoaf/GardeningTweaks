@@ -1,9 +1,7 @@
 package me.dave.gardeningtweaks.events;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Tag;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Item;
@@ -12,6 +10,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -25,15 +24,34 @@ public class Replant implements Listener {
     private final int maximumAttempts = 10;
 
     @EventHandler
-    public void onItemDrop(PlayerDropItemEvent event) {
+    public void onPlayerDropItem(PlayerDropItemEvent event) {
         // TODO: Add config and check if enabled
         Player player = event.getPlayer();
         if (player.isSneaking()) return;
 
         Item itemEntity = event.getItemDrop();
+        if (!Tag.SAPLINGS.isTagged(itemEntity.getItemStack().getType())) return;
 
+        startPlantTimer(itemEntity, player);
+    }
+
+    @EventHandler
+    public void onBlockDropItem(BlockDropItemEvent event) {
+        if (!Tag.LEAVES.isTagged(event.getBlockState().getType())) return;
+
+        event.getItems().forEach(itemEntity -> {
+            if (!Tag.SAPLINGS.isTagged(itemEntity.getItemStack().getType())) return;
+
+            Bukkit.getScheduler().runTaskLater(GardeningTweaks.getInstance(), () -> {
+                if (itemEntity.isValid() && !itemEntity.isDead()) {
+                    startPlantTimer(itemEntity, null);
+                }
+            },200 /* TODO: Make cooldown configurable */);
+        });
+    }
+
+    private void startPlantTimer(Item itemEntity, Player player) {
         Material material = itemEntity.getItemStack().getType();
-        if (!Tag.SAPLINGS.isTagged(material)) return;
 
         final int[] attempt = {0};
         new BukkitRunnable() {
@@ -48,7 +66,7 @@ public class Replant implements Listener {
                 if (block.getType() != Material.AIR) return;
 
                 if (plantableBlocks.contains(block.getRelative(BlockFace.DOWN).getType())) {
-                    if (!callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), itemEntity.getItemStack(), player, true, EquipmentSlot.HAND))) {
+                    if (player != null && !callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), itemEntity.getItemStack(), player, true, EquipmentSlot.HAND))) {
                         cancel();
                         return;
                     }
@@ -58,6 +76,11 @@ public class Replant implements Listener {
                     itemEntity.setItemStack(itemStack);
 
                     block.setType(material);
+                    block.getWorld().playSound(block.getLocation(), Sound.BLOCK_GRASS_PLACE, 1f, 0.8f);
+                    block.getWorld().spawnParticle(Particle.COMPOSTER, block.getLocation().add(0.5, 0.5, 0.5), 20, 0.4, 0, 0.4);
+
+                    cancel();
+                    return;
                 }
             }
         }.runTaskTimer(GardeningTweaks.getInstance(), 0, 20);

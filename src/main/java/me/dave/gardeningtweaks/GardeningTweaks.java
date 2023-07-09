@@ -1,5 +1,6 @@
 package me.dave.gardeningtweaks;
 
+import me.dave.gardeningtweaks.api.GardeningTweaksAPI;
 import me.dave.gardeningtweaks.data.ConfigManager;
 import me.dave.gardeningtweaks.hooks.CoreProtectHook;
 import me.dave.gardeningtweaks.hooks.ProtocolLibHook;
@@ -14,6 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class GardeningTweaks extends JavaPlugin {
     private static GardeningTweaks plugin;
+    private static GardeningTweaksAPI api;
     private static ConfigManager configManager;
     public static ProtocolLibHook protocolLibHook = null;
     public static RealisticBiomesHook realisticBiomesHook = null;
@@ -24,6 +26,7 @@ public final class GardeningTweaks extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
+        api = new GardeningTweaksAPI();
         configManager = new ConfigManager();
 
         pluginManager = getServer().getPluginManager();

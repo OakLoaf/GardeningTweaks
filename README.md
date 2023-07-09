@@ -2,7 +2,7 @@
 # GardeningTweaks
 Make your gardening life become so much easier with Gardening Tweaks. From crops to trees, Gardening Tweaks adds lots of new features to your server to make it feel that little bit nicer, whilst still keeping the same Minecraft feel to it.
 
-**Download Link:** https://www.spigotmc.org/resources/gardening-tweaks-dynamic-trample-crop-dancing-lumberjack-and-more.107892/
+**Download Link:** https://www.spigotmc.org/resources/gardening-tweaks.107892/
 
 
 <br/><br/>

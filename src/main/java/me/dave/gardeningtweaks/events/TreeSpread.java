@@ -16,7 +16,7 @@ import org.bukkit.event.world.StructureGrowEvent;
 import java.util.List;
 import java.util.Random;
 
-public class TreeEvents implements Listener {
+public class TreeSpread implements Listener {
     private final GardeningTweaks plugin = GardeningTweaks.getInstance();
     private final Random random = new Random();
 

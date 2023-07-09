@@ -57,7 +57,7 @@ public final class GardeningTweaks extends JavaPlugin {
             new InteractiveHarvest(),
             new Lumberjack(),
             new RejuvenatedBushes(),
-            new TreeEvents()
+            new TreeSpread()
         };
         registerEvents(listeners);
 

@@ -1,7 +1,7 @@
 plugins {
-    id("java")
-    id("kotlin-dsl")
-    id("maven-publish")
+    java
+    `kotlin-dsl`
+    `maven-publish`
     id("com.github.johnrengelman.shadow") version("7.1.2")
 }
 

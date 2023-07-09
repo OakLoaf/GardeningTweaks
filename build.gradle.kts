@@ -13,9 +13,9 @@ repositories {
     mavenLocal()
     maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
     maven { url = uri("https://oss.sonatype.org/content/groups/public/") }
-    maven { url = uri("https://jitpack.io")}
     maven { url = uri("https://repo.dmulloy2.net/repository/public/")}
     maven { url = uri("https://maven.playpro.com")}
+    maven { url = uri("https://jitpack.io")}
 }
 
 dependencies {

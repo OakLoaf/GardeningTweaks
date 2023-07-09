@@ -102,7 +102,7 @@ public class ConfigManager {
             }
         }).filter(Objects::nonNull).toList(), config.getBoolean("lumberjack.ignore-placed", false));
         rejuvenatedBushes = new RejuvenatedBushes(config.getBoolean("rejuvenated-bushes.enabled", false));
-        saplingReplant = new SaplingReplant(config.getBoolean("sapling-replant.enabled", false), config.getBoolean("sapling-replant.include-player-drops", false), config.getBoolean("sapling-replant.include-leaf-drops", false), config.getInt("sapling-replant.leaf-delay", 10));
+        saplingReplant = new SaplingReplant(config.getBoolean("sapling-replant.enabled", false), config.getBoolean("sapling-replant.include-player-drops", false), config.getBoolean("sapling-replant.include-leaf-drops", false), config.getInt("sapling-replant.leaf-delay", 10) * 20);
 
         defaultTreeData = new TreeData(List.of("GRASS_BLOCK"), List.of("DIRT", "COARSE_DIRT"), new HashMap<>());
         ConfigurationSection treesSection = config.getConfigurationSection("trees");

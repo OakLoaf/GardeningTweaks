@@ -1,5 +1,7 @@
 package me.dave.gardeningtweaks.events;
 
+import me.dave.gardeningtweaks.api.events.BonemealFlowerEvent;
+import me.dave.gardeningtweaks.api.events.CropHarvestEvent;
 import me.dave.gardeningtweaks.data.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
@@ -43,7 +45,7 @@ public class InteractiveHarvest implements Listener {
                 if (mainHand.getType() == Material.BONE_MEAL || offHand.getType() == Material.BONE_MEAL) event.setCancelled(true);
 
                 if (!GardeningTweaks.callEvent(new BlockBreakEvent(block, player))) return;
-                if (!GardeningTweaks.callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.AIR), player, true, event.getHand()))) return;
+                if (!GardeningTweaks.callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.AIR), player, true, EquipmentSlot.HAND))) return;
 
                 Material material = block.getType();
                 Collection<ItemStack> drops = block.getDrops(mainHand);

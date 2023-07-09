@@ -8,6 +8,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.block.BlockEvent;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class SaplingReplantEvent extends BlockEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
@@ -16,14 +17,14 @@ public class SaplingReplantEvent extends BlockEvent implements Cancellable {
     private final Item item;
     private final Material newType;
 
-    public SaplingReplantEvent(@NotNull Block block, @NotNull Player player, @NotNull Item item, @NotNull Material newType) {
+    public SaplingReplantEvent(@NotNull Block block, Player player, @NotNull Item item, @NotNull Material newType) {
         super(block);
         this.player = player;
         this.item = item;
         this.newType = newType;
     }
 
-    @NotNull
+    @Nullable
     public Player getPlayer() {
         return player;
     }

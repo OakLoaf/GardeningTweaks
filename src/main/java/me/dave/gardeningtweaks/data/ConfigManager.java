@@ -26,6 +26,7 @@ public class ConfigManager {
     private InteractiveHarvest interactiveHarvest;
     private Lumberjack lumberjack;
     private RejuvenatedBushes rejuvenatedBushes;
+    private SaplingReplant saplingReplant;
 
     private final HashMap<String, TreeData> treeMap = new HashMap<>();
     private TreeData defaultTreeData;
@@ -101,6 +102,7 @@ public class ConfigManager {
             }
         }).filter(Objects::nonNull).toList(), config.getBoolean("lumberjack.ignore-placed", false));
         rejuvenatedBushes = new RejuvenatedBushes(config.getBoolean("rejuvenated-bushes.enabled", false));
+        saplingReplant = new SaplingReplant(config.getBoolean("sapling-replant.enabled", false), config.getBoolean("sapling-replant.include-player-drops", false), config.getBoolean("sapling-replant.include-leaf-drops", false), config.getInt("sapling-replant.leaf-delay", 10));
 
         defaultTreeData = new TreeData(List.of("GRASS_BLOCK"), List.of("DIRT", "COARSE_DIRT"), new HashMap<>());
         ConfigurationSection treesSection = config.getConfigurationSection("trees");
@@ -176,6 +178,9 @@ public class ConfigManager {
     public RejuvenatedBushes getRejuvenatedBushesConfig() {
         return rejuvenatedBushes;
     }
+    public SaplingReplant getSaplingReplantConfig() {
+        return saplingReplant;
+    }
 
 
     public TreeData getTreeData(TreeType treeType) {
@@ -205,4 +210,5 @@ public class ConfigManager {
     public record InteractiveHarvest(boolean enabled, List<Material> blocks) {}
     public record Lumberjack(GardeningMode mode, List<Material> blocks, boolean ignorePlaced) {}
     public record RejuvenatedBushes(boolean enabled) {}
+    public record SaplingReplant(boolean enabled, boolean includePlayerDrops, boolean includeLeafDrops, int leafDelay) {}
 }

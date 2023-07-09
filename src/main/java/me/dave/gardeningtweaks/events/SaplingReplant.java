@@ -24,32 +24,36 @@ public class SaplingReplant implements Listener {
 
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
-        // TODO: Add config and check if enabled
+        if (!GardeningTweaks.getConfigManager().getSaplingReplantConfig().enabled()) return;
+        if (!GardeningTweaks.getConfigManager().getSaplingReplantConfig().includePlayerDrops()) return;
+
         Player player = event.getPlayer();
         if (player.isSneaking()) return;
 
         Item itemEntity = event.getItemDrop();
         if (!Tag.SAPLINGS.isTagged(itemEntity.getItemStack().getType())) return;
 
-        startPlantTimer(itemEntity, player);
+        startPlantTimer(itemEntity, null, player);
     }
 
     @EventHandler
     public void onBlockDropItem(BlockDropItemEvent event) {
         if (!Tag.LEAVES.isTagged(event.getBlockState().getType())) return;
+        if (!GardeningTweaks.getConfigManager().getSaplingReplantConfig().enabled()) return;
+        if (!GardeningTweaks.getConfigManager().getSaplingReplantConfig().includeLeafDrops()) return;
 
         event.getItems().forEach(itemEntity -> {
             if (!Tag.SAPLINGS.isTagged(itemEntity.getItemStack().getType())) return;
 
             Bukkit.getScheduler().runTaskLater(GardeningTweaks.getInstance(), () -> {
                 if (itemEntity.isValid() && !itemEntity.isDead()) {
-                    startPlantTimer(itemEntity, null);
+                    startPlantTimer(itemEntity, event.getBlock(), null);
                 }
-            },200 /* TODO: Make cooldown configurable */);
+            }, GardeningTweaks.getConfigManager().getSaplingReplantConfig().leafDelay());
         });
     }
 
-    private void startPlantTimer(Item itemEntity, Player player) {
+    private void startPlantTimer(Item itemEntity, Block originBlock, Player player) {
         Material material = itemEntity.getItemStack().getType();
 
         final int[] attempt = {0};
@@ -61,8 +65,17 @@ public class SaplingReplant implements Listener {
                     return;
                 }
 
+                if (originBlock != null && !inRangeOfOrigin(originBlock.getLocation().clone().add(0.5, 0.5, 0.5), itemEntity.getLocation())) {
+                    cancel();
+                    return;
+                }
+
                 Block block = itemEntity.getLocation().getBlock();
                 if (block.getType() != Material.AIR) return;
+                if (Tag.SAPLINGS.isTagged(block.getType())) {
+                    cancel();
+                    return;
+                }
 
                 if (plantableBlocks.contains(block.getRelative(BlockFace.DOWN).getType())) {
                     if (player != null && !GardeningTweaks.callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), itemEntity.getItemStack(), player, true, EquipmentSlot.HAND))) {
@@ -87,5 +100,13 @@ public class SaplingReplant implements Listener {
                 }
             }
         }.runTaskTimer(GardeningTweaks.getInstance(), 0, 20);
+    }
+
+    private boolean inRangeOfOrigin(Location origin, Location location) {
+        return (location.getX() < (origin.getX() + 1.5)) // Upper X Bound
+            && (location.getX() > (origin.getX() - 1.5)) // Lower X Bound
+            && (location.getY() < (origin.getY() + 1.5)) // Upper Y Bound
+            && (location.getZ() < (origin.getZ() + 1.5)) // Upper Z Bound
+            && (location.getZ() > (origin.getZ() - 1.5)); // Lower Z Bound
     }
 }

@@ -151,6 +151,17 @@ rejuvenated-bushes:
   # enabled: Whether Rejuvenated Bushes is enabled
   enabled: true
 
+# sapling-replant: Saplings replant themselves when dropped on the ground
+sapling-replant:
+  # enabled: Whether Sapling Replant is enabled
+  enabled: true
+  # include-player-drops: Whether to replant saplings thrown by players
+  include-player-drops: true
+  # include-leaf-drops: Whether to replant saplings dropped by leaf blocks
+  include-leaf-drops: true
+  # leaf-delay: The time (in seconds) that a sapling will wait, after falling from a leaf, before trying to replant itself
+  leaf-delay: 10
+
 # trees: General Configuration for different Tree Types
 trees:
   # DEFAULT: The tree type that is effected (DEFAULT will affect all trees not defined)

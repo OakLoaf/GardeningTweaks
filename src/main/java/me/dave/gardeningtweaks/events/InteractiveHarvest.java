@@ -42,8 +42,8 @@ public class InteractiveHarvest implements Listener {
                 ItemStack offHand = player.getInventory().getItemInOffHand();
                 if (mainHand.getType() == Material.BONE_MEAL || offHand.getType() == Material.BONE_MEAL) event.setCancelled(true);
 
-                if (!callEvent(new BlockBreakEvent(block, player))) return;
-                if (!callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.AIR), player, true, event.getHand()))) return;
+                if (!GardeningTweaks.callEvent(new BlockBreakEvent(block, player))) return;
+                if (!GardeningTweaks.callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.AIR), player, true, event.getHand()))) return;
 
                 Material material = block.getType();
                 Collection<ItemStack> drops = block.getDrops(mainHand);
@@ -60,15 +60,6 @@ public class InteractiveHarvest implements Listener {
                 world.playSound(location, crop.getSoundGroup().getBreakSound(), 1f, 1f);
             }
 
-        }
-    }
-
-    private boolean callEvent(Event event) {
-        Bukkit.getPluginManager().callEvent(event);
-        if (event instanceof Cancellable) {
-            return !((Cancellable) event).isCancelled();
-        } else {
-            return true;
         }
     }
 }

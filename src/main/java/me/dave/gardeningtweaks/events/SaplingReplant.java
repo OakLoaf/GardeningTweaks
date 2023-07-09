@@ -48,7 +48,7 @@ public class SaplingReplant implements Listener {
                 if (block.getType() != Material.AIR) return;
 
                 if (plantableBlocks.contains(block.getRelative(BlockFace.DOWN).getType())) {
-                    if (!callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), itemEntity.getItemStack(), player, true, EquipmentSlot.HAND))) {
+                    if (!GardeningTweaks.callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), itemEntity.getItemStack(), player, true, EquipmentSlot.HAND))) {
                         cancel();
                         return;
                     }
@@ -61,14 +61,5 @@ public class SaplingReplant implements Listener {
                 }
             }
         }.runTaskTimer(GardeningTweaks.getInstance(), 0, 20);
-    }
-
-    private boolean callEvent(Event event) {
-        Bukkit.getPluginManager().callEvent(event);
-        if (event instanceof Cancellable) {
-            return !((Cancellable) event).isCancelled();
-        } else {
-            return true;
-        }
     }
 }

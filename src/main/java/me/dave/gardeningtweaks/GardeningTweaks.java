@@ -6,6 +6,8 @@ import me.dave.gardeningtweaks.hooks.ProtocolLibHook;
 import me.dave.gardeningtweaks.hooks.RealisticBiomesHook;
 import me.dave.gardeningtweaks.events.*;
 import org.bukkit.Bukkit;
+import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,6 +18,7 @@ public final class GardeningTweaks extends JavaPlugin {
     public static ProtocolLibHook protocolLibHook = null;
     public static RealisticBiomesHook realisticBiomesHook = null;
     public static CoreProtectHook coreProtectHook = null;
+    private static PluginManager pluginManager;
     private static int currTick = 0;
 
     @Override
@@ -23,7 +26,7 @@ public final class GardeningTweaks extends JavaPlugin {
         plugin = this;
         configManager = new ConfigManager();
 
-        PluginManager pluginManager = getServer().getPluginManager();
+        pluginManager = getServer().getPluginManager();
 
         if (pluginManager.getPlugin("CoreProtect") != null) {
             coreProtectHook = new CoreProtectHook();
@@ -74,13 +77,22 @@ public final class GardeningTweaks extends JavaPlugin {
         return configManager;
     }
 
+    public static int getCurrentTick() {
+        return currTick;
+    }
+
+    public static boolean callEvent(Event event) {
+        pluginManager.callEvent(event);
+        if (event instanceof Cancellable) {
+            return !((Cancellable) event).isCancelled();
+        } else {
+            return true;
+        }
+    }
+
     private void registerEvents(Listener[] listeners) {
         for (Listener listener : listeners) {
             getServer().getPluginManager().registerEvents(listener, this);
         }
-    }
-
-    public static int getCurrentTick() {
-        return currTick;
     }
 }

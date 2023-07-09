@@ -57,7 +57,7 @@ public class Lumberjack implements Listener {
 
             if (blocksBroken >= 32) return;
             if (GardeningTweaks.getConfigManager().getLumberjackConfig().ignorePlaced() && GardeningTweaks.coreProtectHook != null && !GardeningTweaks.coreProtectHook.isBlockNatural(block.getLocation())) return;
-            if (!callEvent(new BlockBreakEvent(block, player))) return;
+            if (!GardeningTweaks.callEvent(new BlockBreakEvent(block, player))) return;
             block.breakNaturally();
             blocksBroken += 1;
             BlockData blockData = currType.createBlockData();
@@ -78,15 +78,6 @@ public class Lumberjack implements Listener {
                     }
                 }
             }, 5);
-        }
-
-        private boolean callEvent(Event event) {
-            Bukkit.getPluginManager().callEvent(event);
-            if (event instanceof Cancellable) {
-                return !((Cancellable) event).isCancelled();
-            } else {
-                return true;
-            }
         }
     }
 }

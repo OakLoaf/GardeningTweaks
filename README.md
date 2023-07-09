@@ -49,6 +49,7 @@ gardeningtweaks.admin.reload - Reload the plugin
     </dependency>
 </dependencies>
 ```
+**Javadocs:** https://cooldcb.github.io/GardeningTweaks/
 
 <br/><br/>
 If you have a bug to report or need help setting up your plugin join the Discord Support Server

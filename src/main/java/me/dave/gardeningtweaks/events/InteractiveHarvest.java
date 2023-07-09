@@ -1,7 +1,5 @@
 package me.dave.gardeningtweaks.events;
 
-import me.dave.gardeningtweaks.api.events.BonemealFlowerEvent;
-import me.dave.gardeningtweaks.api.events.CropHarvestEvent;
 import me.dave.gardeningtweaks.data.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;

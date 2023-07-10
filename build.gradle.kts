@@ -25,6 +25,7 @@ dependencies {
     compileOnly("com.github.Maroon28:RealisticBiomes:3d292ea32a")
     shadow(files("EnchantedStorage.jar"))
     shadow("com.github.CoolDCB:ChatColorHandler:v1.2.3")
+    implementation("com.github.amirisback.jitpack-library-kotlin-dsl-guide:dslfirst:1.0.1")
 }
 
 java {

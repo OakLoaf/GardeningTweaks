@@ -141,6 +141,7 @@ public class FastLeafDecay implements Listener {
             ByteArrayInputStream byteIn = new ByteArrayInputStream(bytes);
             ObjectInputStream in = new ObjectInputStream(byteIn);
 
+            @SuppressWarnings("unchecked")
             HashSet<ChunkLocation> chunkLocations = (HashSet<ChunkLocation>) in.readObject();
 
             in.close();

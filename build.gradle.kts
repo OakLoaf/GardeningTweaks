@@ -35,9 +35,9 @@ java {
 tasks.shadowJar {
     minimize()
     configurations = listOf(project.configurations.shadow.get())
-    val folder = System.getenv("pluginFolder_1-20")
+//    val folder = System.getenv("pluginFolder_1-20")
     archiveFileName.set("${project.name}-${project.version}.jar")
-    destinationDirectory.set(file(folder))
+//    destinationDirectory.set(file(folder))
 }
 
 // Handles version variables

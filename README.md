@@ -32,6 +32,14 @@ gardeningtweaks.admin.reload - Reload the plugin
 
 <br/><br/>
 ![API](https://i.imgur.com/BdF7AGF.png)
+
+![Version Number](https://img.shields.io/jitpack/version/com.github.cooldcb/GardeningTweaks?label=Version&color=4EC921)
+
+**Javadocs:** https://cooldcb.github.io/GardeningTweaks/
+
+<details open>
+<summary>Maven</summary>
+    
 **Repository:**
 ```xml
 <repositories>
@@ -51,7 +59,25 @@ gardeningtweaks.admin.reload - Reload the plugin
     </dependency>
 </dependencies>
 ```
-**Javadocs:** https://cooldcb.github.io/GardeningTweaks/
+</details>
+
+<details>
+<summary>Gradle</summary>
+    
+**Repository:**
+```gradle
+repositories {
+    mavenCentral()
+    maven { url = "https://jitpack.io" }
+}
+```
+**Artifact:**
+```gradle
+dependencies {
+    compileOnly "com.github.CoolDCB:GardeningTweaks:1.3"
+}
+```
+</details>
 
 <br/><br/>
 If you have a bug to report or need help setting up your plugin join the Discord Support Server

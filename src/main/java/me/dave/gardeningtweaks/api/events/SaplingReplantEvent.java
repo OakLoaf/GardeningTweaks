@@ -56,7 +56,7 @@ public class SaplingReplantEvent extends BlockEvent implements Cancellable {
     }
 
     @NotNull
-    public HandlerList getHandlerList() {
+    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

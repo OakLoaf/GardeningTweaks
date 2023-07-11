@@ -40,6 +40,10 @@ tasks.shadowJar {
     archiveFileName.set("${project.name}-${project.version}.jar")
 }
 
+tasks.withType<JavaCompile>() {
+    options.encoding = "UTF-8"
+}
+
 // Handles version variables
 tasks.processResources {
     expand(project.properties)

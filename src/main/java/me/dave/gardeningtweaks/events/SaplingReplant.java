@@ -89,8 +89,12 @@ public class SaplingReplant implements Listener {
                     }
 
                     ItemStack itemStack = itemEntity.getItemStack();
-                    itemStack.setAmount(itemStack.getAmount() - 1);
-                    itemEntity.setItemStack(itemStack);
+                    if (itemStack.getAmount() > 1) {
+                        itemStack.setAmount(itemStack.getAmount() - 1);
+                        itemEntity.setItemStack(itemStack);
+                    } else {
+                        itemEntity.remove();
+                    }
 
                     block.setType(material);
                     block.getWorld().playSound(block.getLocation(), Sound.BLOCK_GRASS_PLACE, 1f, 0.8f);

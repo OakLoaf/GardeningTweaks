@@ -4,7 +4,7 @@ main: me.dave.gardeningtweaks.GardeningTweaks
 api-version: 1.16
 authors: [ Dav_e_ ]
 description: Spruces up your gardening
-softdepend: [ ProtocolLib, RealisticBiomes ]
+softdepend: [ CoreProtect, ProtocolLib, RealisticBiomes ]
 commands:
   gardeningtweaks:
     description: The main GardeningTweaks Command.

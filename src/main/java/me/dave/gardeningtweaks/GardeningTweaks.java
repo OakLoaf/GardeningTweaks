@@ -1,5 +1,6 @@
 package me.dave.gardeningtweaks;
 
+import me.dave.gardeningtweaks.commands.GardeningTweaksCmd;
 import me.dave.gardeningtweaks.data.ConfigManager;
 import me.dave.gardeningtweaks.hooks.CoreProtectHook;
 import me.dave.gardeningtweaks.hooks.ProtocolLibHook;

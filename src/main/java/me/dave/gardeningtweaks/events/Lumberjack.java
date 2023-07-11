@@ -2,7 +2,7 @@ package me.dave.gardeningtweaks.events;
 
 import me.dave.gardeningtweaks.api.events.BlockLumberEvent;
 import me.dave.gardeningtweaks.data.ConfigManager;
-import me.dave.gardeningtweaks.GardeningMode;
+import me.dave.gardeningtweaks.utils.GardeningMode;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
 import org.bukkit.block.Block;

@@ -1,4 +1,4 @@
-package me.dave.gardeningtweaks;
+package me.dave.gardeningtweaks.utils;
 
 public enum GardeningMode {
     DEFAULT,

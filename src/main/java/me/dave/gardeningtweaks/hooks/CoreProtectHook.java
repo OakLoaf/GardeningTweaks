@@ -35,7 +35,7 @@ public class CoreProtectHook {
             null,
             null,
             null,
-            List.of(1) /* Checks for place action only */,
+            Arrays.asList(1) /* Checks for place action only */,
             0,
             location
         );

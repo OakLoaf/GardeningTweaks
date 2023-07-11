@@ -50,9 +50,9 @@ public class BonemealFlowers implements Listener {
         World world = block.getWorld();
         Location location = block.getLocation();
 
+        if (!GardeningTweaks.callEvent(new FlowerBonemealEvent(block))) return;
         if (!GardeningTweaks.callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.BONE_MEAL), player, true, EquipmentSlot.HAND))) return;
         if (!GardeningTweaks.callEvent(new BlockPlaceEvent(block.getRelative(BlockFace.UP), block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.BONE_MEAL), player, true, EquipmentSlot.HAND))) return;
-        if (!GardeningTweaks.callEvent(new FlowerBonemealEvent(block))) return;
 
         if (player.getGameMode() != GameMode.CREATIVE) mainHand.setAmount(mainHand.getAmount() - 1);
         if (GardeningTweaks.protocolLibHook != null) GardeningTweaks.protocolLibHook.armInteractAnimation(player);

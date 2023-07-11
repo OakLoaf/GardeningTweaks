@@ -78,12 +78,12 @@ public class SaplingReplant implements Listener {
                 }
 
                 if (plantableBlocks.contains(block.getRelative(BlockFace.DOWN).getType())) {
-                    if (player != null && !GardeningTweaks.callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), itemEntity.getItemStack(), player, true, EquipmentSlot.HAND))) {
+                    if (!GardeningTweaks.callEvent(new SaplingReplantEvent(block, player, itemEntity, material))) {
                         cancel();
                         return;
                     }
 
-                    if (!GardeningTweaks.callEvent(new SaplingReplantEvent(block, player, itemEntity, material))) {
+                    if (player != null && !GardeningTweaks.callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), itemEntity.getItemStack(), player, true, EquipmentSlot.HAND))) {
                         cancel();
                         return;
                     }

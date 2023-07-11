@@ -55,9 +55,12 @@ public class Lumberjack implements Listener {
             World world = block.getWorld();
 
             if (blocksBroken >= 32) return;
-            if (GardeningTweaks.getConfigManager().getLumberjackConfig().ignorePlaced() && GardeningTweaks.coreProtectHook != null && !GardeningTweaks.coreProtectHook.isBlockNatural(block.getLocation())) return;
-            if (!GardeningTweaks.callEvent(new BlockBreakEvent(block, player))) return;
+            if (GardeningTweaks.getConfigManager().getLumberjackConfig().ignorePlaced() && GardeningTweaks.coreProtectHook != null) {
+                if (!GardeningTweaks.coreProtectHook.isBlockNatural(block.getLocation())) return;
+            }
+
             if (!GardeningTweaks.callEvent(new BlockLumberEvent(block, player))) return;
+            if (!GardeningTweaks.callEvent(new BlockBreakEvent(block, player))) return;
 
             block.breakNaturally();
             blocksBroken += 1;

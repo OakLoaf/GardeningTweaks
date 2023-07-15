@@ -6,11 +6,11 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.block.BlockEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class GrowthDanceCropGrowEvent extends BlockEvent implements Cancellable {
+public class CropGrowEvent extends BlockEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancel = false;
 
-    public GrowthDanceCropGrowEvent(@NotNull Block block) {
+    public CropGrowEvent(@NotNull Block block) {
         super(block);
     }
 

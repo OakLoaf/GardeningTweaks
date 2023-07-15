@@ -1,6 +1,6 @@
 package me.dave.gardeningtweaks.events;
 
-import me.dave.gardeningtweaks.api.events.GrowthDanceCropGrowEvent;
+import me.dave.gardeningtweaks.api.events.CropGrowEvent;
 import me.dave.gardeningtweaks.data.ConfigManager;
 import me.dave.gardeningtweaks.utils.GardeningMode;
 import me.dave.gardeningtweaks.GardeningTweaks;

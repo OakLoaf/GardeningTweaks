@@ -21,15 +21,23 @@ public class GardeningTweaksAPI {
 
     /**
      *
-     * @param location
-     * @param chance - Chance of growing per crop
-     * @param radius
-     * @return
+     * @param location Center location
+     * @param chance Chance of growing per crop
+     * @param radius Radius around the location to find crops
+     * @return Whether the method was successfully ran (false, if GrowthDance
      */
     public static boolean growCrops(Location location, double chance, int radius) {
         return GrowthDance.growCrops(location, chance, radius);
     }
 
+    /**
+     *
+     * @param location Center location
+     * @param chance Chance of growing per crop
+     * @param radius Radius around the location to find crops
+     * @param crops List of materials that will be affected
+     * @return Whether the method was successfully ran (false, if GrowthDance
+     */
     public static boolean growCrops(Location location, double chance, int radius, @Nullable List<Material> crops) {
         return GrowthDance.growCrops(location, chance, radius, crops);
     }

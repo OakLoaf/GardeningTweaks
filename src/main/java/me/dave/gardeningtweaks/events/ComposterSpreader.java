@@ -16,10 +16,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.HashSet;
-import java.util.Random;
 
 public class ComposterSpreader implements Listener {
-    private final Random random = new Random();
     private final HashSet<Location> composterLocationList = new HashSet<>();
 
     public ComposterSpreader() {
@@ -38,7 +36,7 @@ public class ComposterSpreader implements Listener {
                 if (!(block.getBlockData() instanceof Levelled composterData)) return;
                 if (composterData.getLevel() == 0) return;
 
-                if (random.nextInt(100) < composterSpreader.chance()) {
+                if (GardeningTweaks.getRandom().nextInt(100) < composterSpreader.chance()) {
                     if (growCrops(composterSpreader, location)) {
                         if (composterData.getLevel() == composterData.getMaximumLevel()) composterData.setLevel(composterData.getLevel() - 2);
                         else composterData.setLevel(composterData.getLevel() - 1);
@@ -101,10 +99,10 @@ public class ComposterSpreader implements Listener {
                 Block currBlock = currLocation.clone().add(indexX, 0, indexZ).getBlock();
 
                 if (currBlock.getBlockData() instanceof Ageable crop && composterSpreader.blocks().contains(currBlock.getType())) {
-                    if (random.nextBoolean()) {
+                    if (GardeningTweaks.getRandom().nextBoolean()) {
                         if (crop.getAge() == crop.getMaximumAge()) continue;
                         if (!GardeningTweaks.callEvent(new ComposterCropGrowEvent(currBlock))) continue;
-                        int newAge = crop.getAge() + 1 + random.nextInt(3);
+                        int newAge = crop.getAge() + 1 + GardeningTweaks.getRandom().nextInt(3);
                         int maxAge = crop.getMaximumAge();
                         if (newAge > maxAge) newAge = maxAge;
                         crop.setAge(newAge);

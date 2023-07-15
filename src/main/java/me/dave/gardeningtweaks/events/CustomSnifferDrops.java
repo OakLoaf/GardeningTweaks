@@ -11,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Random;
 
 public class CustomSnifferDrops implements Listener {
-    private final Random random = new Random();
 
     @EventHandler
     public void onSnifferSniffItem(EntityDropItemEvent event) {
@@ -21,6 +20,6 @@ public class CustomSnifferDrops implements Listener {
         ConfigManager.CustomSnifferDrops customSnifferDrops = GardeningTweaks.getConfigManager().getCustomSnifferDrops();
         if (!customSnifferDrops.enabled() || customSnifferDrops.items().size() == 0) return;
 
-        event.getItemDrop().setItemStack(new ItemStack(customSnifferDrops.items().get(random.nextInt(customSnifferDrops.items().size()))));
+        event.getItemDrop().setItemStack(new ItemStack(customSnifferDrops.items().get(GardeningTweaks.getRandom().nextInt(customSnifferDrops.items().size()))));
     }
 }

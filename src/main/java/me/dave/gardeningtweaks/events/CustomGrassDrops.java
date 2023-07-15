@@ -15,10 +15,8 @@ import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
-import java.util.Random;
 
 public class CustomGrassDrops implements Listener {
-    private final Random random = new Random();
 
     @EventHandler
     public void onBlockDropItem(BlockDropItemEvent event) {
@@ -39,7 +37,7 @@ public class CustomGrassDrops implements Listener {
         Location location = blockState.getLocation();
 
         for (int i = 0; i < drops.iterator().next().getAmount(); i++) {
-            world.dropItemNaturally(location, new ItemStack(grassDrops.get(random.nextInt(grassDrops.size()))));
+            world.dropItemNaturally(location, new ItemStack(grassDrops.get(GardeningTweaks.getRandom().nextInt(grassDrops.size()))));
         }
     }
 }

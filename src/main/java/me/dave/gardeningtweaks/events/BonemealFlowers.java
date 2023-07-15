@@ -16,10 +16,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Random;
-
 public class BonemealFlowers implements Listener {
-    private final Random random = new Random();
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
@@ -46,7 +43,7 @@ public class BonemealFlowers implements Listener {
         }
     }
 
-    public void bonemealFlower(Player player, ItemStack mainHand, Block block, Material flowerType) {
+    public static void bonemealFlower(Player player, ItemStack mainHand, Block block, Material flowerType) {
         World world = block.getWorld();
         Location location = block.getLocation();
 
@@ -59,7 +56,7 @@ public class BonemealFlowers implements Listener {
         world.spawnParticle(Particle.VILLAGER_HAPPY, location.clone().add(0.5, 0.2, 0.5), 10, 0.2, 0.2, 0.2);
         world.playSound(location, Sound.ITEM_BONE_MEAL_USE, 0.4f, 1.4f);
 
-        if (random.nextInt(30) == 0) {
+        if (GardeningTweaks.getRandom().nextInt(30) == 0) {
             if (!(flowerType.createBlockData() instanceof Bisected)) return;
             Block blockAbove = block.getRelative(BlockFace.UP);
             if (blockAbove.getType() != Material.AIR) return;
@@ -68,7 +65,7 @@ public class BonemealFlowers implements Listener {
         }
     }
 
-    private void setFlower(Block block, Material type, Bisected.Half half) {
+    private static void setFlower(Block block, Material type, Bisected.Half half) {
         block.setType(type,false);
         Bisected data = (Bisected) block.getBlockData();
         data.setHalf(half);

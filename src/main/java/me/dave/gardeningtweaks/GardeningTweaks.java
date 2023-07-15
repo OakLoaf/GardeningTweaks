@@ -13,7 +13,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Random;
+
 public final class GardeningTweaks extends JavaPlugin {
+    private static final Random random = new Random();
     private static GardeningTweaks plugin;
     private static ConfigManager configManager;
     public static ProtocolLibHook protocolLibHook = null;
@@ -69,6 +72,10 @@ public final class GardeningTweaks extends JavaPlugin {
         }
 
         Bukkit.getScheduler().runTaskTimer(this, () -> currTick += 1, 1, 1);
+    }
+
+    public static Random getRandom() {
+        return random;
     }
 
     public static GardeningTweaks getInstance() {

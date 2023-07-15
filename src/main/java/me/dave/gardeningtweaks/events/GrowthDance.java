@@ -18,11 +18,9 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 public class GrowthDance implements Listener {
-    private static final Random random = new Random();
     private final GardeningTweaks plugin = GardeningTweaks.getInstance();
     private final HashSet<UUID> cooldownList = new HashSet<>();
 
@@ -57,10 +55,10 @@ public class GrowthDance implements Listener {
                     Block currBlock = currLocation.clone().add(indexX, indexY, indexZ).getBlock();
 
                     if (currBlock.getBlockData() instanceof Ageable crop && (crops == null || crops.contains(currBlock.getType()))) {
-                        if (random.nextDouble(0, 100) <= chance) {
+                        if (GardeningTweaks.getRandom().nextDouble(0, 100) <= chance) {
                             if (!GardeningTweaks.callEvent(new CropGrowEvent(currBlock))) continue;
 
-                            int newAge = crop.getAge() + random.nextInt(3);
+                            int newAge = crop.getAge() + GardeningTweaks.getRandom().nextInt(3);
                             int maxAge = crop.getMaximumAge();
                             if (newAge > maxAge) newAge = maxAge;
                             crop.setAge(newAge);

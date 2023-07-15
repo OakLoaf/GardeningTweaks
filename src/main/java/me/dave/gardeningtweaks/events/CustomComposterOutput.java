@@ -19,10 +19,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
-import java.util.Random;
 
 public class CustomComposterOutput implements Listener {
-    private final Random random = new Random();
 
     @EventHandler
     public void onBlockDropItem(BlockDropItemEvent event) {
@@ -39,7 +37,7 @@ public class CustomComposterOutput implements Listener {
         for (ItemStack item : drops) {
             if (item.getType() == Material.BONE_MEAL) {
                 List<Material> newDrops = customComposterOutput.items();
-                item.setType(newDrops.get(random.nextInt(newDrops.size())));
+                item.setType(newDrops.get(GardeningTweaks.getRandom().nextInt(newDrops.size())));
             }
             world.dropItemNaturally(location, item);
         }
@@ -55,7 +53,7 @@ public class CustomComposterOutput implements Listener {
         ItemStack item = event.getItem();
         if (item.getType() == Material.BONE_MEAL) {
             List<Material> newDrops = customComposterOutput.items();
-            item.setType(newDrops.get(random.nextInt(newDrops.size())));
+            item.setType(newDrops.get(GardeningTweaks.getRandom().nextInt(newDrops.size())));
         }
     }
 
@@ -75,7 +73,7 @@ public class CustomComposterOutput implements Listener {
         List<Material> newDrops = customComposterOutput.items();
         Location location = block.getLocation().clone().add(0, 0.5, 0);
         World world = block.getWorld();
-        world.dropItemNaturally(location, new ItemStack(newDrops.get(random.nextInt(newDrops.size()))));
+        world.dropItemNaturally(location, new ItemStack(newDrops.get(GardeningTweaks.getRandom().nextInt(newDrops.size()))));
         world.playSound(location, Sound.BLOCK_COMPOSTER_FILL_SUCCESS, 1f, 1.5f);
         world.playSound(location, Sound.ENTITY_ITEM_PICKUP, 0.5f, 1f);
     }

@@ -40,15 +40,15 @@ public class GrowthDance implements Listener {
         growCrops(player.getLocation(), 0.5, 2, growthDance.blocks());
     }
 
-    public static boolean growCrops(Location location, double chance, int radius) {
-        return growCrops(location, chance, radius, 2, null);
+    public static void growCrops(Location location, double chance, int radius) {
+        growCrops(location, chance, radius, 2, null);
     }
 
-    public static boolean growCrops(Location location, double chance, int radius, @Nullable List<Material> crops) {
-        return growCrops(location, chance, radius, 2, crops);
+    public static void growCrops(Location location, double chance, int radius, @Nullable List<Material> crops) {
+        growCrops(location, chance, radius, 2, crops);
     }
 
-    public static boolean growCrops(Location location, double chance, int radius, int height, @Nullable List<Material> crops) {
+    public static void growCrops(Location location, double chance, int radius, int height, @Nullable List<Material> crops) {
         Location currLocation = location.clone();
 
         for (int indexY = 0; indexY < height; indexY++) {
@@ -70,6 +70,5 @@ public class GrowthDance implements Listener {
                 }
             }
         }
-        return true;
     }
 }

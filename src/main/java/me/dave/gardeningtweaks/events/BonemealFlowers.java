@@ -16,6 +16,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nullable;
+
+
 public class BonemealFlowers implements Listener {
 
     @EventHandler
@@ -43,16 +46,20 @@ public class BonemealFlowers implements Listener {
         }
     }
 
-    public static void bonemealFlower(Player player, ItemStack mainHand, Block block, Material flowerType) {
+    public static void bonemealFlower(@Nullable Player player, @Nullable ItemStack mainHand, Block block, Material flowerType) {
         World world = block.getWorld();
         Location location = block.getLocation();
 
         if (!GardeningTweaks.callEvent(new FlowerBonemealEvent(block))) return;
-        if (!GardeningTweaks.callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.BONE_MEAL), player, true, EquipmentSlot.HAND))) return;
-        if (!GardeningTweaks.callEvent(new BlockPlaceEvent(block.getRelative(BlockFace.UP), block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.BONE_MEAL), player, true, EquipmentSlot.HAND))) return;
 
-        if (player.getGameMode() != GameMode.CREATIVE) mainHand.setAmount(mainHand.getAmount() - 1);
-        if (GardeningTweaks.protocolLibHook != null) GardeningTweaks.protocolLibHook.armInteractAnimation(player);
+        if (player != null) {
+            if (!GardeningTweaks.callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.BONE_MEAL), player, true, EquipmentSlot.HAND))) return;
+            if (!GardeningTweaks.callEvent(new BlockPlaceEvent(block.getRelative(BlockFace.UP), block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.BONE_MEAL), player, true, EquipmentSlot.HAND))) return;
+
+            if (player.getGameMode() != GameMode.CREATIVE && mainHand != null) mainHand.setAmount(mainHand.getAmount() - 1);
+            if (GardeningTweaks.protocolLibHook != null) GardeningTweaks.protocolLibHook.armInteractAnimation(player);
+        }
+
         world.spawnParticle(Particle.VILLAGER_HAPPY, location.clone().add(0.5, 0.2, 0.5), 10, 0.2, 0.2, 0.2);
         world.playSound(location, Sound.ITEM_BONE_MEAL_USE, 0.4f, 1.4f);
 

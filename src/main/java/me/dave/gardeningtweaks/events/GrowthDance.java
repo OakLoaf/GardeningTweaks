@@ -55,7 +55,7 @@ public class GrowthDance implements Listener {
                     Block currBlock = currLocation.clone().add(indexX, indexY, indexZ).getBlock();
 
                     if (currBlock.getBlockData() instanceof Ageable crop && (crops == null || crops.contains(currBlock.getType()))) {
-                        if (GardeningTweaks.getRandom().nextDouble(0, 100) <= chance) {
+                        if (GardeningTweaks.getRandom().nextDouble(0, 1) <= chance) {
                             if (!GardeningTweaks.callEvent(new CropGrowEvent(currBlock))) continue;
 
                             int newAge = crop.getAge() + GardeningTweaks.getRandom().nextInt(3);

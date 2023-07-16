@@ -5,6 +5,7 @@ import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
@@ -34,6 +35,7 @@ public class InteractiveHarvest implements Listener {
         if (action != Action.RIGHT_CLICK_BLOCK) return;
         Block block = event.getClickedBlock();
         if (block != null && block.getBlockData() instanceof Ageable crop && interactiveHarvest.blocks().contains(block.getType()) && crop.getAge() == crop.getMaximumAge()) {
+            BlockState blockState = block.getState();
             Player player = event.getPlayer();
             UUID playerUUID = player.getUniqueId();
             if (!harvestCooldownSet.contains(playerUUID)) {
@@ -58,7 +60,7 @@ public class InteractiveHarvest implements Listener {
                 }
 
                 if (!entities.isEmpty()) {
-                    if (!GardeningTweaks.callEvent(new BlockDropItemEvent(block, block.getState(), player, entities))) {
+                    if (!GardeningTweaks.callEvent(new BlockDropItemEvent(block, blockState, player, entities))) {
                         entities.forEach(Entity::remove);
                     }
                 }

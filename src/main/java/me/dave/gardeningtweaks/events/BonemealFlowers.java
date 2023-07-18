@@ -15,9 +15,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-
-import javax.annotation.Nullable;
-
+import org.jetbrains.annotations.Nullable;
 
 public class BonemealFlowers implements Listener {
 

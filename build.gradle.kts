@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "me.dave"
-version = "1.3.1"
+version = "1.3.2-BETA"
 
 repositories {
     mavenCentral()
@@ -24,7 +24,7 @@ dependencies {
     compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
     compileOnly("com.github.Maroon28:RealisticBiomes:3d292ea32a")
     shadow(files("libs/EnchantedStorage.jar"))
-    shadow("com.github.CoolDCB:ChatColorHandler:v1.2.3")
+    shadow("com.github.CoolDCB:ChatColorHandler:v2.0.0")
 }
 
 java {

@@ -141,6 +141,7 @@ lumberjack:
     - "ACACIA_LOG"
     - "DARK_OAK_LOG"
     - "MANGROVE_LOG"
+    - "CHERRY_LOG"
     - "CRIMSON_STEM"
     - "WARPED_STEM"
 

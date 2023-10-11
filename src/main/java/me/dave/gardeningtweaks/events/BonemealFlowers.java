@@ -37,14 +37,14 @@ public class BonemealFlowers implements Listener {
 
 
         switch(blockType) {
-            case POPPY -> bonemealFlower(player, mainHand, block, Material.ROSE_BUSH);
-            case PINK_TULIP -> bonemealFlower(player, mainHand, block, Material.LILAC);
-            case ALLIUM -> bonemealFlower(player, mainHand, block, Material.PEONY);
-            case DANDELION -> bonemealFlower(player, mainHand, block, Material.SUNFLOWER);
+            case POPPY -> bonemealFlower(player, mainHand, block, Material.ROSE_BUSH, 0.5);
+            case PINK_TULIP -> bonemealFlower(player, mainHand, block, Material.LILAC, 0.5);
+            case ALLIUM -> bonemealFlower(player, mainHand, block, Material.PEONY, 0.5);
+            case DANDELION -> bonemealFlower(player, mainHand, block, Material.SUNFLOWER, 0.5);
         }
     }
 
-    public static void bonemealFlower(@Nullable Player player, @Nullable ItemStack mainHand, Block block, Material flowerType) {
+    public static void bonemealFlower(@Nullable Player player, @Nullable ItemStack mainHand, Block block, Material flowerType, double chance) {
         World world = block.getWorld();
         Location location = block.getLocation();
 
@@ -61,7 +61,7 @@ public class BonemealFlowers implements Listener {
         world.spawnParticle(Particle.VILLAGER_HAPPY, location.clone().add(0.5, 0.2, 0.5), 10, 0.2, 0.2, 0.2);
         world.playSound(location, Sound.ITEM_BONE_MEAL_USE, 0.4f, 1.4f);
 
-        if (GardeningTweaks.getRandom().nextInt(30) == 0) {
+        if (GardeningTweaks.getRandom().nextDouble(100) < chance) {
             if (!(flowerType.createBlockData() instanceof Bisected)) return;
             Block blockAbove = block.getRelative(BlockFace.UP);
             if (blockAbove.getType() != Material.AIR) return;

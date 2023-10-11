@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class GardeningTweaksAPI {
 
     /**
@@ -60,9 +61,10 @@ public class GardeningTweaksAPI {
      * Grow a single block flower into a double tall flower
      * @param block The block to change
      * @param flowerType The double tall flower to change to
+     * @param chance The chance of success
      */
-    public static void bonemealFlower(Block block, Material flowerType) {
-        BonemealFlowers.bonemealFlower(null, null, block, flowerType);
+    public static void bonemealFlower(Block block, Material flowerType, double chance) {
+        BonemealFlowers.bonemealFlower(null, null, block, flowerType, chance);
     }
 
     /**
@@ -71,8 +73,9 @@ public class GardeningTweaksAPI {
      * @param mainHand The item in the player's main hand
      * @param block The block to change
      * @param flowerType The double tall flower to change to
+     * @param chance The chance of success
      */
-    public static void bonemealFlower(Player player, ItemStack mainHand, Block block, Material flowerType) {
-        BonemealFlowers.bonemealFlower(player, mainHand, block, flowerType);
+    public static void bonemealFlower(Player player, ItemStack mainHand, Block block, Material flowerType, double chance) {
+        BonemealFlowers.bonemealFlower(player, mainHand, block, flowerType, chance);
     }
 }

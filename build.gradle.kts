@@ -23,7 +23,7 @@ dependencies {
     compileOnly("net.coreprotect:coreprotect:21.3")
     compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
     compileOnly("com.github.Maroon28:RealisticBiomes:3d292ea32a")
-    shadow("com.github.CoolDCB:ChatColorHandler:v2.0.0")
+    shadow("com.github.CoolDCB:ChatColorHandler:v2.1.5")
 }
 
 java {

@@ -1,7 +1,8 @@
-package me.dave.gardeningtweaks.events;
+package me.dave.gardeningtweaks.module.custom;
 
 import me.dave.gardeningtweaks.data.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.gardeningtweaks.module.Module;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.BlockState;
@@ -13,18 +14,29 @@ import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class Decoarsify implements Listener {
+public class Decoarsify extends Module implements Listener {
+
+    public Decoarsify(String id) {
+        super(id);
+    }
 
     @EventHandler
     public void onBlockDropItem(BlockDropItemEvent event) {
-        if (event.isCancelled()) return;
-        ConfigManager.Decoarsify decoarsify = GardeningTweaks.getConfigManager().getDecoarsifyConfig();
-        if (!decoarsify.enabled()) return;
+        if (event.isCancelled()) {
+            return;
+        }
+
         BlockState blockState = event.getBlockState();
         Player player = event.getPlayer();
-        if (blockState.getType() != Material.COARSE_DIRT || player.getGameMode() == GameMode.CREATIVE) return;
+        if (blockState.getType() != Material.COARSE_DIRT || player.getGameMode() == GameMode.CREATIVE) {
+            return;
+        }
+
         ItemMeta mainHandMeta = player.getInventory().getItemInMainHand().getItemMeta();
-        if (mainHandMeta == null || mainHandMeta.hasEnchant(Enchantment.SILK_TOUCH)) return;
+        if (mainHandMeta == null || mainHandMeta.hasEnchant(Enchantment.SILK_TOUCH)) {
+            return;
+        }
+
         event.setCancelled(true);
         blockState.getWorld().dropItemNaturally(blockState.getLocation(), new ItemStack(Material.DIRT));
     }

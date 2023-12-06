@@ -1,41 +1,88 @@
-package me.dave.gardeningtweaks.events;
+package me.dave.gardeningtweaks.module.custom;
 
 import me.dave.gardeningtweaks.api.events.CropGrowEvent;
 import me.dave.gardeningtweaks.api.events.PlayerGrowthDanceEvent;
-import me.dave.gardeningtweaks.data.ConfigManager;
-import me.dave.gardeningtweaks.utils.GardeningMode;
+import me.dave.gardeningtweaks.module.Module;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
-public class GrowthDance implements Listener {
-    private final GardeningTweaks plugin = GardeningTweaks.getInstance();
-    private final HashSet<UUID> cooldownList = new HashSet<>();
+public class GrowthDance extends Module implements Listener {
+    private HashSet<UUID> cooldownList;
+    private Integer cooldownLength;
+    private List<Material> blocks;
+
+    public GrowthDance(String id) {
+        super(id);
+    }
+
+    @Override
+    public void onEnable() {
+        GardeningTweaks plugin = GardeningTweaks.getInstance();
+
+        File configFile = new File(plugin.getDataFolder(), "modules/growth-dance.yml");
+        if (!configFile.exists()) {
+            plugin.saveResource("modules/growth-dance.yml", false);
+            plugin.getLogger().info("File Created: growth-dance.yml");
+        }
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+
+        cooldownList = new HashSet<>();
+
+        cooldownLength = config.getInt("growth-rate", 2);
+        blocks = config.getStringList("blocks").stream().map((string) -> {
+            try {
+                return Material.valueOf(string);
+            } catch (IllegalArgumentException err) {
+                plugin.getLogger().warning("Ignoring " + string + ", that is not a valid material.");
+                return null;
+            }
+        }).filter(Objects::nonNull).toList();
+    }
+
+    @Override
+    public void onDisable() {
+        if (blocks != null) {
+            blocks.clear();
+            blocks = null;
+        }
+
+        if (cooldownList != null) {
+            cooldownList.clear();
+            cooldownList = null;
+        }
+
+        cooldownLength = null;
+    }
 
     @EventHandler
     public void onPlayerSneak(PlayerToggleSneakEvent event) {
-        if (event.isCancelled()) return;
-        ConfigManager.GrowthDance growthDance = GardeningTweaks.getConfigManager().getGrowthDanceConfig();
-        if (growthDance.mode() == GardeningMode.DISABLED) return;
-        if (!event.isSneaking()) return;
+        if (event.isCancelled() || !event.isSneaking()) {
+            return;
+        }
+
         Player player = event.getPlayer();
-        if (cooldownList.contains(player.getUniqueId())) return;
-        if (!GardeningTweaks.callEvent(new PlayerGrowthDanceEvent(player))) return;
+        if (cooldownList.contains(player.getUniqueId()) || !GardeningTweaks.callEvent(new PlayerGrowthDanceEvent(player))) {
+            return;
+        }
         cooldownList.add(player.getUniqueId());
-        Bukkit.getScheduler().runTaskLater(plugin, () -> cooldownList.remove(player.getUniqueId()), growthDance.cooldownLength());
-        growCrops(player.getLocation(), 0.5, 2, growthDance.blocks());
+        Bukkit.getScheduler().runTaskLater(GardeningTweaks.getInstance(), () -> cooldownList.remove(player.getUniqueId()), cooldownLength);
+        growCrops(player.getLocation(), 0.5, 2, blocks);
     }
 
     public static void growCrops(Location location, double chance, int radius) {

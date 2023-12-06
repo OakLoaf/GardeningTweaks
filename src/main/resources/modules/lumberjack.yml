@@ -1,0 +1,11 @@
+# blocks: A list of blocks that will be effected by Lumberjack
+blocks:
+  - "OAK_LOG"
+  - "SPRUCE_LOG"
+  - "BIRCH_LOG"
+  - "JUNGLE_LOG"
+  - "ACACIA_LOG"
+  - "DARK_OAK_LOG"
+  - "MANGROVE_LOG"
+  - "CRIMSON_STEM"
+  - "WARPED_STEM"

@@ -1,0 +1,4 @@
+# feather-falling: Whether Feather Falling stops users from trampling farmland
+feather-falling: true
+# creative-mode: Whether Creative Mode stops users from trampling farmland
+creative-mode: true

@@ -1,0 +1,20 @@
+# timer: Number of seconds between each chance of growing surrounding crops
+timer: 10
+# chance: Percentage chance of crop growth being triggered
+chance: 50
+# blocks: A list of blocks that will be effected by Composter Spreader
+blocks:
+  - "BEETROOTS"
+  - "CACTUS"
+  - "CARROTS"
+  - "CHORUS_FLOWER"
+  - "KELP"
+  - "MELON_STEM"
+  - "NETHER_WART"
+  - "POTATOES"
+  - "PUMPKIN_STEM"
+  - "SUGAR_CANE"
+  - "SWEET_BERRY_BUSH"
+  - "TWISTING_VINES"
+  - "WEEPING_VINES"
+  - "WHEAT"

@@ -1,0 +1,6 @@
+# sounds: Whether a sound will be made when leaves decay
+sounds: false
+# particles: Whether particles will appear when leaves decay
+particles: false
+# ignore-persistence: Whether persistent leaves should decay (Leaves placed by players will not decay)
+ignore-persistence: false # WARNING: Enabling this will cause leaves previously placed by players to decay.

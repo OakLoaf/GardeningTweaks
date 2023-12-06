@@ -1,0 +1,6 @@
+# items: A list of items that will have a chance of being dropped by grass
+items:
+  WHEAT_SEEDS: 10
+  BEETROOT_SEEDS: 4
+  PUMPKIN_SEEDS: 1
+  MELON_SEEDS: 1

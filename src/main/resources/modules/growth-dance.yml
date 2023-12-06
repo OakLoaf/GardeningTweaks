@@ -1,0 +1,18 @@
+# growth-rate: The amount of times a crop can have a chance of receiving a boost per second (maximum of 20)
+growth-rate: 2
+# blocks: A list of blocks that will be effected by Growth Dance
+blocks:
+  - "BEETROOTS"
+  - "CACTUS"
+  - "CARROTS"
+  - "CHORUS_FLOWER"
+  - "KELP"
+  - "MELON_STEM"
+  - "NETHER_WART"
+  - "POTATOES"
+  - "PUMPKIN_STEM"
+  - "SUGAR_CANE"
+  - "SWEET_BERRY_BUSH"
+  - "TWISTING_VINES"
+  - "WEEPING_VINES"
+  - "WHEAT"

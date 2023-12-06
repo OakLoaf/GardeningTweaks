@@ -1,10 +1,12 @@
-package me.dave.gardeningtweaks.events;
+package me.dave.gardeningtweaks.module.custom;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.api.events.SaplingReplantEvent;
+import me.dave.gardeningtweaks.module.Module;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,31 +18,60 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.File;
 import java.util.List;
 
-public class SaplingReplant implements Listener {
+public class SaplingReplant extends Module implements Listener {
     private final List<Material> plantableBlocks = List.of(new Material[]{Material.DIRT, Material.COARSE_DIRT, Material.GRASS_BLOCK, Material.MOSS_BLOCK});
     private final int maximumAttempts = 10;
+    private Boolean includePlayerDrops;
+    private Boolean includeLeafDrops;
+    private Integer leafDelay;
+
+    public SaplingReplant(String id) {
+        super(id);
+    }
+
+    @Override
+    public void onEnable() {
+        GardeningTweaks plugin = GardeningTweaks.getInstance();
+
+        File configFile = new File(plugin.getDataFolder(), "modules/sapling-replant.yml");
+        if (!configFile.exists()) {
+            plugin.saveResource("modules/sapling-replant.yml", false);
+            plugin.getLogger().info("File Created: sapling-replant.yml");
+        }
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+
+        includePlayerDrops = config.getBoolean("include-player-drops", false);
+        includeLeafDrops = config.getBoolean("include-leaf-drops", false);
+        leafDelay = config.getInt("leaf-delay", 10);
+    }
 
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
-        if (!GardeningTweaks.getConfigManager().getSaplingReplantConfig().enabled()) return;
-        if (!GardeningTweaks.getConfigManager().getSaplingReplantConfig().includePlayerDrops()) return;
+        if (!includePlayerDrops) {
+            return;
+        }
 
         Player player = event.getPlayer();
-        if (player.isSneaking()) return;
+        if (player.isSneaking()) {
+            return;
+        }
 
         Item itemEntity = event.getItemDrop();
-        if (!Tag.SAPLINGS.isTagged(itemEntity.getItemStack().getType())) return;
+        if (!Tag.SAPLINGS.isTagged(itemEntity.getItemStack().getType())) {
+            return;
+        }
 
         startPlantTimer(itemEntity, null, player);
     }
 
     @EventHandler
     public void onBlockDropItem(BlockDropItemEvent event) {
-        if (!Tag.LEAVES.isTagged(event.getBlockState().getType())) return;
-        if (!GardeningTweaks.getConfigManager().getSaplingReplantConfig().enabled()) return;
-        if (!GardeningTweaks.getConfigManager().getSaplingReplantConfig().includeLeafDrops()) return;
+        if (!Tag.LEAVES.isTagged(event.getBlockState().getType()) || !includeLeafDrops) {
+            return;
+        }
 
         event.getItems().forEach(itemEntity -> {
             if (!Tag.SAPLINGS.isTagged(itemEntity.getItemStack().getType())) return;
@@ -49,7 +80,7 @@ public class SaplingReplant implements Listener {
                 if (itemEntity.isValid() && !itemEntity.isDead()) {
                     startPlantTimer(itemEntity, event.getBlock(), null);
                 }
-            }, GardeningTweaks.getConfigManager().getSaplingReplantConfig().leafDelay());
+            }, leafDelay);
         });
     }
 

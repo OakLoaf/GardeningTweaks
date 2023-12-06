@@ -1,0 +1,8 @@
+# blocks: A list of blocks that can be harvested with Interactive Harvest
+blocks:
+  - "BEETROOTS"
+  - "CARROTS"
+  - "NETHER_WART"
+  - "POTATOES"
+  - "SWEET_BERRY_BUSH"
+  - "WHEAT"

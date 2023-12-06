@@ -1,8 +1,8 @@
-package me.dave.gardeningtweaks.events;
+package me.dave.gardeningtweaks.module.custom;
 
 import me.dave.gardeningtweaks.api.events.BushRejuvenateEvent;
-import me.dave.gardeningtweaks.data.ConfigManager;
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.gardeningtweaks.module.Module;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -13,24 +13,31 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class RejuvenatedBushes implements Listener {
+public class RejuvenatedBushes extends Module implements Listener {
+
+    public RejuvenatedBushes(String id) {
+        super(id);
+    }
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY) return;
-
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-        ConfigManager.RejuvenatedBushes rejuvenatedBushes = GardeningTweaks.getConfigManager().getRejuvenatedBushesConfig();
-        if (!rejuvenatedBushes.enabled()) return;
+        if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY || event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+            return;
+        }
 
         Block block = event.getClickedBlock();
-        if (block == null) return;
-        Material blockType = block.getType();
+        if (block == null) {
+            return;
+        }
 
-        if (blockType != Material.DEAD_BUSH) return;
+        Material blockType = block.getType();
+        if (blockType != Material.DEAD_BUSH) {
+            return;
+        }
+
         Player player = event.getPlayer();
         ItemStack mainHand = player.getInventory().getItemInMainHand();
-        switch(mainHand.getType()) {
+        switch (mainHand.getType()) {
             case WHEAT_SEEDS -> bushToSapling(player, mainHand, block, Material.OAK_SAPLING);
             case BEETROOT_SEEDS -> bushToSapling(player, mainHand, block, Material.ACACIA_SAPLING);
             case MELON_SEEDS -> bushToSapling(player, mainHand, block, Material.SPRUCE_SAPLING);

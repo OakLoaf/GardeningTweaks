@@ -1,0 +1,7 @@
+# items: A list of items and their chance of being output by the composter
+items:
+  BONE_MEAL: 10
+  WHEAT_SEEDS: 5
+  BEETROOT_SEEDS: 3
+  PUMPKIN_SEEDS: 1
+  MELON_SEEDS: 1

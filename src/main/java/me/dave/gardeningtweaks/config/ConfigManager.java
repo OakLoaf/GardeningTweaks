@@ -3,6 +3,7 @@ package me.dave.gardeningtweaks.config;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.module.Module;
 import me.dave.gardeningtweaks.module.custom.*;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -131,6 +132,11 @@ public class ConfigManager {
             }
 
             if (modulesSection.getBoolean("sniffer-drops", false)) {
+                String serverVersion = Bukkit.getVersion();
+                if (!serverVersion.contains("1.20") && !serverVersion.contains("1.21")) {
+                    GardeningTweaks.getInstance().getLogger().severe("The 'sniffer-drops' module requires versions 1.20 and above to function");
+                }
+
                 GardeningTweaks.getModule(SnifferDrops.ID).ifPresentOrElse(
                         Module::reload,
                         () -> GardeningTweaks.registerModule(new SnifferDrops())

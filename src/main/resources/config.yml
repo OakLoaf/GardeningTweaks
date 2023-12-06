@@ -1,3 +1,10 @@
+# Welcome to the GardeningTweaks main config file, as you can see it is very simple,
+# each module has its own separate config which will be generated upon enabling the module.
+# You can find these config files in the "modules" folder alongside this config file.
+
+# If you need any help or support using the plugin please join our support discord,
+# we're more than happy to help you :)
+
 # A list of modules and whether they are enabled
 modules:
   bonemeal-flowers: false

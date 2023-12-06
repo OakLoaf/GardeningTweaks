@@ -14,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -107,8 +108,8 @@ public final class GardeningTweaks extends JavaPlugin {
         }
     }
 
-    public static Module getModule(String id) {
-        return modules.get(id);
+    public static Optional<Module> getModule(String id) {
+        return Optional.ofNullable(modules.get(id));
     }
 
     public static void registerModule(Module module) {

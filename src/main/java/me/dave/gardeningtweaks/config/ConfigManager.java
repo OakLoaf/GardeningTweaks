@@ -20,7 +20,7 @@ public class ConfigManager {
         FileConfiguration config = plugin.getConfig();
 
         // TODO: Add check for already registered modules
-        //  (Make sure to unregister old moldules that are no longer enabled)
+        //  (Make sure to unregister old modules that are no longer enabled)
         ConfigurationSection modulesSection = config.getConfigurationSection("modules");
         if (modulesSection != null) {
             if (modulesSection.getBoolean("bonemeal-flowers", false)) {

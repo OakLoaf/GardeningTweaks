@@ -112,6 +112,11 @@ public final class GardeningTweaks extends JavaPlugin {
     }
 
     public static void registerModule(Module module) {
+        if (modules.containsKey(module.getId())) {
+            GardeningTweaks.getInstance().getLogger().severe("Failed to register module with id '" + module.getId() + "', a module with this id is already running");
+            return;
+        }
+
         modules.put(module.getId(), module);
         module.enable();
         if (module instanceof Listener listener) {

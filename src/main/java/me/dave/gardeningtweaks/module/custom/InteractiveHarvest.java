@@ -26,7 +26,6 @@ import java.util.*;
 public class InteractiveHarvest extends Module implements Listener {
     public static String ID = "INTERACTIVE_HARVEST";
 
-    private final GardeningTweaks plugin = GardeningTweaks.getInstance();
     private final HashSet<UUID> harvestCooldownSet = new HashSet<>();
     private List<Material> blocks;
 
@@ -75,7 +74,7 @@ public class InteractiveHarvest extends Module implements Listener {
             UUID playerUUID = player.getUniqueId();
             if (!harvestCooldownSet.contains(playerUUID)) {
                 harvestCooldownSet.add(playerUUID);
-                Bukkit.getScheduler().runTaskLater(plugin, () -> harvestCooldownSet.remove(playerUUID), 2);
+                Bukkit.getScheduler().runTaskLater(GardeningTweaks.getInstance(), () -> harvestCooldownSet.remove(playerUUID), 2);
                 ItemStack mainHand = player.getInventory().getItemInMainHand();
                 ItemStack offHand = player.getInventory().getItemInOffHand();
                 if (mainHand.getType() == Material.BONE_MEAL || offHand.getType() == Material.BONE_MEAL) {

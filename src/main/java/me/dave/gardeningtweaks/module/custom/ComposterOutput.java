@@ -25,10 +25,12 @@ import java.io.File;
 import java.util.List;
 
 public class ComposterOutput extends Module implements Listener {
+    public static String ID = "COMPOSTER_OUTPUT";
+
     private RandomCollection<Material> items;
 
-    public ComposterOutput(String id) {
-        super(id);
+    public ComposterOutput() {
+        super(ID);
     }
 
     @Override

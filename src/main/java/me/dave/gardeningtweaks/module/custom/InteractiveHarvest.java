@@ -24,12 +24,14 @@ import java.io.File;
 import java.util.*;
 
 public class InteractiveHarvest extends Module implements Listener {
+    public static String ID = "INTERACTIVE_HARVEST";
+
     private final GardeningTweaks plugin = GardeningTweaks.getInstance();
     private final HashSet<UUID> harvestCooldownSet = new HashSet<>();
     private List<Material> blocks;
 
-    public InteractiveHarvest(String id) {
-        super(id);
+    public InteractiveHarvest() {
+        super(ID);
     }
 
     @Override

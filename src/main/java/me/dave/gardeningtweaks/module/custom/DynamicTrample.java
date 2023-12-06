@@ -19,11 +19,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.io.File;
 
 public class DynamicTrample extends Module implements Listener {
+    public static String ID = "DYNAMIC_TRAMPLE";
+
     private Boolean featherFalling;
     private Boolean creativeMode;
 
-    public DynamicTrample(String id) {
-        super(id);
+    public DynamicTrample() {
+        super(ID);
     }
 
     @Override

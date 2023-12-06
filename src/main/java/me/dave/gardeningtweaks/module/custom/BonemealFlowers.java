@@ -23,10 +23,12 @@ import java.io.File;
 import java.util.HashMap;
 
 public class BonemealFlowers extends Module implements Listener {
+    public static String ID = "BONEMEAL_FLOWERS";
+
     private HashMap<Material, Material> flowers;
 
-    public BonemealFlowers(String id) {
-        super(id);
+    public BonemealFlowers() {
+        super(ID);
     }
 
     @Override

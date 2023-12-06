@@ -1,10 +1,11 @@
 package me.dave.gardeningtweaks.config;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.gardeningtweaks.module.custom.BonemealFlowers;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class ConfigManager {
-    private final GardeningTweaks plugin = GardeningTweaks.getInstance();
 
     public ConfigManager() {
         GardeningTweaks.getInstance().saveDefaultConfig();
@@ -17,5 +18,12 @@ public class ConfigManager {
 
         plugin.reloadConfig();
         FileConfiguration config = plugin.getConfig();
+
+        ConfigurationSection modulesSection = config.getConfigurationSection("modules");
+        if (modulesSection != null) {
+            if (modulesSection.getBoolean("bonemeal-flowers")) {
+                GardeningTweaks.registerModule(new BonemealFlowers());
+            }
+        }
     }
 }

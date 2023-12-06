@@ -23,6 +23,8 @@ import java.io.*;
 import java.util.*;
 
 public class FastLeafDecay extends Module implements Listener {
+    public static String ID = "FAST_LEAF_DECAY";
+
     private final NamespacedKey ignoredKey = new NamespacedKey(GardeningTweaks.getInstance(), "FLD");
     private final FixedMetadataValue ignoredBlockMetaData = new FixedMetadataValue(GardeningTweaks.getInstance(), "ignored");
     private HashMap<Integer, Deque<Block>> blockScheduleMap;
@@ -30,8 +32,8 @@ public class FastLeafDecay extends Module implements Listener {
     private Boolean particles;
     private Boolean ignorePersistence;
 
-    public FastLeafDecay(String id) {
-        super(id);
+    public FastLeafDecay() {
+        super(ID);
     }
 
     @Override

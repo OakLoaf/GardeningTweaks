@@ -20,11 +20,13 @@ import java.util.List;
 import java.util.Objects;
 
 public class Lumberjack extends Module implements Listener {
+    public static String ID = "LUMBERJACK";
+
     private final EnumSet<Material> axes = EnumSet.of(Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE);
     private List<Material> blocks;
 
-    public Lumberjack(String id) {
-        super(id);
+    public Lumberjack() {
+        super(ID);
     }
 
     @Override

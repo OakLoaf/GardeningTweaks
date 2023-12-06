@@ -15,10 +15,12 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 
 public class SnifferDrops extends Module implements Listener {
+    public static String ID = "SNIFFER_DROPS";
+
     private RandomCollection<Material> drops;
 
-    public SnifferDrops(String id) {
-        super(id);
+    public SnifferDrops() {
+        super(ID);
     }
 
     @Override

@@ -21,10 +21,12 @@ import java.io.File;
 import java.util.List;
 
 public class GrassDrops extends Module implements Listener {
+    public static String ID = "GRASS_DROPS";
+
     private RandomCollection<Material> items;
 
-    public GrassDrops(String id) {
-        super(id);
+    public GrassDrops() {
+        super(ID);
     }
 
     @Override

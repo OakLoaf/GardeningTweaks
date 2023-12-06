@@ -23,11 +23,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TreeSpread extends Module implements Listener {
+    public static String ID = "TREE_SPREAD";
+
     private TreeData defaultTreeData;
     private final HashMap<String, TreeData> treeMap = new HashMap<>();
 
-    public TreeSpread(String id) {
-        super(id);
+    public TreeSpread() {
+        super(ID);
     }
 
     @Override

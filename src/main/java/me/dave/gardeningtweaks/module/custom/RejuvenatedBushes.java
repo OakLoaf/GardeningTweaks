@@ -19,10 +19,12 @@ import java.io.File;
 import java.util.HashMap;
 
 public class RejuvenatedBushes extends Module implements Listener {
+    public static String ID = "REJUVENATED_BUSHES";
+
     private HashMap<Material, Material> items;
 
-    public RejuvenatedBushes(String id) {
-        super(id);
+    public RejuvenatedBushes() {
+        super(ID);
     }
 
     @Override

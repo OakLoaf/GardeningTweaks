@@ -5,6 +5,8 @@ import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.module.Module;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -13,10 +15,63 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.File;
+import java.util.HashMap;
+
 public class RejuvenatedBushes extends Module implements Listener {
+    private HashMap<Material, Material> items;
 
     public RejuvenatedBushes(String id) {
         super(id);
+    }
+
+    @Override
+    public void onEnable() {
+        GardeningTweaks plugin = GardeningTweaks.getInstance();
+
+        File configFile = new File(plugin.getDataFolder(), "modules/rejuvenated-bushes.yml");
+        if (!configFile.exists()) {
+            plugin.saveResource("modules/rejuvenated-bushes.yml", false);
+            plugin.getLogger().info("File Created: rejuvenated-bushes.yml");
+        }
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+
+        items = new HashMap<>();
+        ConfigurationSection flowersSection = config.getConfigurationSection("items");
+        if (flowersSection != null) {
+            flowersSection.getValues(false).forEach((fromRaw, toRaw) -> {
+                Material from;
+                try {
+                    from = Material.valueOf(String.valueOf(fromRaw));
+                } catch (IllegalArgumentException e) {
+                    GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material");
+                    return;
+                }
+
+                Material to;
+                try {
+                    to = Material.valueOf(String.valueOf(toRaw));
+                } catch (IllegalArgumentException e) {
+                    GardeningTweaks.getInstance().getLogger().warning("'" + toRaw + "' is not a valid material");
+                    return;
+                }
+
+                items.put(from, to);
+            });
+        }
+
+        if (items.isEmpty()) {
+            GardeningTweaks.getInstance().getLogger().warning("There are no valid materials configured, automatically disabling the 'rejuvenated-bushes' module");
+            disable();
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        if (items != null) {
+            items.clear();
+            items = null;
+        }
     }
 
     @EventHandler
@@ -37,12 +92,8 @@ public class RejuvenatedBushes extends Module implements Listener {
 
         Player player = event.getPlayer();
         ItemStack mainHand = player.getInventory().getItemInMainHand();
-        switch (mainHand.getType()) {
-            case WHEAT_SEEDS -> bushToSapling(player, mainHand, block, Material.OAK_SAPLING);
-            case BEETROOT_SEEDS -> bushToSapling(player, mainHand, block, Material.ACACIA_SAPLING);
-            case MELON_SEEDS -> bushToSapling(player, mainHand, block, Material.SPRUCE_SAPLING);
-            case PUMPKIN_SEEDS -> bushToSapling(player, mainHand, block, Material.BIRCH_SAPLING);
-            case TORCHFLOWER_SEEDS -> bushToSapling(player, mainHand, block, Material.CHERRY_SAPLING);
+        if (items.containsKey(mainHand.getType())) {
+            bushToSapling(player, mainHand, block, items.get(mainHand.getType()));
         }
     }
 

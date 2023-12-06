@@ -1,7 +1,7 @@
 package me.dave.gardeningtweaks;
 
 import me.dave.gardeningtweaks.commands.GardeningTweaksCmd;
-import me.dave.gardeningtweaks.data.ConfigManager;
+import me.dave.gardeningtweaks.config.ConfigManager;
 import me.dave.gardeningtweaks.hooks.CoreProtectHook;
 import me.dave.gardeningtweaks.hooks.ProtocolLibHook;
 import me.dave.gardeningtweaks.hooks.RealisticBiomesHook;

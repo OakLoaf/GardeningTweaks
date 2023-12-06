@@ -1,7 +1,5 @@
 package me.dave.gardeningtweaks.module.custom;
 
-import me.dave.gardeningtweaks.data.ConfigManager;
-import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.module.Module;
 import org.bukkit.GameMode;
 import org.bukkit.Material;

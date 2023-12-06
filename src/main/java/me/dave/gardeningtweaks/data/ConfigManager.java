@@ -1,6 +1,5 @@
 package me.dave.gardeningtweaks.data;
 
-import me.dave.gardeningtweaks.utils.GardeningMode;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.Material;
 import org.bukkit.TreeType;

@@ -100,11 +100,11 @@ public class BonemealFlowers extends Module implements Listener {
         if (mainHand.getType() != Material.BONE_MEAL) return;
 
         if (flowers.containsKey(blockType)) {
-            bonemealFlower(player, mainHand, block, flowers.get(blockType));
+            bonemealFlower(player, mainHand, block, flowers.get(blockType), 50);
         }
     }
 
-    public static void bonemealFlower(@Nullable Player player, @Nullable ItemStack mainHand, Block block, Material flowerType) {
+    public static void bonemealFlower(@Nullable Player player, @Nullable ItemStack mainHand, Block block, Material flowerType, int chance) {
         World world = block.getWorld();
         Location location = block.getLocation();
 
@@ -121,7 +121,7 @@ public class BonemealFlowers extends Module implements Listener {
         world.spawnParticle(Particle.VILLAGER_HAPPY, location.clone().add(0.5, 0.2, 0.5), 10, 0.2, 0.2, 0.2);
         world.playSound(location, Sound.ITEM_BONE_MEAL_USE, 0.4f, 1.4f);
 
-        if (GardeningTweaks.getRandom().nextInt(30) == 0) {
+        if (GardeningTweaks.getRandom().nextInt(100) < chance) {
             if (flowerType.createBlockData() instanceof Bisected) {
                 Block blockAbove = block.getRelative(BlockFace.UP);
                 if (blockAbove.getType() != Material.AIR) return;

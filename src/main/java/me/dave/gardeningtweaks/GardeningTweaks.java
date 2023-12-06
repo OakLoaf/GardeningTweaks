@@ -52,28 +52,6 @@ public final class GardeningTweaks extends JavaPlugin {
 
         getCommand("gardeningtweaks").setExecutor(new GardeningTweaksCmd());
 
-//        Listener[] listeners = new Listener[] {
-//            new BonemealFlowers(),
-//            new ComposterSpreader(),
-//            new CustomComposterOutput(),
-//            new CustomGrassDrops(),
-//            new Decoarsify(),
-//            new DynamicTrample(),
-//            new FastLeafDecay(),
-//            new GrowthDance(),
-//            new InteractiveHarvest(),
-//            new Lumberjack(),
-//            new RejuvenatedBushes(),
-//            new SaplingReplant(),
-//            new TreeSpread()
-//        };
-//        registerEvents(listeners);
-
-        // Version Specific Features
-//        if (Bukkit.getVersion().contains("1.20")) {
-//            getServer().getPluginManager().registerEvents(new SnifferDrops(), this);
-//        }
-
         Bukkit.getScheduler().runTaskTimer(this, () -> currTick += 1, 1, 1);
     }
 

@@ -9,7 +9,7 @@ Make your gardening life become so much easier with Gardening Tweaks. From crops
 
 <br/><br/>
 ![Features](https://imgur.com/mDGUKbj.png)
-- Allow players to bonemeal some small flowers to grow taller flowers
+- Allow players to bone meal some small flowers to grow taller flowers
 - Change what items grass drops, add more seeds to the mix so that it's easier to start off your pumpkin patch!
 - Stop your players from trampling your crops with multiple modes including to stop players with feather falling from trampling.
 - Make your tree leaves decay faster

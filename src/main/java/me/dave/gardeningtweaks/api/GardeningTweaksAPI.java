@@ -1,7 +1,7 @@
 package me.dave.gardeningtweaks.api;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.gardeningtweaks.module.custom.BonemealFlowers;
+import me.dave.gardeningtweaks.module.custom.BoneMealFlowers;
 import me.dave.gardeningtweaks.module.custom.GrowthDance;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -63,8 +63,8 @@ public class GardeningTweaksAPI {
      * @param flowerType The double tall flower to change to
      * @param chance The chance of success
      */
-    public static void bonemealFlower(Block block, Material flowerType, int chance) {
-        BonemealFlowers.bonemealFlower(null, null, block, flowerType, chance);
+    public static void boneMealFlower(Block block, Material flowerType, int chance) {
+        BoneMealFlowers.boneMealFlower(null, null, block, flowerType, chance);
     }
 
     /**
@@ -75,7 +75,7 @@ public class GardeningTweaksAPI {
      * @param flowerType The double tall flower to change to
      * @param chance The chance of success
      */
-    public static void bonemealFlower(Player player, ItemStack mainHand, Block block, Material flowerType, int chance) {
-        BonemealFlowers.bonemealFlower(player, mainHand, block, flowerType, chance);
+    public static void boneMealFlower(Player player, ItemStack mainHand, Block block, Material flowerType, int chance) {
+        BoneMealFlowers.boneMealFlower(player, mainHand, block, flowerType, chance);
     }
 }

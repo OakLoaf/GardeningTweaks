@@ -6,11 +6,11 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.block.BlockEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class FlowerBonemealEvent extends BlockEvent implements Cancellable {
+public class FlowerBoneMealEvent extends BlockEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancel = false;
 
-    public FlowerBonemealEvent(@NotNull Block block) {
+    public FlowerBoneMealEvent(@NotNull Block block) {
         super(block);
     }
 

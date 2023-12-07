@@ -1,6 +1,6 @@
 package me.dave.gardeningtweaks.module.custom;
 
-import me.dave.gardeningtweaks.api.events.FlowerBonemealEvent;
+import me.dave.gardeningtweaks.api.events.FlowerBoneMealEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.module.Module;
 import org.bukkit.*;
@@ -22,12 +22,12 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.util.HashMap;
 
-public class BonemealFlowers extends Module implements Listener {
-    public static String ID = "BONEMEAL_FLOWERS";
+public class BoneMealFlowers extends Module implements Listener {
+    public static String ID = "BONE_MEAL_FLOWERS";
 
     private HashMap<Material, Material> flowers;
 
-    public BonemealFlowers() {
+    public BoneMealFlowers() {
         super(ID);
     }
 
@@ -35,10 +35,10 @@ public class BonemealFlowers extends Module implements Listener {
     public void onEnable() {
         GardeningTweaks plugin = GardeningTweaks.getInstance();
 
-        File configFile = new File(plugin.getDataFolder(), "modules/bonemeal-flowers.yml");
+        File configFile = new File(plugin.getDataFolder(), "modules/bone-meal-flowers.yml");
         if (!configFile.exists()) {
-            plugin.saveResource("modules/bonemeal-flowers.yml", false);
-            plugin.getLogger().info("File Created: bonemeal-flowers.yml");
+            plugin.saveResource("modules/bone-meal-flowers.yml", false);
+            plugin.getLogger().info("File Created: bone-meal-flowers.yml");
         }
         YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
 
@@ -75,7 +75,7 @@ public class BonemealFlowers extends Module implements Listener {
         }
 
         if (this.flowers.isEmpty()) {
-            GardeningTweaks.getInstance().getLogger().warning("There are no valid materials configured, automatically disabling the 'bonemeal-flowers' module");
+            GardeningTweaks.getInstance().getLogger().warning("There are no valid materials configured, automatically disabling the 'bone-meal-flowers' module");
             disable();
         }
     }
@@ -102,15 +102,15 @@ public class BonemealFlowers extends Module implements Listener {
         if (mainHand.getType() != Material.BONE_MEAL) return;
 
         if (flowers.containsKey(blockType)) {
-            bonemealFlower(player, mainHand, block, flowers.get(blockType), 50);
+            boneMealFlower(player, mainHand, block, flowers.get(blockType), 50);
         }
     }
 
-    public static void bonemealFlower(@Nullable Player player, @Nullable ItemStack mainHand, Block block, Material flowerType, int chance) {
+    public static void boneMealFlower(@Nullable Player player, @Nullable ItemStack mainHand, Block block, Material flowerType, int chance) {
         World world = block.getWorld();
         Location location = block.getLocation();
 
-        if (!GardeningTweaks.callEvent(new FlowerBonemealEvent(block))) return;
+        if (!GardeningTweaks.callEvent(new FlowerBoneMealEvent(block))) return;
 
         if (player != null) {
             if (!GardeningTweaks.callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.BONE_MEAL), player, true, EquipmentSlot.HAND))) return;

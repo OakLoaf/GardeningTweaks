@@ -7,7 +7,7 @@
 
 # A list of modules and whether they are enabled
 modules:
-  bonemeal-flowers: false
+  bone-meal-flowers: false
   composter-output: true
   composter-spreader: false
   decoarsify: true

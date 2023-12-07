@@ -23,13 +23,13 @@ public class ConfigManager {
 
         ConfigurationSection modulesSection = config.getConfigurationSection("modules");
         if (modulesSection != null) {
-            if (modulesSection.getBoolean("bonemeal-flowers", false)) {
-                GardeningTweaks.getModule(BonemealFlowers.ID).ifPresentOrElse(
+            if (modulesSection.getBoolean("bone-meal-flowers", false)) {
+                GardeningTweaks.getModule(BoneMealFlowers.ID).ifPresentOrElse(
                         Module::reload,
-                        () -> GardeningTweaks.registerModule(new BonemealFlowers())
+                        () -> GardeningTweaks.registerModule(new BoneMealFlowers())
                 );
             } else {
-                GardeningTweaks.unregisterModule(BonemealFlowers.ID);
+                GardeningTweaks.unregisterModule(BoneMealFlowers.ID);
             }
 
             if (modulesSection.getBoolean("composter-output", false)) {

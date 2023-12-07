@@ -1,4 +1,4 @@
-# Flowers that can be bonemealed and the flower that they will change to
+# Flowers that can be bone mealed and the flower that they will change to
 flowers:
   POPPY: ROSE_BUSH
   PINK_TULIP: LILAC

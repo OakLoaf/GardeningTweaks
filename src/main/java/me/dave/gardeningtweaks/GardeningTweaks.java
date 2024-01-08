@@ -5,6 +5,7 @@ import me.dave.gardeningtweaks.config.ConfigManager;
 import me.dave.gardeningtweaks.hooks.*;
 import me.dave.gardeningtweaks.hooks.claims.GriefPreventionHook;
 import me.dave.gardeningtweaks.hooks.claims.HuskClaimsHook;
+import me.dave.gardeningtweaks.hooks.claims.HuskTownsHook;
 import me.dave.gardeningtweaks.listener.GardeningTweaksListener;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Cancellable;
@@ -37,6 +38,10 @@ public final class GardeningTweaks extends JavaPlugin {
         addHook("HuskClaims", () -> {
             Hook.register(new HuskClaimsHook());
             getLogger().info("GardeningTweaks now respects HuskClaims Claims.");
+        });
+        addHook("HuskTowns", () -> {
+            Hook.register(new HuskTownsHook());
+            getLogger().info("GardeningTweaks now respects HuskTowns Claims.");
         });
 
         pluginManager.registerEvents(new GardeningTweaksListener(), this);

@@ -1,9 +1,9 @@
-package me.dave.gardeningtweaks.module.custom;
+package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.api.events.CropGrowEvent;
 import me.dave.gardeningtweaks.api.events.PlayerGrowthDanceEvent;
-import me.dave.gardeningtweaks.module.Module;
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.platyutils.module.Module;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

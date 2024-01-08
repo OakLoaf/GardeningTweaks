@@ -4,17 +4,17 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
+import me.dave.platyutils.hook.Hook;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.InvocationTargetException;
 
-public class ProtocolLibHook implements Hook {
+public class ProtocolLibHook extends Hook {
     public static String ID = "protocol-lib";
     private final ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
 
-    @Override
-    public String getId() {
-        return ID;
+    public ProtocolLibHook() {
+        super(ID);
     }
 
     public void armInteractAnimation(Player player) {

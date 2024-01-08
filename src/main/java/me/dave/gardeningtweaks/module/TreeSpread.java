@@ -1,11 +1,10 @@
-package me.dave.gardeningtweaks.module.custom;
+package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.api.events.TreeSpreadBlockEvent;
-import me.dave.gardeningtweaks.hooks.Hook;
 import me.dave.gardeningtweaks.hooks.RealisticBiomesHook;
-import me.dave.gardeningtweaks.module.Module;
-import me.dave.gardeningtweaks.utils.RandomCollection;
+import me.dave.platyutils.module.Module;
+import me.dave.platyutils.utils.RandomCollection;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -171,7 +170,7 @@ public class TreeSpread extends Module implements Listener {
     }
 
     private void setBlockMaterial(Block block, Material material) {
-        Hook.get(RealisticBiomesHook.ID).ifPresentOrElse(hook -> ((RealisticBiomesHook) hook).setBlockType(block, material), () -> block.setType(material));
+        GardeningTweaks.getInstance().getHook(RealisticBiomesHook.ID).ifPresentOrElse(hook -> ((RealisticBiomesHook) hook).setBlockType(block, material), () -> block.setType(material));
     }
 
     private static class TreeData {
@@ -208,9 +207,9 @@ public class TreeSpread extends Module implements Listener {
                     GardeningTweaks.getInstance().getLogger().warning("Ignoring " + string + ", that is not a valid material.");
                     return;
                 }
-                this.flowerList.add(material, weight);
+                this.flowerList.add(weight, material);
             });
-            flowerList.forEach((string, weight) -> this.flowerList.add(Material.valueOf(string), weight));
+            flowerList.forEach((string, weight) -> this.flowerList.add(weight, Material.valueOf(string)));
         }
 
         public boolean spreadsBlocks() {

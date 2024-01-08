@@ -4,12 +4,11 @@ import net.william278.husktowns.api.HuskTownsAPI;
 import net.william278.husktowns.listener.Operation;
 import org.bukkit.Location;
 
-public class HuskTownsHook implements ClaimHook {
+public class HuskTownsHook extends ClaimHook {
     public static String ID = "husk-towns";
 
-    @Override
-    public String getId() {
-        return ID;
+    public HuskTownsHook() {
+        super(ID);
     }
 
     @Override

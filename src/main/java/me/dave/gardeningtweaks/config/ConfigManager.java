@@ -1,8 +1,8 @@
 package me.dave.gardeningtweaks.config;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.gardeningtweaks.module.Module;
-import me.dave.gardeningtweaks.module.custom.*;
+import me.dave.gardeningtweaks.module.*;
+import me.dave.platyutils.module.Module;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -24,111 +24,111 @@ public class ConfigManager {
         ConfigurationSection modulesSection = config.getConfigurationSection("modules");
         if (modulesSection != null) {
             if (modulesSection.getBoolean("bone-meal-flowers", false)) {
-                Module.get(BoneMealFlowers.ID).ifPresentOrElse(
+                GardeningTweaks.getInstance().getModule(BoneMealFlowers.ID).ifPresentOrElse(
                         Module::reload,
-                        () -> Module.register(new BoneMealFlowers())
+                        () -> GardeningTweaks.getInstance().registerModule(new BoneMealFlowers())
                 );
             } else {
-                Module.unregister(BoneMealFlowers.ID);
+                GardeningTweaks.getInstance().unregisterModule(BoneMealFlowers.ID);
             }
 
             if (modulesSection.getBoolean("composter-output", false)) {
-                Module.get(ComposterOutput.ID).ifPresentOrElse(
+                GardeningTweaks.getInstance().getModule(ComposterOutput.ID).ifPresentOrElse(
                         Module::reload,
-                        () -> Module.register(new ComposterOutput())
+                        () -> GardeningTweaks.getInstance().registerModule(new ComposterOutput())
                 );
             } else {
-                Module.unregister(ComposterOutput.ID);
+                GardeningTweaks.getInstance().unregisterModule(ComposterOutput.ID);
             }
 
             if (modulesSection.getBoolean("composter-spreader", false)) {
-                Module.get(ComposterSpreader.ID).ifPresentOrElse(
+                GardeningTweaks.getInstance().getModule(ComposterSpreader.ID).ifPresentOrElse(
                         Module::reload,
-                        () -> Module.register(new ComposterSpreader())
+                        () -> GardeningTweaks.getInstance().registerModule(new ComposterSpreader())
                 );
             } else {
-                Module.unregister(ComposterSpreader.ID);
+                GardeningTweaks.getInstance().unregisterModule(ComposterSpreader.ID);
             }
 
             if (modulesSection.getBoolean("decoarsify", false)) {
-                Module.get(Decoarsify.ID).ifPresentOrElse(
+                GardeningTweaks.getInstance().getModule(Decoarsify.ID).ifPresentOrElse(
                         Module::reload,
-                        () -> Module.register(new Decoarsify())
+                        () -> GardeningTweaks.getInstance().registerModule(new Decoarsify())
                 );
             } else {
-                Module.unregister(Decoarsify.ID);
+                GardeningTweaks.getInstance().unregisterModule(Decoarsify.ID);
             }
 
             if (modulesSection.getBoolean("dynamic-trample", false)) {
-                Module.get(DynamicTrample.ID).ifPresentOrElse(
+                GardeningTweaks.getInstance().getModule(DynamicTrample.ID).ifPresentOrElse(
                         Module::reload,
-                        () -> Module.register(new DynamicTrample())
+                        () -> GardeningTweaks.getInstance().registerModule(new DynamicTrample())
                 );
             } else {
-                Module.unregister(DynamicTrample.ID);
+                GardeningTweaks.getInstance().unregisterModule(DynamicTrample.ID);
             }
 
             if (modulesSection.getBoolean("fast-leaf-decay", false)) {
-                Module.get(FastLeafDecay.ID).ifPresentOrElse(
+                GardeningTweaks.getInstance().getModule(FastLeafDecay.ID).ifPresentOrElse(
                         Module::reload,
-                        () -> Module.register(new FastLeafDecay())
+                        () -> GardeningTweaks.getInstance().registerModule(new FastLeafDecay())
                 );
             } else {
-                Module.unregister(FastLeafDecay.ID);
+                GardeningTweaks.getInstance().unregisterModule(FastLeafDecay.ID);
             }
 
             if (modulesSection.getBoolean("grass-drops", false)) {
-                Module.get(GrassDrops.ID).ifPresentOrElse(
+                GardeningTweaks.getInstance().getModule(GrassDrops.ID).ifPresentOrElse(
                         Module::reload,
-                        () -> Module.register(new GrassDrops())
+                        () -> GardeningTweaks.getInstance().registerModule(new GrassDrops())
                 );
             } else {
-                Module.unregister(GrassDrops.ID);
+                GardeningTweaks.getInstance().unregisterModule(GrassDrops.ID);
             }
 
             if (modulesSection.getBoolean("growth-dance", false)) {
-                Module.get(GrowthDance.ID).ifPresentOrElse(
+                GardeningTweaks.getInstance().getModule(GrowthDance.ID).ifPresentOrElse(
                         Module::reload,
-                        () -> Module.register(new GrowthDance())
+                        () -> GardeningTweaks.getInstance().registerModule(new GrowthDance())
                 );
             } else {
-                Module.unregister(GrowthDance.ID);
+                GardeningTweaks.getInstance().unregisterModule(GrowthDance.ID);
             }
 
             if (modulesSection.getBoolean("interactive-harvest", false)) {
-                Module.get(InteractiveHarvest.ID).ifPresentOrElse(
+                GardeningTweaks.getInstance().getModule(InteractiveHarvest.ID).ifPresentOrElse(
                         Module::reload,
-                        () -> Module.register(new InteractiveHarvest())
+                        () -> GardeningTweaks.getInstance().registerModule(new InteractiveHarvest())
                 );
             } else {
-                Module.unregister(InteractiveHarvest.ID);
+                GardeningTweaks.getInstance().unregisterModule(InteractiveHarvest.ID);
             }
 
             if (modulesSection.getBoolean("lumberjack", false)) {
-                Module.get(Lumberjack.ID).ifPresentOrElse(
+                GardeningTweaks.getInstance().getModule(Lumberjack.ID).ifPresentOrElse(
                         Module::reload,
-                        () -> Module.register(new Lumberjack())
+                        () -> GardeningTweaks.getInstance().registerModule(new Lumberjack())
                 );
             } else {
-                Module.unregister(Lumberjack.ID);
+                GardeningTweaks.getInstance().unregisterModule(Lumberjack.ID);
             }
 
             if (modulesSection.getBoolean("rejuvenated-bushes", false)) {
-                Module.get(RejuvenatedBushes.ID).ifPresentOrElse(
+                GardeningTweaks.getInstance().getModule(RejuvenatedBushes.ID).ifPresentOrElse(
                         Module::reload,
-                        () -> Module.register(new RejuvenatedBushes())
+                        () -> GardeningTweaks.getInstance().registerModule(new RejuvenatedBushes())
                 );
             } else {
-                Module.unregister(RejuvenatedBushes.ID);
+                GardeningTweaks.getInstance().unregisterModule(RejuvenatedBushes.ID);
             }
 
             if (modulesSection.getBoolean("sapling-replant", false)) {
-                Module.get(SaplingReplant.ID).ifPresentOrElse(
+                GardeningTweaks.getInstance().getModule(SaplingReplant.ID).ifPresentOrElse(
                         Module::reload,
-                        () -> Module.register(new SaplingReplant())
+                        () -> GardeningTweaks.getInstance().registerModule(new SaplingReplant())
                 );
             } else {
-                Module.unregister(SaplingReplant.ID);
+                GardeningTweaks.getInstance().unregisterModule(SaplingReplant.ID);
             }
 
             if (modulesSection.getBoolean("sniffer-drops", false)) {
@@ -137,21 +137,21 @@ public class ConfigManager {
                     GardeningTweaks.getInstance().getLogger().severe("The 'sniffer-drops' module requires versions 1.20 and above to function");
                 }
 
-                Module.get(SnifferDrops.ID).ifPresentOrElse(
+                GardeningTweaks.getInstance().getModule(SnifferDrops.ID).ifPresentOrElse(
                         Module::reload,
-                        () -> Module.register(new SnifferDrops())
+                        () -> GardeningTweaks.getInstance().registerModule(new SnifferDrops())
                 );
             } else {
-                Module.unregister(SnifferDrops.ID);
+                GardeningTweaks.getInstance().unregisterModule(SnifferDrops.ID);
             }
 
             if (modulesSection.getBoolean("tree-spread", false)) {
-                Module.get(TreeSpread.ID).ifPresentOrElse(
+                GardeningTweaks.getInstance().getModule(TreeSpread.ID).ifPresentOrElse(
                         Module::reload,
-                        () -> Module.register(new TreeSpread())
+                        () -> GardeningTweaks.getInstance().registerModule(new TreeSpread())
                 );
             } else {
-                Module.unregister(TreeSpread.ID);
+                GardeningTweaks.getInstance().unregisterModule(TreeSpread.ID);
             }
         }
     }

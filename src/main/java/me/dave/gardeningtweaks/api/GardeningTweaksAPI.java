@@ -1,8 +1,8 @@
 package me.dave.gardeningtweaks.api;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.gardeningtweaks.module.custom.BoneMealFlowers;
-import me.dave.gardeningtweaks.module.custom.GrowthDance;
+import me.dave.gardeningtweaks.module.BoneMealFlowers;
+import me.dave.gardeningtweaks.module.GrowthDance;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

@@ -9,7 +9,7 @@ version = "2.0-BETA"
 
 repositories {
     mavenCentral()
-    mavenLocal()
+    mavenLocal() // PlatyUtils
     maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") } // Spigot
     maven { url = uri("https://repo.dmulloy2.net/repository/public/")} // ProtocolLib
     maven { url = uri("https://maven.playpro.com")} // CoreProtect
@@ -26,6 +26,7 @@ dependencies {
     compileOnly("net.william278.huskclaims:huskclaims-bukkit:1.0-8818300")
     compileOnly("net.william278:husktowns:2.6.1")
     compileOnly("com.github.TechFortress:GriefPrevention:16.18")
+    implementation(files("libs/PlatyUtils-0.1.13-BETA.jar"))
     implementation("com.github.CoolDCB:ChatColorHandler:v2.1.5")
 }
 

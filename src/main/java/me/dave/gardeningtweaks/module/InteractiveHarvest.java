@@ -1,9 +1,8 @@
-package me.dave.gardeningtweaks.module.custom;
+package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.gardeningtweaks.hooks.Hook;
 import me.dave.gardeningtweaks.hooks.ProtocolLibHook;
-import me.dave.gardeningtweaks.module.Module;
+import me.dave.platyutils.module.Module;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -110,7 +109,7 @@ public class InteractiveHarvest extends Module implements Listener {
                     }
                 }
 
-                Hook.get(ProtocolLibHook.ID).ifPresent(hook -> ((ProtocolLibHook) hook).armInteractAnimation(player));
+                GardeningTweaks.getInstance().getHook(ProtocolLibHook.ID).ifPresent(hook -> ((ProtocolLibHook) hook).armInteractAnimation(player));
 
                 world.spawnParticle(Particle.BLOCK_DUST, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3, crop);
                 world.playSound(location, crop.getSoundGroup().getBreakSound(), 1f, 1f);

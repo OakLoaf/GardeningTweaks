@@ -1,6 +1,6 @@
-package me.dave.gardeningtweaks.module.custom;
+package me.dave.gardeningtweaks.module;
 
-import me.dave.gardeningtweaks.module.Module;
+import me.dave.platyutils.module.Module;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.BlockState;

@@ -3,44 +3,51 @@ package me.dave.gardeningtweaks;
 import me.dave.gardeningtweaks.commands.GardeningTweaksCmd;
 import me.dave.gardeningtweaks.config.ConfigManager;
 import me.dave.gardeningtweaks.hooks.*;
+import me.dave.gardeningtweaks.hooks.claims.ClaimHook;
 import me.dave.gardeningtweaks.hooks.claims.GriefPreventionHook;
 import me.dave.gardeningtweaks.hooks.claims.HuskClaimsHook;
 import me.dave.gardeningtweaks.hooks.claims.HuskTownsHook;
 import me.dave.gardeningtweaks.listener.GardeningTweaksListener;
+import me.dave.platyutils.hook.Hook;
+import me.dave.platyutils.plugin.SpigotPlugin;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Random;
 
-public final class GardeningTweaks extends JavaPlugin {
+public final class GardeningTweaks extends SpigotPlugin {
     private static final Random random = new Random();
     private static GardeningTweaks plugin;
     private static ConfigManager configManager;
     private static int currTick = 0;
 
     @Override
-    public void onEnable() {
+    public void onLoad() {
         plugin = this;
+    }
+
+    @Override
+    public void onEnable() {
         configManager = new ConfigManager();
 
         PluginManager pluginManager = getServer().getPluginManager();
 
-        addHook("CoreProtect", () -> Hook.register(new CoreProtectHook()));
-        addHook("ProtocolLib", () -> Hook.register(new ProtocolLibHook()));
-        addHook("RealisticBiomes", () -> Hook.register(new RealisticBiomesHook()));
+        addHook("CoreProtect", () -> registerHook(new CoreProtectHook()));
+        addHook("ProtocolLib", () -> registerHook(new ProtocolLibHook()));
+        addHook("RealisticBiomes", () -> registerHook(new RealisticBiomesHook()));
         addHook("GriefPrevention", () -> {
-            Hook.register(new GriefPreventionHook());
+            registerHook(new GriefPreventionHook());
             getLogger().info("GardeningTweaks now respects GriefPrevention Claims.");
         });
         addHook("HuskClaims", () -> {
-            Hook.register(new HuskClaimsHook());
+            registerHook(new HuskClaimsHook());
             getLogger().info("GardeningTweaks now respects HuskClaims Claims.");
         });
         addHook("HuskTowns", () -> {
-            Hook.register(new HuskTownsHook());
+            registerHook(new HuskTownsHook());
             getLogger().info("GardeningTweaks now respects HuskTowns Claims.");
         });
 
@@ -53,7 +60,7 @@ public final class GardeningTweaks extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        Hook.unregisterAll();
+        unregisterAllHooks();
     }
 
     public static Random getRandom() {
@@ -87,5 +94,15 @@ public final class GardeningTweaks extends JavaPlugin {
             getLogger().info("Found plugin \"" + pluginName +"\". Enabling " + pluginName + " support.");
             runnable.run();
         }
+    }
+
+    public boolean hasPrivateClaimAt(Location location) {
+        for (Hook hook : hooks.values()) {
+            if (hook instanceof ClaimHook claimHook && claimHook.hasClaimAt(location)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -5,12 +5,11 @@ import net.william278.huskclaims.libraries.cloplib.operation.Operation;
 import net.william278.huskclaims.libraries.cloplib.operation.OperationType;
 import org.bukkit.Location;
 
-public class HuskClaimsHook implements ClaimHook {
+public class HuskClaimsHook extends ClaimHook {
     public static String ID = "husk-claims";
 
-    @Override
-    public String getId() {
-        return ID;
+    public HuskClaimsHook() {
+        super(ID);
     }
 
     @Override

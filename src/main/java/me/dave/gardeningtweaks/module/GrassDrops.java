@@ -1,8 +1,8 @@
-package me.dave.gardeningtweaks.module.custom;
+package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.gardeningtweaks.module.Module;
-import me.dave.gardeningtweaks.utils.RandomCollection;
+import me.dave.platyutils.module.Module;
+import me.dave.platyutils.utils.RandomCollection;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -52,7 +52,7 @@ public class GrassDrops extends Module implements Listener {
                     return;
                 }
 
-                items.add(from, Double.parseDouble(String.valueOf(toRaw)));
+                items.add(Double.parseDouble(String.valueOf(toRaw)), from);
             });
         }
     }

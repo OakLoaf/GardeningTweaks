@@ -1,5 +1,6 @@
-package me.dave.gardeningtweaks.hooks;
+package me.dave.gardeningtweaks.hooks.claims;
 
+import me.dave.gardeningtweaks.hooks.claims.ClaimHook;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.Location;
 

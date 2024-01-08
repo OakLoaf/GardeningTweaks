@@ -1,5 +1,6 @@
-package me.dave.gardeningtweaks.hooks;
+package me.dave.gardeningtweaks.hooks.claims;
 
+import me.dave.gardeningtweaks.hooks.claims.ClaimHook;
 import net.william278.huskclaims.api.BukkitHuskClaimsAPI;
 import net.william278.huskclaims.libraries.cloplib.operation.Operation;
 import net.william278.huskclaims.libraries.cloplib.operation.OperationType;

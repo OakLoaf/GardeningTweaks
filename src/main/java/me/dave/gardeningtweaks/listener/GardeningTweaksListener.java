@@ -1,7 +1,7 @@
 package me.dave.gardeningtweaks.listener;
 
 import me.dave.gardeningtweaks.api.events.SaplingReplantEvent;
-import me.dave.gardeningtweaks.hooks.ClaimHook;
+import me.dave.gardeningtweaks.hooks.claims.ClaimHook;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 

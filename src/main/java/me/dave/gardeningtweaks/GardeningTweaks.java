@@ -3,6 +3,8 @@ package me.dave.gardeningtweaks;
 import me.dave.gardeningtweaks.commands.GardeningTweaksCmd;
 import me.dave.gardeningtweaks.config.ConfigManager;
 import me.dave.gardeningtweaks.hooks.*;
+import me.dave.gardeningtweaks.hooks.claims.GriefPreventionHook;
+import me.dave.gardeningtweaks.hooks.claims.HuskClaimsHook;
 import me.dave.gardeningtweaks.listener.GardeningTweaksListener;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Cancellable;

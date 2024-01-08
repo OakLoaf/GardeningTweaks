@@ -1,5 +1,6 @@
-package me.dave.gardeningtweaks.hooks;
+package me.dave.gardeningtweaks.hooks.claims;
 
+import me.dave.gardeningtweaks.hooks.Hook;
 import org.bukkit.Location;
 
 public interface ClaimHook extends Hook {

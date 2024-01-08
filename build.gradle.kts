@@ -1,8 +1,7 @@
 plugins {
     java
-    `kotlin-dsl`
     `maven-publish`
-    id("com.github.johnrengelman.shadow") version("7.1.2")
+    id("com.github.johnrengelman.shadow") version("8.1.1")
 }
 
 group = "me.dave"
@@ -11,44 +10,44 @@ version = "2.0-BETA"
 repositories {
     mavenCentral()
     mavenLocal()
-    maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
-    maven { url = uri("https://oss.sonatype.org/content/groups/public/") }
-    maven { url = uri("https://repo.dmulloy2.net/repository/public/")}
-    maven { url = uri("https://maven.playpro.com")}
-    maven { url = uri("https://jitpack.io")}
+    maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") } // Spigot
+    maven { url = uri("https://repo.dmulloy2.net/repository/public/")} // ProtocolLib
+    maven { url = uri("https://maven.playpro.com")} // CoreProtect
+    maven { url = uri("https://repo.william278.net/snapshots") } // HuskClaims
+    maven { url = uri("https://jitpack.io")} // ChatColorHandler, GardeningTweaks, GriefPrevention, RealisticBiomes
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.20-R0.1-SNAPSHOT")
-    compileOnly("net.coreprotect:coreprotect:21.3")
+    compileOnly("org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT")
     compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
+    compileOnly("net.coreprotect:coreprotect:21.3")
     compileOnly("com.github.Maroon28:RealisticBiomes:3d292ea32a")
-    shadow("com.github.CoolDCB:ChatColorHandler:v2.1.5")
+    compileOnly("net.william278.huskclaims:huskclaims-bukkit:1.0-8818300")
+    compileOnly("com.github.TechFortress:GriefPrevention:16.18")
+    implementation("com.github.CoolDCB:ChatColorHandler:v2.1.5")
 }
 
 java {
-    configurations.shadow.get().dependencies.remove(dependencies.gradleApi())
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
-tasks.shadowJar {
-    minimize()
-    configurations = listOf(project.configurations.shadow.get())
-    val folder = System.getenv("pluginFolder_1-20")
-    if (folder != null) destinationDirectory.set(file(folder))
-    archiveFileName.set("${project.name}-${project.version}.jar")
-}
+tasks {
+    withType<JavaCompile> {
+        options.encoding = "UTF-8"
+    }
 
-tasks.withType<JavaCompile>() {
-    options.encoding = "UTF-8"
-}
+    shadowJar {
+        val folder = System.getenv("pluginFolder_1-20")
+        if (folder != null) destinationDirectory.set(file(folder))
+        archiveFileName.set("${project.name}-${project.version}.jar")
+    }
 
-// Handles version variables
-tasks.processResources {
-    expand(project.properties)
+    processResources{
+        expand(project.properties)
 
-    inputs.property("version", rootProject.version)
-    filesMatching("plugin.yml") {
-        expand("version" to rootProject.version)
+        inputs.property("version", rootProject.version)
+        filesMatching("plugin.yml") {
+            expand("version" to rootProject.version)
+        }
     }
 }

@@ -8,8 +8,14 @@ import org.bukkit.entity.Player;
 
 import java.lang.reflect.InvocationTargetException;
 
-public class ProtocolLibHook {
+public class ProtocolLibHook implements Hook {
+    public static String ID = "protocol-lib";
     private final ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
+
+    @Override
+    public String getId() {
+        return ID;
+    }
 
     public void armInteractAnimation(Player player) {
         if (protocolManager != null) {

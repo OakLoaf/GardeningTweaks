@@ -2,6 +2,7 @@ package me.dave.gardeningtweaks.module.custom;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.api.events.SaplingReplantEvent;
+import me.dave.gardeningtweaks.hooks.ClaimHook;
 import me.dave.gardeningtweaks.module.Module;
 import org.bukkit.*;
 import org.bukkit.block.Block;

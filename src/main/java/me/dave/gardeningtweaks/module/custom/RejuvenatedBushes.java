@@ -2,6 +2,8 @@ package me.dave.gardeningtweaks.module.custom;
 
 import me.dave.gardeningtweaks.api.events.BushRejuvenateEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.gardeningtweaks.hooks.Hook;
+import me.dave.gardeningtweaks.hooks.ProtocolLibHook;
 import me.dave.gardeningtweaks.module.Module;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -105,7 +107,7 @@ public class RejuvenatedBushes extends Module implements Listener {
         if (player.getGameMode() != GameMode.CREATIVE) mainHand.setAmount(mainHand.getAmount() - 1);
         block.setType(saplingType);
 
-        if (GardeningTweaks.protocolLibHook != null) GardeningTweaks.protocolLibHook.armInteractAnimation(player);
+        Hook.get(ProtocolLibHook.ID).ifPresent(hook -> ((ProtocolLibHook) hook).armInteractAnimation(player));
 
         World world = block.getWorld();
         Location location = block.getLocation();

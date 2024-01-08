@@ -2,6 +2,8 @@ package me.dave.gardeningtweaks.module.custom;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.api.events.TreeSpreadBlockEvent;
+import me.dave.gardeningtweaks.hooks.Hook;
+import me.dave.gardeningtweaks.hooks.RealisticBiomesHook;
 import me.dave.gardeningtweaks.module.Module;
 import me.dave.gardeningtweaks.utils.RandomCollection;
 import org.bukkit.Bukkit;
@@ -169,11 +171,7 @@ public class TreeSpread extends Module implements Listener {
     }
 
     private void setBlockMaterial(Block block, Material material) {
-        if (GardeningTweaks.realisticBiomesHook != null) {
-            GardeningTweaks.realisticBiomesHook.setBlockType(block, material);
-        } else {
-            block.setType(material);
-        }
+        Hook.get(RealisticBiomesHook.ID).ifPresentOrElse(hook -> ((RealisticBiomesHook) hook).setBlockType(block, material), () -> block.setType(material));
     }
 
     private static class TreeData {

@@ -10,8 +10,14 @@ import org.bukkit.plugin.Plugin;
 import java.util.Arrays;
 import java.util.List;
 
-public class CoreProtectHook {
-    CoreProtectAPI coreProtect;
+public class CoreProtectHook implements Hook {
+    public static String ID = "core-protect";
+    private CoreProtectAPI coreProtect;
+
+    @Override
+    public String getId() {
+        return ID;
+    }
 
     public CoreProtectHook() {
         Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("CoreProtect");

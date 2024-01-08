@@ -79,46 +79,6 @@ public final class GardeningTweaks extends JavaPlugin {
         }
     }
 
-    private void registerEvents(Listener[] listeners) {
-        for (Listener listener : listeners) {
-            getServer().getPluginManager().registerEvents(listener, this);
-        }
-    }
-
-//    public static Optional<Module> getModule(String id) {
-//        return Optional.ofNullable(modules.get(id));
-//    }
-
-//    public static void registerModule(Module module) {
-//        if (modules.containsKey(module.getId())) {
-//            GardeningTweaks.getInstance().getLogger().severe("Failed to register module with id '" + module.getId() + "', a module with this id is already running");
-//            return;
-//        }
-//
-//        modules.put(module.getId(), module);
-//        module.enable();
-//        if (module instanceof Listener listener) {
-//            Bukkit.getServer().getPluginManager().registerEvents(listener, getInstance());
-//        }
-//    }
-
-//    public static void unregisterModule(String moduleId) {
-//        Module module = modules.get(moduleId);
-//        if (module != null) {
-//            module.disable();
-//
-//            if (module instanceof Listener listener) {
-//                HandlerList.unregisterAll(listener);
-//            }
-//        }
-//        modules.remove(moduleId);
-//    }
-//
-//    public static void unregisterAllModules() {
-//        modules.values().forEach(Module::disable);
-//        modules.clear();
-//    }
-
     private void addHook(String pluginName, Runnable runnable) {
         PluginManager pluginManager = getServer().getPluginManager();
         if (pluginManager.getPlugin(pluginName) != null && pluginManager.getPlugin(pluginName).isEnabled()) {

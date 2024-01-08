@@ -8,6 +8,8 @@ softdepend:
   - CoreProtect
   - ProtocolLib
   - RealisticBiomes
+  - GriefPrevention
+  - HuskClaims
 commands:
   gardeningtweaks:
     description: The main GardeningTweaks Command.

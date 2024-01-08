@@ -25,10 +25,17 @@ public final class GardeningTweaks extends JavaPlugin {
 
         PluginManager pluginManager = getServer().getPluginManager();
 
-        if (pluginManager.getPlugin("CoreProtect") != null) {
-            coreProtectHook = new CoreProtectHook();
-            plugin.getLogger().info("Found plugin \"CoreProtect\". CoreProtect support enabled.");
-        }
+        addHook("CoreProtect", () -> Hook.register(new CoreProtectHook()));
+        addHook("ProtocolLib", () -> Hook.register(new ProtocolLibHook()));
+        addHook("RealisticBiomes", () -> Hook.register(new RealisticBiomesHook()));
+        addHook("GriefPrevention", () -> {
+            Hook.register(new GriefPreventionHook());
+            getLogger().info("GardeningTweaks now respects GriefPrevention Claims.");
+        });
+        addHook("HuskClaims", () -> {
+            Hook.register(new HuskClaimsHook());
+            getLogger().info("GardeningTweaks now respects HuskClaims Claims.");
+        });
 
         pluginManager.registerEvents(new GardeningTweaksListener(), this);
 

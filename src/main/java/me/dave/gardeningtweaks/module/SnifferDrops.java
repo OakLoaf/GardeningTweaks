@@ -1,8 +1,8 @@
 package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.gardeningtweaks.utils.RandomCollection;
 import me.dave.platyutils.module.Module;
+import me.dave.platyutils.utils.RandomCollection;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -46,7 +46,7 @@ public class SnifferDrops extends Module implements Listener {
                     return;
                 }
 
-                drops.add(from, Double.parseDouble(String.valueOf(toRaw)));
+                drops.add(Double.parseDouble(String.valueOf(toRaw)), from);
             });
         }
     }

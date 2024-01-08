@@ -6,8 +6,8 @@ import org.bukkit.Location;
 public class GriefPreventionHook extends ClaimHook {
     public static String ID = "grief-prevention";
 
-    public GriefPreventionHook(String id) {
-        super(id);
+    public GriefPreventionHook() {
+        super(ID);
     }
 
     @Override

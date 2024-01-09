@@ -99,15 +99,6 @@ public final class GardeningTweaks extends SpigotPlugin {
         }
     }
 
-    public static void backupFile(File file) {
-        File parent = file.getParentFile();
-        String name = file.getName();
-
-        if (!file.renameTo(new File(parent, FilenameUtils.removeExtension(name) + "-old-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy--HH-mm-ss")) + ".yml"))) {
-            GardeningTweaks.getInstance().getLogger().severe("Failed to rename file '" + name + "'");
-        }
-    }
-
     private void addHook(String pluginName, Runnable runnable) {
         PluginManager pluginManager = getServer().getPluginManager();
         if (pluginManager.getPlugin(pluginName) != null && pluginManager.getPlugin(pluginName).isEnabled()) {

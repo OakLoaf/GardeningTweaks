@@ -27,13 +27,8 @@ public class SnifferDrops extends Module implements Listener {
     @Override
     public void onEnable() {
         GardeningTweaks plugin = GardeningTweaks.getInstance();
-
-        File configFile = new File(plugin.getDataFolder(), "modules/sniffer-drops.yml");
-        if (!configFile.exists()) {
-            plugin.saveResource("modules/sniffer-drops.yml", false);
-            plugin.getLogger().info("File Created: sniffer-drops.yml");
-        }
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+        plugin.saveDefaultResource("modules/sniffer-drops.yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/sniffer-drops.yml"));
 
         drops = new RandomCollection<>();
         ConfigurationSection itemsSection = config.getConfigurationSection("items");

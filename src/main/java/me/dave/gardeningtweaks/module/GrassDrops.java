@@ -33,13 +33,8 @@ public class GrassDrops extends Module implements Listener {
     @Override
     public void onEnable() {
         GardeningTweaks plugin = GardeningTweaks.getInstance();
-
-        File configFile = new File(plugin.getDataFolder(), "modules/grass-drops.yml");
-        if (!configFile.exists()) {
-            plugin.saveResource("modules/grass-drops.yml", false);
-            plugin.getLogger().info("File Created: grass-drops.yml");
-        }
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+        plugin.saveDefaultResource("modules/grass-drops.yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/grass-drops.yml"));
 
         items = new RandomCollection<>();
         ConfigurationSection itemsSection = config.getConfigurationSection("items");

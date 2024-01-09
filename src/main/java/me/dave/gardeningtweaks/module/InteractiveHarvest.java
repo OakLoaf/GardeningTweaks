@@ -38,13 +38,8 @@ public class InteractiveHarvest extends Module implements Listener {
     @Override
     public void onEnable() {
         GardeningTweaks plugin = GardeningTweaks.getInstance();
-
-        File configFile = new File(plugin.getDataFolder(), "modules/interactive-harvest.yml");
-        if (!configFile.exists()) {
-            plugin.saveResource("modules/interactive-harvest.yml", false);
-            plugin.getLogger().info("File Created: interactive-harvest.yml");
-        }
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+        plugin.saveDefaultResource("modules/interactive-harvest.yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/interactive-harvest.yml"));
 
         blocks = config.getStringList("blocks").stream().map((materialRaw) -> {
             Material material = StringUtils.getEnum(materialRaw, Material.class).orElse(null);

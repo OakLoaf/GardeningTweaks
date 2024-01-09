@@ -31,13 +31,8 @@ public class DynamicTrample extends Module implements Listener {
     @Override
     public void onEnable() {
         GardeningTweaks plugin = GardeningTweaks.getInstance();
-
-        File configFile = new File(plugin.getDataFolder(), "modules/dynamic-trample.yml");
-        if (!configFile.exists()) {
-            plugin.saveResource("modules/dynamic-trample.yml", false);
-            plugin.getLogger().info("File Created: dynamic-trample.yml");
-        }
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+        plugin.saveDefaultResource("modules/dynamic-trample.yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/dynamic-trample.yml"));
 
         featherFalling = config.getBoolean("feather-falling", false);
         creativeMode = config.getBoolean("creative-mode", false);

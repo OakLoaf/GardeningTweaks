@@ -37,13 +37,8 @@ public class SaplingReplant extends Module implements Listener {
     @Override
     public void onEnable() {
         GardeningTweaks plugin = GardeningTweaks.getInstance();
-
-        File configFile = new File(plugin.getDataFolder(), "modules/sapling-replant.yml");
-        if (!configFile.exists()) {
-            plugin.saveResource("modules/sapling-replant.yml", false);
-            plugin.getLogger().info("File Created: sapling-replant.yml");
-        }
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+        plugin.saveDefaultResource("modules/sapling-replant.yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/sapling-replant.yml"));
 
         includePlayerDrops = config.getBoolean("include-player-drops", false);
         includeLeafDrops = config.getBoolean("include-leaf-drops", false);

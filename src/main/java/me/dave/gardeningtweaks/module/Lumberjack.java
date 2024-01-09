@@ -33,13 +33,8 @@ public class Lumberjack extends Module implements Listener {
     @Override
     public void onEnable() {
         GardeningTweaks plugin = GardeningTweaks.getInstance();
-
-        File configFile = new File(plugin.getDataFolder(), "modules/lumberjack.yml");
-        if (!configFile.exists()) {
-            plugin.saveResource("modules/lumberjack.yml", false);
-            plugin.getLogger().info("File Created: lumberjack.yml");
-        }
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+        plugin.saveDefaultResource("modules/lumberjack.yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/lumberjack.yml"));
 
         blocks = config.getStringList("blocks").stream().map((materialRaw) -> {
             Material material = StringUtils.getEnum(materialRaw, Material.class).orElse(null);

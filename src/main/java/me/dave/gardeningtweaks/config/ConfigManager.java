@@ -7,19 +7,31 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.io.File;
+
 public class ConfigManager {
 
     public ConfigManager() {
         GardeningTweaks.getInstance().saveDefaultConfig();
-
-        reloadConfig();
     }
 
     public void reloadConfig() {
+        reloadConfig(true);
+    }
+
+    public void reloadConfig(boolean checkVersion) {
         GardeningTweaks plugin = GardeningTweaks.getInstance();
 
         plugin.reloadConfig();
         FileConfiguration config = plugin.getConfig();
+
+        int configVersion = config.getInt("config-version", -1);
+        if (checkVersion && configVersion == -1) {
+            GardeningTweaks.backupFile(new File(plugin.getDataFolder(), "config.yml"));
+            plugin.saveResource("config.yml", true);
+            reloadConfig(false);
+            return;
+        }
 
         ConfigurationSection modulesSection = config.getConfigurationSection("modules");
         if (modulesSection != null) {

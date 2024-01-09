@@ -44,13 +44,8 @@ public class FastLeafDecay extends Module implements Listener {
     @Override
     public void onEnable() {
         GardeningTweaks plugin = GardeningTweaks.getInstance();
-
-        File configFile = new File(plugin.getDataFolder(), "modules/fast-leaf-decay.yml");
-        if (!configFile.exists()) {
-            plugin.saveResource("modules/fast-leaf-decay.yml", false);
-            plugin.getLogger().info("File Created: fast-leaf-decay.yml");
-        }
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+        plugin.saveDefaultResource("modules/fast-leaf-decay.yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/fast-leaf-decay.yml"));
 
         blockScheduleMap = new HashMap<>();
 

@@ -21,3 +21,6 @@ modules:
   rejuvenated-bushes: false
   sapling-replant: false
   sniffer-drops: false
+
+# Don't edit this value
+config-version: 2

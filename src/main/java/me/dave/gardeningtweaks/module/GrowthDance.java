@@ -37,13 +37,8 @@ public class GrowthDance extends Module implements Listener {
     @Override
     public void onEnable() {
         GardeningTweaks plugin = GardeningTweaks.getInstance();
-
-        File configFile = new File(plugin.getDataFolder(), "modules/growth-dance.yml");
-        if (!configFile.exists()) {
-            plugin.saveResource("modules/growth-dance.yml", false);
-            plugin.getLogger().info("File Created: growth-dance.yml");
-        }
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+        plugin.saveDefaultResource("modules/growth-dance.yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/growth-dance.yml"));
 
         cooldownList = new HashSet<>();
 

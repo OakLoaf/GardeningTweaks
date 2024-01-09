@@ -37,13 +37,8 @@ public class TreeSpread extends Module implements Listener {
     @Override
     public void onEnable() {
         GardeningTweaks plugin = GardeningTweaks.getInstance();
-
-        File configFile = new File(plugin.getDataFolder(), "modules/tree-spread.yml");
-        if (!configFile.exists()) {
-            plugin.saveResource("modules/tree-spread.yml", false);
-            plugin.getLogger().info("File Created: tree-spread.yml");
-        }
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+        plugin.saveDefaultResource("modules/tree-spread.yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/tree-spread.yml"));;
 
         treeMap.clear();
 

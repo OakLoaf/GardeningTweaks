@@ -37,13 +37,8 @@ public class ComposterOutput extends Module implements Listener {
     @Override
     public void onEnable() {
         GardeningTweaks plugin = GardeningTweaks.getInstance();
-
-        File configFile = new File(plugin.getDataFolder(), "modules/composter-output.yml");
-        if (!configFile.exists()) {
-            plugin.saveResource("modules/composter-output.yml", false);
-            plugin.getLogger().info("File Created: composter-output.yml");
-        }
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+        plugin.saveDefaultResource("modules/composter-output.yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/composter-output.yml"));
 
         items = new RandomCollection<>();
         ConfigurationSection itemsSection = config.getConfigurationSection("items");

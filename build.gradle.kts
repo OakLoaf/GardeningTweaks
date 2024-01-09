@@ -26,7 +26,7 @@ dependencies {
     compileOnly("net.william278.huskclaims:huskclaims-bukkit:1.0-8818300")
     compileOnly("net.william278:husktowns:2.6.1")
     compileOnly("com.github.TechFortress:GriefPrevention:16.18")
-    implementation(files("libs/PlatyUtils-0.1.13-BETA.jar"))
+    implementation(files("libs/PlatyUtils-0.1.15-BETA.jar"))
     implementation("com.github.CoolDCB:ChatColorHandler:v2.1.5")
 }
 

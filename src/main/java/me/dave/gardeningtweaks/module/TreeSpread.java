@@ -207,9 +207,9 @@ public class TreeSpread extends Module implements Listener {
                     GardeningTweaks.getInstance().getLogger().warning("Ignoring " + string + ", that is not a valid material.");
                     return;
                 }
-                this.flowerList.add(weight, material);
+                this.flowerList.add(material, weight);
             });
-            flowerList.forEach((string, weight) -> this.flowerList.add(weight, Material.valueOf(string)));
+            flowerList.forEach((string, weight) -> this.flowerList.add(Material.valueOf(string), weight));
         }
 
         public boolean spreadsBlocks() {

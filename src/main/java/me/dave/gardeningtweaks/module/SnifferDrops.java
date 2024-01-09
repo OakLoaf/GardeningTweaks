@@ -3,6 +3,7 @@ package me.dave.gardeningtweaks.module;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.platyutils.module.Module;
 import me.dave.platyutils.utils.RandomCollection;
+import me.dave.platyutils.utils.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -38,15 +39,10 @@ public class SnifferDrops extends Module implements Listener {
         ConfigurationSection itemsSection = config.getConfigurationSection("items");
         if (itemsSection != null) {
             itemsSection.getValues(false).forEach((fromRaw, toRaw) -> {
-                Material from;
-                try {
-                    from = Material.valueOf(String.valueOf(fromRaw));
-                } catch (IllegalArgumentException e) {
-                    GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material");
-                    return;
-                }
-
-                drops.add(Double.parseDouble(String.valueOf(toRaw)), from);
+                StringUtils.getEnum(String.valueOf(fromRaw), Material.class).ifPresentOrElse(
+                    (material) -> drops.add(material, Double.parseDouble(String.valueOf(toRaw))),
+                    () -> GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material")
+                );
             });
         }
     }

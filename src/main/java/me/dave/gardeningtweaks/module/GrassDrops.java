@@ -52,7 +52,7 @@ public class GrassDrops extends Module implements Listener {
                     return;
                 }
 
-                items.add(Double.parseDouble(String.valueOf(toRaw)), from);
+                items.add(from, Double.parseDouble(String.valueOf(toRaw)));
             });
         }
     }

@@ -4,6 +4,7 @@ import me.dave.gardeningtweaks.api.events.BushRejuvenateEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.hooks.ProtocolLibHook;
 import me.dave.platyutils.module.Module;
+import me.dave.platyutils.utils.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
@@ -43,6 +44,8 @@ public class RejuvenatedBushes extends Module implements Listener {
         ConfigurationSection flowersSection = config.getConfigurationSection("items");
         if (flowersSection != null) {
             flowersSection.getValues(false).forEach((fromRaw, toRaw) -> {
+                optionalMaterial = StringUtils.getEnum(String.valueOf(fromRaw), Material.class);
+
                 Material from;
                 try {
                     from = Material.valueOf(String.valueOf(fromRaw));

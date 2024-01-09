@@ -3,6 +3,7 @@ package me.dave.gardeningtweaks.module;
 import me.dave.gardeningtweaks.api.events.ComposterCropGrowEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.platyutils.module.Module;
+import me.dave.platyutils.utils.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
@@ -15,7 +16,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
@@ -48,46 +48,43 @@ public class ComposterSpreader extends Module implements Listener {
 
         int timer = config.getInt("timer", 10) * 20;
         chance = (int) Math.round(config.getDouble("chance", 50));
-        blocks = config.getStringList("blocks").stream().map((string) -> {
-            try {
-                return Material.valueOf(string);
-            } catch (IllegalArgumentException err) {
-                plugin.getLogger().warning("Ignoring " + string + ", that is not a valid material.");
-                return null;
+        blocks = config.getStringList("blocks").stream().map((materialRaw) -> {
+            Material material = StringUtils.getEnum(materialRaw, Material.class).orElse(null);
+            if (material == null) {
+                plugin.getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.");
             }
+
+            return material;
         }).filter(Objects::nonNull).toList();
 
         composterLocationList = new HashSet<>();
-        task = new BukkitRunnable() {
-            @Override
-            public void run() {
-                composterLocationList.forEach(location -> {
-                    Block block = location.getBlock();
+        task = Bukkit.getScheduler().runTaskTimer(plugin, () ->  {
+            composterLocationList.forEach(location -> {
+                Block block = location.getBlock();
 
-                    if (block.getType() != Material.COMPOSTER) {
-                        composterLocationList.remove(location);
-                        return;
-                    }
+                if (block.getType() != Material.COMPOSTER) {
+                    composterLocationList.remove(location);
+                    return;
+                }
 
-                    if (!(block.getBlockData() instanceof Levelled composterData)) return;
-                    if (composterData.getLevel() == 0) return;
+                if (!(block.getBlockData() instanceof Levelled composterData)) return;
+                if (composterData.getLevel() == 0) return;
 
-                    if (GardeningTweaks.getRandom().nextInt(100) < chance) {
-                        if (growCrops(location)) {
-                            composterData.setLevel(composterData.getLevel() - composterData.getLevel() == composterData.getMaximumLevel() ? -2 : 1);
-                            block.setBlockData(composterData);
+                if (GardeningTweaks.getRandom().nextInt(100) < chance) {
+                    if (growCrops(location)) {
+                        composterData.setLevel(composterData.getLevel() - composterData.getLevel() == composterData.getMaximumLevel() ? -2 : 1);
+                        block.setBlockData(composterData);
 
-                            Location blockCenter = location.clone().add(0.5, 1, 0.5);
-                            World world = blockCenter.getWorld();
-                            if (world != null) {
-                                world.spawnParticle(Particle.COMPOSTER, blockCenter, 20, 0.4, 0, 0.4);
-                                world.playSound(blockCenter, Sound.BLOCK_COMPOSTER_FILL_SUCCESS, 1f, 1f);
-                            }
+                        Location blockCenter = location.clone().add(0.5, 1, 0.5);
+                        World world = blockCenter.getWorld();
+                        if (world != null) {
+                            world.spawnParticle(Particle.COMPOSTER, blockCenter, 20, 0.4, 0, 0.4);
+                            world.playSound(blockCenter, Sound.BLOCK_COMPOSTER_FILL_SUCCESS, 1f, 1f);
                         }
                     }
-                });
-            }
-        }.runTaskTimer(plugin, 600, timer);
+                }
+            });
+        }, 600, timer);
     }
 
     @Override

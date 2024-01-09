@@ -3,6 +3,7 @@ package me.dave.gardeningtweaks.module;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.platyutils.module.Module;
 import me.dave.platyutils.utils.RandomCollection;
+import me.dave.platyutils.utils.StringUtils;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -44,15 +45,10 @@ public class GrassDrops extends Module implements Listener {
         ConfigurationSection itemsSection = config.getConfigurationSection("items");
         if (itemsSection != null) {
             itemsSection.getValues(false).forEach((fromRaw, toRaw) -> {
-                Material from;
-                try {
-                    from = Material.valueOf(String.valueOf(fromRaw));
-                } catch (IllegalArgumentException e) {
-                    GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material");
-                    return;
-                }
-
-                items.add(from, Double.parseDouble(String.valueOf(toRaw)));
+                StringUtils.getEnum(String.valueOf(fromRaw), Material.class).ifPresentOrElse(
+                    from ->  items.add(from, Double.parseDouble(String.valueOf(toRaw))),
+                    () -> GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material")
+                );
             });
         }
     }

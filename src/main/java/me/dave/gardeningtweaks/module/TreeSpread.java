@@ -5,6 +5,7 @@ import me.dave.gardeningtweaks.api.events.TreeSpreadBlockEvent;
 import me.dave.gardeningtweaks.hooks.RealisticBiomesHook;
 import me.dave.platyutils.module.Module;
 import me.dave.platyutils.utils.RandomCollection;
+import me.dave.platyutils.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -179,37 +180,24 @@ public class TreeSpread extends Module implements Listener {
         private final RandomCollection<Material> flowerList = new RandomCollection<>();
 
         public TreeData(List<String> spreadBlocks, List<String> spreadBlocksOn, HashMap<String, Double> flowerList) {
-            spreadBlocks.forEach(string -> {
-                Material material;
-                try {
-                    material = Material.valueOf(string);
-                } catch (IllegalArgumentException err) {
-                    GardeningTweaks.getInstance().getLogger().warning("Ignoring " + string + ", that is not a valid material.");
-                    return;
-                }
-                this.spreadBlocks.add(material);
+            spreadBlocks.forEach(materialRaw -> {
+                StringUtils.getEnum(materialRaw, Material.class).ifPresentOrElse(
+                    this.spreadBlocks::add,
+                    () -> GardeningTweaks.getInstance().getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.")
+                );
             });
-            spreadBlocksOn.forEach(string -> {
-                Material material;
-                try {
-                    material = Material.valueOf(string);
-                } catch (IllegalArgumentException err) {
-                    GardeningTweaks.getInstance().getLogger().warning("Ignoring " + string + ", that is not a valid material.");
-                    return;
-                }
-                this.spreadBlocksOn.add(material);
+            spreadBlocksOn.forEach(materialRaw -> {
+                StringUtils.getEnum(materialRaw, Material.class).ifPresentOrElse(
+                    this.spreadBlocksOn::add,
+                    () -> GardeningTweaks.getInstance().getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.")
+                );
             });
-            flowerList.forEach((string, weight) -> {
-                Material material;
-                try {
-                    material = Material.valueOf(string);
-                } catch (IllegalArgumentException err) {
-                    GardeningTweaks.getInstance().getLogger().warning("Ignoring " + string + ", that is not a valid material.");
-                    return;
-                }
-                this.flowerList.add(material, weight);
+            flowerList.forEach((materialRaw, weight) -> {
+                StringUtils.getEnum(materialRaw, Material.class).ifPresentOrElse(
+                    material -> this.flowerList.add(material, weight),
+                    () -> GardeningTweaks.getInstance().getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.")
+                );
             });
-            flowerList.forEach((string, weight) -> this.flowerList.add(Material.valueOf(string), weight));
         }
 
         public boolean spreadsBlocks() {

@@ -4,6 +4,7 @@ import me.dave.gardeningtweaks.api.events.CropGrowEvent;
 import me.dave.gardeningtweaks.api.events.PlayerGrowthDanceEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.platyutils.module.Module;
+import me.dave.platyutils.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -47,13 +48,13 @@ public class GrowthDance extends Module implements Listener {
         cooldownList = new HashSet<>();
 
         cooldownLength = config.getInt("growth-rate", 2);
-        blocks = config.getStringList("blocks").stream().map((string) -> {
-            try {
-                return Material.valueOf(string);
-            } catch (IllegalArgumentException err) {
-                plugin.getLogger().warning("Ignoring " + string + ", that is not a valid material.");
-                return null;
+        blocks = config.getStringList("blocks").stream().map((materialRaw) -> {
+            Material material = StringUtils.getEnum(materialRaw, Material.class).orElse(null);
+            if (material == null) {
+                plugin.getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.");
             }
+
+            return material;
         }).filter(Objects::nonNull).toList();
     }
 

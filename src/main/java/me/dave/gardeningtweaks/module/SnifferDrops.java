@@ -38,12 +38,10 @@ public class SnifferDrops extends Module implements Listener {
         drops = new RandomCollection<>();
         ConfigurationSection itemsSection = config.getConfigurationSection("items");
         if (itemsSection != null) {
-            itemsSection.getValues(false).forEach((fromRaw, toRaw) -> {
-                StringUtils.getEnum(String.valueOf(fromRaw), Material.class).ifPresentOrElse(
-                    (material) -> drops.add(material, Double.parseDouble(String.valueOf(toRaw))),
-                    () -> GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material")
-                );
-            });
+            itemsSection.getValues(false).forEach((fromRaw, toRaw) -> StringUtils.getEnum(fromRaw, Material.class).ifPresentOrElse(
+                (material) -> drops.add(material, Double.parseDouble(String.valueOf(toRaw))),
+                () -> GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material")
+            ));
         }
     }
 

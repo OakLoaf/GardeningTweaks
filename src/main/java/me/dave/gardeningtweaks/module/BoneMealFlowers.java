@@ -4,6 +4,7 @@ import me.dave.gardeningtweaks.api.events.FlowerBoneMealEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.hooks.ProtocolLibHook;
 import me.dave.platyutils.module.Module;
+import me.dave.platyutils.utils.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -47,31 +48,25 @@ public class BoneMealFlowers extends Module implements Listener {
         ConfigurationSection flowersSection = config.getConfigurationSection("flowers");
         if (flowersSection != null) {
             flowersSection.getValues(false).forEach((fromRaw, toRaw) -> {
-                Material from;
-                try {
-                    from = Material.valueOf(String.valueOf(fromRaw));
-                    if (!Tag.FLOWERS.isTagged(from)) {
-                        GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a flower");
-                        return;
-                    }
-                } catch (IllegalArgumentException e) {
-                    GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material");
-                    return;
-                }
-
-                Material to;
-                try {
-                    to = Material.valueOf(String.valueOf(toRaw));
-                    if (!Tag.FLOWERS.isTagged(from)) {
-                        GardeningTweaks.getInstance().getLogger().warning("'" + toRaw + "' is not a flower");
-                        return;
-                    }
-                } catch (IllegalArgumentException e) {
-                    GardeningTweaks.getInstance().getLogger().warning("'" + toRaw + "' is not a valid material");
-                    return;
-                }
-
-                this.flowers.put(from, to);
+                StringUtils.getEnum(fromRaw, Material.class).ifPresentOrElse(
+                    from -> {
+                        if (Tag.FLOWERS.isTagged(from)) {
+                            StringUtils.getEnum(String.valueOf(toRaw), Material.class).ifPresentOrElse(
+                                to -> {
+                                    if (Tag.FLOWERS.isTagged(from)) {
+                                        this.flowers.put(from, to);
+                                    } else {
+                                        GardeningTweaks.getInstance().getLogger().warning("'" + toRaw + "' is not a flower");
+                                    }
+                                },
+                                () -> GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material")
+                            );
+                        } else {
+                            GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a flower");
+                        }
+                    },
+                    () -> GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material")
+                );
             });
         }
 

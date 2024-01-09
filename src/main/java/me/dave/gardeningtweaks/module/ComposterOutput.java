@@ -3,6 +3,7 @@ package me.dave.gardeningtweaks.module;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.platyutils.module.Module;
 import me.dave.platyutils.utils.RandomCollection;
+import me.dave.platyutils.utils.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -47,17 +48,10 @@ public class ComposterOutput extends Module implements Listener {
         items = new RandomCollection<>();
         ConfigurationSection itemsSection = config.getConfigurationSection("items");
         if (itemsSection != null) {
-            itemsSection.getValues(false).forEach((fromRaw, toRaw) -> {
-                Material from;
-                try {
-                    from = Material.valueOf(String.valueOf(fromRaw));
-                } catch (IllegalArgumentException e) {
-                    GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material");
-                    return;
-                }
-
-                items.add(from, Double.parseDouble(String.valueOf(toRaw)));
-            });
+            itemsSection.getValues(false).forEach((fromRaw, toRaw) -> StringUtils.getEnum(fromRaw, Material.class).ifPresentOrElse(
+                from -> items.add(from, Double.parseDouble(String.valueOf(toRaw))),
+                () -> GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material")
+            ));
         }
     }
 

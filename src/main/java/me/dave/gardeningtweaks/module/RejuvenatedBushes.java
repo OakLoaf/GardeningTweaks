@@ -44,25 +44,13 @@ public class RejuvenatedBushes extends Module implements Listener {
         ConfigurationSection flowersSection = config.getConfigurationSection("items");
         if (flowersSection != null) {
             flowersSection.getValues(false).forEach((fromRaw, toRaw) -> {
-                optionalMaterial = StringUtils.getEnum(String.valueOf(fromRaw), Material.class);
-
-                Material from;
-                try {
-                    from = Material.valueOf(String.valueOf(fromRaw));
-                } catch (IllegalArgumentException e) {
-                    GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material");
-                    return;
-                }
-
-                Material to;
-                try {
-                    to = Material.valueOf(String.valueOf(toRaw));
-                } catch (IllegalArgumentException e) {
-                    GardeningTweaks.getInstance().getLogger().warning("'" + toRaw + "' is not a valid material");
-                    return;
-                }
-
-                items.put(from, to);
+                StringUtils.getEnum(String.valueOf(fromRaw), Material.class).ifPresentOrElse(
+                    from -> StringUtils.getEnum(String.valueOf(fromRaw), Material.class).ifPresentOrElse(
+                        to -> items.put(from, to),
+                        () -> GardeningTweaks.getInstance().getLogger().warning("'" + toRaw + "' is not a valid material")
+                    ),
+                    () -> GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material")
+                );
             });
         }
 

@@ -27,7 +27,7 @@ public class ConfigManager {
 
         int configVersion = config.getInt("config-version", -1);
         if (checkVersion && configVersion == -1) {
-            GardeningTweaks.backupFile(new File(plugin.getDataFolder(), "config.yml"));
+            GardeningTweaks.getInstance().backupFile(new File(plugin.getDataFolder(), "config.yml"));
             plugin.saveResource("config.yml", true);
             reloadConfig(false);
             return;

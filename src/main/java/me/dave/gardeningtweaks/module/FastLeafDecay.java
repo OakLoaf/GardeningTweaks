@@ -2,6 +2,7 @@ package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.platyutils.module.Module;
+import me.dave.platyutils.utils.BlockPosition;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -17,17 +18,21 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class FastLeafDecay extends Module implements Listener {
     public static String ID = "FAST_LEAF_DECAY";
+    private static final int MAX_LEAVES_PER_RUN = 512;
 
     private final NamespacedKey ignoredKey = new NamespacedKey(GardeningTweaks.getInstance(), "FLD");
     private final FixedMetadataValue ignoredBlockMetaData = new FixedMetadataValue(GardeningTweaks.getInstance(), "ignored");
-    private HashMap<Integer, Deque<Block>> blockScheduleMap;
+
+    private BukkitTask decayTask;
+    private HashMap<Integer, Deque<BlockPosition>> blockScheduleMap;
     private Boolean sounds;
     private Boolean particles;
     private Boolean ignorePersistence;
@@ -52,10 +57,56 @@ public class FastLeafDecay extends Module implements Listener {
         sounds = config.getBoolean("sounds", false);
         particles = config.getBoolean("particles", false);
         ignorePersistence = config.getBoolean("ignore-persistence", false);
+
+        decayTask = Bukkit.getScheduler().runTaskTimer(GardeningTweaks.getInstance(), () -> {
+            if (blockScheduleMap == null || blockScheduleMap.isEmpty()) {
+                return;
+            }
+
+            AtomicInteger leavesBroken = new AtomicInteger();
+            blockScheduleMap.forEach((tick, blockSchedule) -> {
+                if (blockSchedule.isEmpty()) {
+                    blockScheduleMap.remove(tick);
+                    return;
+                }
+
+                if (leavesBroken.get() >= MAX_LEAVES_PER_RUN) {
+                    return;
+                }
+
+                Block block = blockSchedule.pop().getBlock();
+                if (!Tag.LEAVES.isTagged(block.getType()) || !(block.getBlockData() instanceof Leaves leaves) || leaves.getDistance() < 7) {
+                    return;
+                }
+
+                List<MetadataValue> metaList = block.getMetadata("GT_FLD");
+                if (metaList.size() > 0) {
+                    return;
+                }
+
+                leavesBroken.getAndIncrement();
+                BlockData blockData = block.getType().createBlockData();
+                Location location = block.getLocation();
+                World world = block.getWorld();
+                block.breakNaturally();
+
+                if (sounds) {
+                    world.playSound(location.clone().add(0.5, 0.5, 0.5), blockData.getSoundGroup().getBreakSound(), 1f, 1f);
+                }
+                if (particles) {
+                    world.spawnParticle(Particle.BLOCK_DUST, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3, blockData);
+                }
+            });
+        }, 3, 3);
     }
 
     @Override
     public void onDisable() {
+        if (decayTask != null) {
+            decayTask.cancel();
+            decayTask = null;
+        }
+
         if (blockScheduleMap != null) {
             blockScheduleMap.values().forEach(Collection::clear);
             blockScheduleMap.clear();
@@ -77,27 +128,34 @@ public class FastLeafDecay extends Module implements Listener {
         if (!ignorePersistence && leaves.isPersistent()) {
             return;
         }
+
         if (leaves.getDistance() >= 7) {
             int currTick = GardeningTweaks.getCurrentTick();
             if (blockScheduleMap.containsKey(currTick)) {
-                Deque<Block> blockSchedule = blockScheduleMap.get(currTick);
-                if (!blockSchedule.contains(block)) {
-                    blockSchedule.add(block);
+                Deque<BlockPosition> blockSchedule = blockScheduleMap.get(currTick);
+                BlockPosition blockPos = BlockPosition.adapt(block.getLocation());
+                if (!blockSchedule.contains(blockPos)) {
+                    blockSchedule.add(blockPos);
                 }
             } else {
-                Deque<Block> blockSchedule = new ArrayDeque<>();
-                blockSchedule.add(block);
+                Deque<BlockPosition> blockSchedule = new ArrayDeque<>();
+                blockSchedule.add(BlockPosition.adapt(block.getLocation()));
                 blockScheduleMap.put(currTick, blockSchedule);
-                breakLeaves(currTick);
             }
         }
     }
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-        if (!ignorePersistence) return;
+        if (!ignorePersistence) {
+            return;
+        }
+
         Block block = event.getBlock();
-        if (!Tag.LEAVES.isTagged(block.getType())) return;
+        if (!Tag.LEAVES.isTagged(block.getType())) {
+            return;
+        }
+
         updateLeaf(block.getLocation(), true);
         block.setMetadata("GT_FLD", ignoredBlockMetaData);
     }
@@ -146,46 +204,6 @@ public class FastLeafDecay extends Module implements Listener {
         }
 
         dataContainer.set(ignoredKey, PersistentDataType.BYTE_ARRAY, serialize(chunkLocations));
-    }
-
-    private void breakLeaves(int tick) {
-        Deque<Block> blockSchedule = blockScheduleMap.get(tick);
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (blockScheduleMap == null || blockScheduleMap.isEmpty()) {
-                    cancel();
-                    return;
-                }
-
-                if (blockSchedule.isEmpty()) {
-                    blockScheduleMap.remove(tick);
-                    cancel();
-                    return;
-                }
-
-                Block block = blockSchedule.pop();
-                if (!Tag.LEAVES.isTagged(block.getType()) || !(block.getBlockData() instanceof Leaves leaves) || leaves.getDistance() < 7) {
-                    return;
-                }
-
-                List<MetadataValue> metaList = block.getMetadata("GT_FLD");
-                if (metaList.size() > 0) {
-                    return;
-                }
-
-                BlockData blockData = block.getType().createBlockData();
-                Location location = block.getLocation();
-                World world = block.getWorld();
-                block.breakNaturally();
-                if (sounds) {
-                    world.playSound(location.clone().add(0.5, 0.5, 0.5), blockData.getSoundGroup().getBreakSound(), 1f, 1f);
-                }
-                if (particles) {
-                    world.spawnParticle(Particle.BLOCK_DUST, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3, blockData);
-                }
-            }
-        }.runTaskTimer(GardeningTweaks.getInstance(), 3,3);
     }
 
     private byte[] serialize(HashSet<ChunkLocation> chunkLocations) {

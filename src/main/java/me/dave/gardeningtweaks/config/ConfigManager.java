@@ -36,135 +36,123 @@ public class ConfigManager {
         ConfigurationSection modulesSection = config.getConfigurationSection("modules");
         if (modulesSection != null) {
             if (modulesSection.getBoolean("bone-meal-flowers", false)) {
-                GardeningTweaks.getInstance().getModule(BoneMealFlowers.ID).ifPresentOrElse(
-                        Module::reload,
-                        () -> GardeningTweaks.getInstance().registerModule(new BoneMealFlowers())
-                );
+                if (plugin.getModule(BoneMealFlowers.ID).isEmpty()) {
+                    plugin.registerModule(new BoneMealFlowers());
+                }
             } else {
-                GardeningTweaks.getInstance().unregisterModule(BoneMealFlowers.ID);
+                plugin.unregisterModule(BoneMealFlowers.ID);
             }
 
             if (modulesSection.getBoolean("composter-output", false)) {
-                GardeningTweaks.getInstance().getModule(ComposterOutput.ID).ifPresentOrElse(
-                        Module::reload,
-                        () -> GardeningTweaks.getInstance().registerModule(new ComposterOutput())
-                );
+                if (plugin.getModule(ComposterOutput.ID).isEmpty()) {
+                    plugin.registerModule(new ComposterOutput());
+                }
             } else {
-                GardeningTweaks.getInstance().unregisterModule(ComposterOutput.ID);
+                plugin.unregisterModule(ComposterOutput.ID);
             }
 
             if (modulesSection.getBoolean("composter-spreader", false)) {
-                GardeningTweaks.getInstance().getModule(ComposterSpreader.ID).ifPresentOrElse(
-                        Module::reload,
-                        () -> GardeningTweaks.getInstance().registerModule(new ComposterSpreader())
-                );
+                if (plugin.getModule(ComposterSpreader.ID).isEmpty()) {
+                    plugin.registerModule(new ComposterSpreader());
+                }
             } else {
-                GardeningTweaks.getInstance().unregisterModule(ComposterSpreader.ID);
+                plugin.unregisterModule(ComposterSpreader.ID);
             }
 
             if (modulesSection.getBoolean("decoarsify", false)) {
-                GardeningTweaks.getInstance().getModule(Decoarsify.ID).ifPresentOrElse(
-                        Module::reload,
-                        () -> GardeningTweaks.getInstance().registerModule(new Decoarsify())
-                );
+                if (plugin.getModule(Decoarsify.ID).isEmpty()) {
+                    plugin.registerModule(new Decoarsify());
+                }
             } else {
-                GardeningTweaks.getInstance().unregisterModule(Decoarsify.ID);
+                plugin.unregisterModule(Decoarsify.ID);
             }
 
             if (modulesSection.getBoolean("dynamic-trample", false)) {
-                GardeningTweaks.getInstance().getModule(DynamicTrample.ID).ifPresentOrElse(
-                        Module::reload,
-                        () -> GardeningTweaks.getInstance().registerModule(new DynamicTrample())
-                );
+                if (plugin.getModule(DynamicTrample.ID).isEmpty()) {
+                    plugin.registerModule(new DynamicTrample());
+                }
             } else {
-                GardeningTweaks.getInstance().unregisterModule(DynamicTrample.ID);
+                plugin.unregisterModule(DynamicTrample.ID);
             }
 
             if (modulesSection.getBoolean("fast-leaf-decay", false)) {
-                GardeningTweaks.getInstance().getModule(FastLeafDecay.ID).ifPresentOrElse(
-                        Module::reload,
-                        () -> GardeningTweaks.getInstance().registerModule(new FastLeafDecay())
-                );
+                if (plugin.getModule(FastLeafDecay.ID).isEmpty()) {
+                    plugin.registerModule(new FastLeafDecay());
+                }
             } else {
-                GardeningTweaks.getInstance().unregisterModule(FastLeafDecay.ID);
+                plugin.unregisterModule(FastLeafDecay.ID);
             }
 
             if (modulesSection.getBoolean("grass-drops", false)) {
-                GardeningTweaks.getInstance().getModule(GrassDrops.ID).ifPresentOrElse(
-                        Module::reload,
-                        () -> GardeningTweaks.getInstance().registerModule(new GrassDrops())
-                );
+                if (plugin.getModule(GrassDrops.ID).isEmpty()) {
+                    plugin.registerModule(new GrassDrops());
+                }
             } else {
-                GardeningTweaks.getInstance().unregisterModule(GrassDrops.ID);
+                plugin.unregisterModule(GrassDrops.ID);
             }
 
             if (modulesSection.getBoolean("growth-dance", false)) {
-                GardeningTweaks.getInstance().getModule(GrowthDance.ID).ifPresentOrElse(
-                        Module::reload,
-                        () -> GardeningTweaks.getInstance().registerModule(new GrowthDance())
-                );
+                if (plugin.getModule(GrowthDance.ID).isEmpty()) {
+                    plugin.registerModule(new GrowthDance());
+                }
             } else {
-                GardeningTweaks.getInstance().unregisterModule(GrowthDance.ID);
+                plugin.unregisterModule(GrowthDance.ID);
             }
 
             if (modulesSection.getBoolean("interactive-harvest", false)) {
-                GardeningTweaks.getInstance().getModule(InteractiveHarvest.ID).ifPresentOrElse(
-                        Module::reload,
-                        () -> GardeningTweaks.getInstance().registerModule(new InteractiveHarvest())
-                );
+                if (plugin.getModule(InteractiveHarvest.ID).isEmpty()) {
+                    plugin.registerModule(new InteractiveHarvest());
+                }
             } else {
-                GardeningTweaks.getInstance().unregisterModule(InteractiveHarvest.ID);
+                plugin.unregisterModule(InteractiveHarvest.ID);
             }
 
             if (modulesSection.getBoolean("lumberjack", false)) {
-                GardeningTweaks.getInstance().getModule(Lumberjack.ID).ifPresentOrElse(
-                        Module::reload,
-                        () -> GardeningTweaks.getInstance().registerModule(new Lumberjack())
-                );
+                if (plugin.getModule(Lumberjack.ID).isEmpty()) {
+                    plugin.registerModule(new Lumberjack());
+                }
             } else {
-                GardeningTweaks.getInstance().unregisterModule(Lumberjack.ID);
+                plugin.unregisterModule(Lumberjack.ID);
             }
 
             if (modulesSection.getBoolean("rejuvenated-bushes", false)) {
-                GardeningTweaks.getInstance().getModule(RejuvenatedBushes.ID).ifPresentOrElse(
-                        Module::reload,
-                        () -> GardeningTweaks.getInstance().registerModule(new RejuvenatedBushes())
-                );
+                if (plugin.getModule(RejuvenatedBushes.ID).isEmpty()) {
+                    plugin.registerModule(new RejuvenatedBushes());
+                }
             } else {
-                GardeningTweaks.getInstance().unregisterModule(RejuvenatedBushes.ID);
+                plugin.unregisterModule(RejuvenatedBushes.ID);
             }
 
             if (modulesSection.getBoolean("sapling-replant", false)) {
-                GardeningTweaks.getInstance().getModule(SaplingReplant.ID).ifPresentOrElse(
-                        Module::reload,
-                        () -> GardeningTweaks.getInstance().registerModule(new SaplingReplant())
-                );
+                if (plugin.getModule(SaplingReplant.ID).isEmpty()) {
+                    plugin.registerModule(new SaplingReplant());
+                }
             } else {
-                GardeningTweaks.getInstance().unregisterModule(SaplingReplant.ID);
+                plugin.unregisterModule(SaplingReplant.ID);
             }
 
             if (modulesSection.getBoolean("sniffer-drops", false)) {
                 String serverVersion = Bukkit.getVersion();
                 if (!serverVersion.contains("1.20") && !serverVersion.contains("1.21")) {
-                    GardeningTweaks.getInstance().getLogger().severe("The 'sniffer-drops' module requires versions 1.20 and above to function");
+                    plugin.getLogger().severe("The 'sniffer-drops' module requires versions 1.20 and above to function");
                 }
 
-                GardeningTweaks.getInstance().getModule(SnifferDrops.ID).ifPresentOrElse(
-                        Module::reload,
-                        () -> GardeningTweaks.getInstance().registerModule(new SnifferDrops())
-                );
+                if (plugin.getModule(SnifferDrops.ID).isEmpty()) {
+                    plugin.registerModule(new SnifferDrops());
+                }
             } else {
-                GardeningTweaks.getInstance().unregisterModule(SnifferDrops.ID);
+                plugin.unregisterModule(SnifferDrops.ID);
             }
 
             if (modulesSection.getBoolean("tree-spread", false)) {
-                GardeningTweaks.getInstance().getModule(TreeSpread.ID).ifPresentOrElse(
-                        Module::reload,
-                        () -> GardeningTweaks.getInstance().registerModule(new TreeSpread())
-                );
+                if (plugin.getModule(TreeSpread.ID).isEmpty()) {
+                    plugin.registerModule(new TreeSpread());
+                }
             } else {
-                GardeningTweaks.getInstance().unregisterModule(TreeSpread.ID);
+                plugin.unregisterModule(TreeSpread.ID);
             }
+
+            GardeningTweaks.getInstance().getModules().forEach(Module::reload);
         }
     }
 }

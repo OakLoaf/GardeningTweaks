@@ -55,16 +55,12 @@ public class GrowthDance extends Module implements Listener {
 
     @Override
     public void onDisable() {
-        if (blocks != null) {
-            blocks.clear();
-            blocks = null;
-        }
-
         if (cooldownList != null) {
             cooldownList.clear();
             cooldownList = null;
         }
 
+        blocks = null;
         cooldownLength = null;
     }
 

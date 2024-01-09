@@ -49,7 +49,6 @@ public class Lumberjack extends Module implements Listener {
     @Override
     public void onDisable() {
         if (blocks != null) {
-            blocks.clear();
             blocks = null;
         }
     }

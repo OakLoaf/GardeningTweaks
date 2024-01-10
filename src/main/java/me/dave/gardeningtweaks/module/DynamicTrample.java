@@ -19,7 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.io.File;
 
 public class DynamicTrample extends Module implements Listener {
-    public static String ID = "DYNAMIC_TRAMPLE";
+    public static final String ID = "DYNAMIC_TRAMPLE";
 
     private Boolean featherFalling;
     private Boolean creativeMode;

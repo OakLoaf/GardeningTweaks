@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ComposterSpreader extends Module implements Listener {
-    public static String ID = "COMPOSTER_SPREADER";
+    public static final String ID = "COMPOSTER_SPREADER";
 
     private BukkitTask task;
     private HashSet<Location> composterLocationList;

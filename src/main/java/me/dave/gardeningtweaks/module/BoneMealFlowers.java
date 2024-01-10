@@ -25,7 +25,7 @@ import java.io.File;
 import java.util.HashMap;
 
 public class BoneMealFlowers extends Module implements Listener {
-    public static String ID = "BONE_MEAL_FLOWERS";
+    public static final String ID = "BONE_MEAL_FLOWERS";
 
     private HashMap<Material, Material> flowers;
 

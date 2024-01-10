@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.List;
 
 public class GrassDrops extends Module implements Listener {
-    public static String ID = "GRASS_DROPS";
+    public static final String ID = "GRASS_DROPS";
 
     private RandomCollection<Material> items;
 

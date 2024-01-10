@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class Decoarsify extends Module implements Listener {
-    public static String ID = "DECOARSIFY";
+    public static final String ID = "DECOARSIFY";
 
     public Decoarsify() {
         super(ID);

@@ -21,7 +21,7 @@ import java.io.File;
 import java.util.HashMap;
 
 public class RejuvenatedBushes extends Module implements Listener {
-    public static String ID = "REJUVENATED_BUSHES";
+    public static final String ID = "REJUVENATED_BUSHES";
 
     private HashMap<Material, Material> items;
 

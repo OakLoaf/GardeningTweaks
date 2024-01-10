@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 
 public class SnifferDrops extends Module implements Listener {
-    public static String ID = "SNIFFER_DROPS";
+    public static final String ID = "SNIFFER_DROPS";
 
     private RandomCollection<Material> drops;
 

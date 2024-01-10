@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class GrowthDance extends Module implements Listener {
-    public static String ID = "GROWTH_DANCE";
+    public static final String ID = "GROWTH_DANCE";
 
     private HashSet<UUID> cooldownList;
     private Integer cooldownLength;

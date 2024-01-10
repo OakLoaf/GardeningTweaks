@@ -25,7 +25,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class FastLeafDecay extends Module implements Listener {
-    public static String ID = "FAST_LEAF_DECAY";
+    public static final String ID = "FAST_LEAF_DECAY";
     private static final int MAX_LEAVES_PER_RUN = 512;
 
     private final NamespacedKey ignoredKey = new NamespacedKey(GardeningTweaks.getInstance(), "FLD");

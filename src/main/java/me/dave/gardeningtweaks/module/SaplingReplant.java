@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.List;
 
 public class SaplingReplant extends Module implements Listener {
-    public static String ID = "SAPLING_REPLANT";
+    public static final String ID = "SAPLING_REPLANT";
 
     private final List<Material> plantableBlocks = List.of(new Material[]{Material.DIRT, Material.COARSE_DIRT, Material.GRASS_BLOCK, Material.MOSS_BLOCK});
     private final int maximumAttempts = 10;

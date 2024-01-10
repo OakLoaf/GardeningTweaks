@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TreeSpread extends Module implements Listener {
-    public static String ID = "TREE_SPREAD";
+    public static final String ID = "TREE_SPREAD";
 
     private TreeData defaultTreeData;
     private final HashMap<String, TreeData> treeMap = new HashMap<>();

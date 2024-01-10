@@ -26,7 +26,7 @@ import java.io.File;
 import java.util.List;
 
 public class ComposterOutput extends Module implements Listener {
-    public static String ID = "COMPOSTER_OUTPUT";
+    public static final String ID = "COMPOSTER_OUTPUT";
 
     private RandomCollection<Material> items;
 

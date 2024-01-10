@@ -26,7 +26,7 @@ import java.io.File;
 import java.util.*;
 
 public class InteractiveHarvest extends Module implements Listener {
-    public static String ID = "INTERACTIVE_HARVEST";
+    public static final String ID = "INTERACTIVE_HARVEST";
 
     private final HashSet<UUID> harvestCooldownSet = new HashSet<>();
     private List<Material> blocks;

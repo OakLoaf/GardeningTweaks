@@ -8,6 +8,7 @@ import me.dave.gardeningtweaks.listener.GardeningTweaksListener;
 import me.dave.platyutils.PlatyUtils;
 import me.dave.platyutils.hook.Hook;
 import me.dave.platyutils.plugin.SpigotPlugin;
+import me.dave.platyutils.utils.Updater;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
@@ -20,6 +21,7 @@ import java.util.logging.Level;
 public final class GardeningTweaks extends SpigotPlugin {
     private static final Random random = new Random();
     private static GardeningTweaks plugin;
+    private Updater updater;
     private static ConfigManager configManager;
     private static int currTick = 0;
 
@@ -31,6 +33,7 @@ public final class GardeningTweaks extends SpigotPlugin {
     @Override
     public void onEnable() {
         PlatyUtils.enable(this);
+        updater = new Updater(this, "gardening-tweaks", "gardeningtweaks.update", "gardeningtweaks update");
 
         configManager = new ConfigManager();
         configManager.reloadConfig();
@@ -68,6 +71,10 @@ public final class GardeningTweaks extends SpigotPlugin {
         unregisterAllModules();
 
         PlatyUtils.disable();
+    }
+
+    public Updater getUpdater() {
+        return updater;
     }
 
     public static Random getRandom() {

@@ -2,6 +2,7 @@ package me.dave.gardeningtweaks.commands;
 
 import me.dave.chatcolorhandler.ChatColorHandler;
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.platyutils.utils.Updater;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,14 +18,39 @@ public class GardeningTweaksCmd implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length == 1) {
-            if (args[0].equalsIgnoreCase("reload")) {
-                if (!sender.hasPermission("gardeningtweaks.admin.reload")) {
-                    ChatColorHandler.sendMessage(sender, "&cYou have insufficient permissions.");
+            switch (args[0]) {
+                case "reload" -> {
+                    if (!sender.hasPermission("gardeningtweaks.admin.reload")) {
+                        ChatColorHandler.sendMessage(sender, "&cYou have insufficient permissions.");
+                        return true;
+                    }
+                    GardeningTweaks.getConfigManager().reloadConfig();
+                    ChatColorHandler.sendMessage(sender, "&#feb5ff✿ &#96D590GardeningTweaks has been reloaded.");
                     return true;
                 }
-                GardeningTweaks.getConfigManager().reloadConfig();
-                ChatColorHandler.sendMessage(sender, "&#feb5ff✿ &#96D590GardeningTweaks has been reloaded.");
-                return true;
+                case "update" -> {
+                    if (!sender.hasPermission("gardeningtweaks.update")) {
+                        ChatColorHandler.sendMessage(sender, "&#ff6969Insufficient permissions");
+                        return true;
+                    }
+
+                    Updater updater = GardeningTweaks.getInstance().getUpdater();
+
+                    if (updater.isAlreadyDownloaded() || !updater.isUpdateAvailable()) {
+                        ChatColorHandler.sendMessage(sender, "&#ff6969It looks like there is no new update available!");
+                        return true;
+                    }
+
+                    updater.downloadUpdate().thenAccept(success -> {
+                        if (success) {
+                            ChatColorHandler.sendMessage(sender, "&#b7faa2Successfully updated ActivityRewarder, restart the server to apply changes!");
+                        } else {
+                            ChatColorHandler.sendMessage(sender, "&#ff6969Failed to update ActivityRewarder!");
+                        }
+                    });
+
+                    return true;
+                }
             }
         }
         PluginDescriptionFile pdf = GardeningTweaks.getInstance().getDescription();

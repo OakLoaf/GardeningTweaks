@@ -1,5 +1,6 @@
 package me.dave.gardeningtweaks.module;
 
+import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -7,12 +8,11 @@ import org.bukkit.block.BlockState;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class Decoarsify extends Module implements Listener {
+public class Decoarsify extends Module implements EventListener {
     public static final String ID = "DECOARSIFY";
 
     public Decoarsify() {

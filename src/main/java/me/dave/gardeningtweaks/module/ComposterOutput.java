@@ -1,6 +1,7 @@
 package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
 import me.dave.platyutils.utils.RandomCollection;
 import me.dave.platyutils.utils.StringUtils;
@@ -13,7 +14,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Item;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -25,7 +25,7 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.util.List;
 
-public class ComposterOutput extends Module implements Listener {
+public class ComposterOutput extends Module implements EventListener {
     public static final String ID = "COMPOSTER_OUTPUT";
 
     private RandomCollection<Material> items;

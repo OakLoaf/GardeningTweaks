@@ -2,6 +2,7 @@ package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.api.events.SaplingReplantEvent;
+import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -10,7 +11,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -21,7 +21,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.io.File;
 import java.util.EnumSet;
 
-public class SaplingReplant extends Module implements Listener {
+public class SaplingReplant extends Module implements EventListener {
     public static final String ID = "SAPLING_REPLANT";
     private static final int MAXIMUM_ATTEMPTS = 10;
     private static final EnumSet<Material> PLANTABLE_BLOCKS = EnumSet.of(Material.DIRT, Material.COARSE_DIRT, Material.GRASS_BLOCK, Material.MOSS_BLOCK);

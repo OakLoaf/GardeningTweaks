@@ -1,6 +1,7 @@
 package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -10,7 +11,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -18,7 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
 
-public class DynamicTrample extends Module implements Listener {
+public class DynamicTrample extends Module implements EventListener {
     public static final String ID = "DYNAMIC_TRAMPLE";
 
     private Boolean featherFalling;

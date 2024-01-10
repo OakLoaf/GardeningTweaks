@@ -2,6 +2,7 @@ package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.api.events.ComposterCropGrowEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
 import me.dave.platyutils.utils.StringUtils;
 import org.bukkit.*;
@@ -11,7 +12,6 @@ import org.bukkit.block.data.Levelled;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -23,7 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
-public class ComposterSpreader extends Module implements Listener {
+public class ComposterSpreader extends Module implements EventListener {
     public static final String ID = "COMPOSTER_SPREADER";
 
     private BukkitTask task;

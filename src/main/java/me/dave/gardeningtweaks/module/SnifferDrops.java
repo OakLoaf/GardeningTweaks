@@ -1,6 +1,7 @@
 package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
 import me.dave.platyutils.utils.RandomCollection;
 import me.dave.platyutils.utils.StringUtils;
@@ -9,13 +10,12 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Sniffer;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 
-public class SnifferDrops extends Module implements Listener {
+public class SnifferDrops extends Module implements EventListener {
     public static final String ID = "SNIFFER_DROPS";
 
     private RandomCollection<Material> drops;

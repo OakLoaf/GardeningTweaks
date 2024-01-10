@@ -3,6 +3,7 @@ package me.dave.gardeningtweaks.module;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.api.events.TreeSpreadBlockEvent;
 import me.dave.gardeningtweaks.hooks.RealisticBiomesHook;
+import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
 import me.dave.platyutils.utils.RandomCollection;
 import me.dave.platyutils.utils.StringUtils;
@@ -14,7 +15,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.util.BoundingBox;
 
@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class TreeSpread extends Module implements Listener {
+public class TreeSpread extends Module implements EventListener {
     public static final String ID = "TREE_SPREAD";
 
     private TreeData defaultTreeData;

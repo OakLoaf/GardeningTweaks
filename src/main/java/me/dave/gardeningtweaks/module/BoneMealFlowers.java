@@ -3,6 +3,7 @@ package me.dave.gardeningtweaks.module;
 import me.dave.gardeningtweaks.api.events.FlowerBoneMealEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.hooks.ProtocolLibHook;
+import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
 import me.dave.platyutils.utils.StringUtils;
 import org.bukkit.*;
@@ -14,7 +15,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.util.HashMap;
 
-public class BoneMealFlowers extends Module implements Listener {
+public class BoneMealFlowers extends Module implements EventListener {
     public static final String ID = "BONE_MEAL_FLOWERS";
 
     private HashMap<Material, Material> flowers;

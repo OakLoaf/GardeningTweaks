@@ -3,6 +3,7 @@ package me.dave.gardeningtweaks.module;
 import me.dave.gardeningtweaks.api.events.CropGrowEvent;
 import me.dave.gardeningtweaks.api.events.PlayerGrowthDanceEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
 import me.dave.platyutils.utils.StringUtils;
 import org.bukkit.Bukkit;
@@ -13,7 +14,6 @@ import org.bukkit.block.data.Ageable;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-public class GrowthDance extends Module implements Listener {
+public class GrowthDance extends Module implements EventListener {
     public static final String ID = "GROWTH_DANCE";
 
     private HashSet<UUID> cooldownList;

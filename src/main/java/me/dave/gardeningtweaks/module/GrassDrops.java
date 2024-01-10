@@ -1,6 +1,7 @@
 package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
 import me.dave.platyutils.utils.RandomCollection;
 import me.dave.platyutils.utils.StringUtils;
@@ -14,14 +15,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.util.List;
 
-public class GrassDrops extends Module implements Listener {
+public class GrassDrops extends Module implements EventListener {
     public static final String ID = "GRASS_DROPS";
 
     private RandomCollection<Material> items;

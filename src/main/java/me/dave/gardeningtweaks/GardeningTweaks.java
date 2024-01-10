@@ -59,7 +59,7 @@ public final class GardeningTweaks extends SpigotPlugin {
             getLogger().info("GardeningTweaks now respects HuskTowns Claims.");
         });
 
-        pluginManager.registerEvents(new GardeningTweaksListener(), this);
+        new GardeningTweaksListener().re
 
         getCommand("gardeningtweaks").setExecutor(new GardeningTweaksCmd());
 

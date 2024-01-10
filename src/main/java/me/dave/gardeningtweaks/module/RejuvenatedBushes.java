@@ -3,6 +3,7 @@ package me.dave.gardeningtweaks.module;
 import me.dave.gardeningtweaks.api.events.BushRejuvenateEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.hooks.ProtocolLibHook;
+import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
 import me.dave.platyutils.utils.StringUtils;
 import org.bukkit.*;
@@ -12,7 +13,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -20,7 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.util.HashMap;
 
-public class RejuvenatedBushes extends Module implements Listener {
+public class RejuvenatedBushes extends Module implements EventListener {
     public static final String ID = "REJUVENATED_BUSHES";
 
     private HashMap<Material, Material> items;

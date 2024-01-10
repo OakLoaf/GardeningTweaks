@@ -2,6 +2,7 @@ package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.hooks.ProtocolLibHook;
+import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
 import me.dave.platyutils.utils.StringUtils;
 import org.bukkit.*;
@@ -25,7 +26,7 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.util.*;
 
-public class InteractiveHarvest extends Module implements Listener {
+public class InteractiveHarvest extends Module implements EventListener {
     public static final String ID = "INTERACTIVE_HARVEST";
 
     private final HashSet<UUID> harvestCooldownSet = new HashSet<>();

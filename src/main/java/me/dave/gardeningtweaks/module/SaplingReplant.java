@@ -19,13 +19,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
-import java.util.List;
+import java.util.EnumSet;
 
 public class SaplingReplant extends Module implements Listener {
     public static final String ID = "SAPLING_REPLANT";
+    private static final int MAXIMUM_ATTEMPTS = 10;
+    private static final EnumSet<Material> PLANTABLE_BLOCKS = EnumSet.of(Material.DIRT, Material.COARSE_DIRT, Material.GRASS_BLOCK, Material.MOSS_BLOCK);
 
-    private final List<Material> plantableBlocks = List.of(new Material[]{Material.DIRT, Material.COARSE_DIRT, Material.GRASS_BLOCK, Material.MOSS_BLOCK});
-    private final int maximumAttempts = 10;
     private Boolean includePlayerDrops;
     private Boolean includeLeafDrops;
     private Integer leafDelay;
@@ -88,7 +88,7 @@ public class SaplingReplant extends Module implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!itemEntity.isValid() || itemEntity.isDead() || attempt[0]++ > maximumAttempts) {
+                if (!itemEntity.isValid() || itemEntity.isDead() || attempt[0]++ > MAXIMUM_ATTEMPTS) {
                     cancel();
                     return;
                 }
@@ -105,7 +105,7 @@ public class SaplingReplant extends Module implements Listener {
                     return;
                 }
 
-                if (plantableBlocks.contains(block.getRelative(BlockFace.DOWN).getType())) {
+                if (PLANTABLE_BLOCKS.contains(block.getRelative(BlockFace.DOWN).getType())) {
                     if (!GardeningTweaks.callEvent(new SaplingReplantEvent(block, player, itemEntity, material))) {
                         cancel();
                         return;

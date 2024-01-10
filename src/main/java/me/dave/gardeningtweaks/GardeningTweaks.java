@@ -3,10 +3,7 @@ package me.dave.gardeningtweaks;
 import me.dave.gardeningtweaks.commands.GardeningTweaksCmd;
 import me.dave.gardeningtweaks.config.ConfigManager;
 import me.dave.gardeningtweaks.hooks.*;
-import me.dave.gardeningtweaks.hooks.claims.ClaimHook;
-import me.dave.gardeningtweaks.hooks.claims.GriefPreventionHook;
-import me.dave.gardeningtweaks.hooks.claims.HuskClaimsHook;
-import me.dave.gardeningtweaks.hooks.claims.HuskTownsHook;
+import me.dave.gardeningtweaks.hooks.claims.*;
 import me.dave.gardeningtweaks.listener.GardeningTweaksListener;
 import me.dave.platyutils.PlatyUtils;
 import me.dave.platyutils.hook.Hook;
@@ -18,6 +15,7 @@ import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 
 import java.util.Random;
+import java.util.logging.Level;
 
 public final class GardeningTweaks extends SpigotPlugin {
     private static final Random random = new Random();
@@ -42,15 +40,19 @@ public final class GardeningTweaks extends SpigotPlugin {
         addHook("RealisticBiomes", () -> registerHook(new RealisticBiomesHook()));
         addHook("GriefPrevention", () -> {
             registerHook(new GriefPreventionHook());
-            getLogger().info("GardeningTweaks now respects GriefPrevention Claims.");
+            log(Level.INFO, "GardeningTweaks now respects GriefPrevention Claims.");
         });
         addHook("HuskClaims", () -> {
             registerHook(new HuskClaimsHook());
-            getLogger().info("GardeningTweaks now respects HuskClaims Claims.");
+            log(Level.INFO, "GardeningTweaks now respects HuskClaims Claims.");
         });
         addHook("HuskTowns", () -> {
             registerHook(new HuskTownsHook());
-            getLogger().info("GardeningTweaks now respects HuskTowns Claims.");
+            log(Level.INFO, "GardeningTweaks now respects HuskTowns Claims.");
+        });
+        addHook("Lands", () -> {
+            registerHook(new LandsHook());
+            log(Level.INFO, "GardeningTweaks now respects Lands Claims.");
         });
 
         new GardeningTweaksListener().registerListeners();

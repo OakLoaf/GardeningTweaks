@@ -15,7 +15,7 @@ repositories {
     maven { url = uri("https://maven.playpro.com")} // CoreProtect
     maven { url = uri("https://repo.william278.net/snapshots") } // HuskClaims
     maven { url = uri("https://repo.william278.net/releases") } // HuskTowns
-    maven { url = uri("https://jitpack.io")} // ChatColorHandler, GardeningTweaks, GriefPrevention, RealisticBiomes
+    maven { url = uri("https://jitpack.io")} // ChatColorHandler, GardeningTweaks, GriefPrevention, RealisticBiomes, Lands
 }
 
 dependencies {
@@ -26,6 +26,7 @@ dependencies {
     compileOnly("net.william278.huskclaims:huskclaims-bukkit:1.0-8818300")
     compileOnly("net.william278:husktowns:2.6.1")
     compileOnly("com.github.TechFortress:GriefPrevention:16.18")
+    compileOnly("com.github.angeschossen:LandsAPI:6.42.15")
     implementation(files("libs/PlatyUtils-0.1.20.jar"))
     implementation("com.github.CoolDCB:ChatColorHandler:v2.1.5")
 }

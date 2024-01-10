@@ -22,8 +22,8 @@ import java.util.Objects;
 
 public class Lumberjack extends Module implements Listener {
     public static final String ID = "LUMBERJACK";
+    private static final EnumSet<Material> axes = EnumSet.of(Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE);
 
-    private final EnumSet<Material> axes = EnumSet.of(Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE);
     private List<Material> blocks;
 
     public Lumberjack() {

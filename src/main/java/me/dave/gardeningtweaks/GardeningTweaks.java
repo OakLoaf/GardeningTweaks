@@ -37,8 +37,6 @@ public final class GardeningTweaks extends SpigotPlugin {
         configManager = new ConfigManager();
         configManager.reloadConfig();
 
-        PluginManager pluginManager = getServer().getPluginManager();
-
         addHook("CoreProtect", () -> registerHook(new CoreProtectHook()));
         addHook("ProtocolLib", () -> registerHook(new ProtocolLibHook()));
         addHook("RealisticBiomes", () -> registerHook(new RealisticBiomesHook()));

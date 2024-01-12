@@ -14,7 +14,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
@@ -28,6 +27,7 @@ import java.io.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
 
 public class FastLeafDecay extends Module implements EventListener {
     public static final String ID = "FAST_LEAF_DECAY";
@@ -113,6 +113,11 @@ public class FastLeafDecay extends Module implements EventListener {
                     if (entityCount != null && entityCount.get() > limitDrops) {
                         block.setType(Material.AIR);
                     } else {
+                        if (chunkDropCountCache.containsKey(chunkCoordinate)) {
+                            int dropCount = block.getDrops().size();
+                            chunkDropCountCache.get(chunkCoordinate).addAndGet(dropCount);
+                        }
+
                         block.breakNaturally();
                     }
                 } else {
@@ -206,24 +211,6 @@ public class FastLeafDecay extends Module implements EventListener {
             return;
         }
         updateLeaf(block.getLocation(), false);
-    }
-
-    @EventHandler
-    public void onBlockDropItem(BlockDropItemEvent event) {
-        if (limitDrops < 0) {
-            return;
-        }
-
-        Block block = event.getBlock();
-        if (!Tag.LEAVES.isTagged(block.getType())) {
-            return;
-        }
-
-        ChunkCoordinate chunkCoordinate = ChunkCoordinate.from(block.getChunk());
-        if (chunkDropCountCache.containsKey(chunkCoordinate)) {
-            int dropCount = event.getItems().size();
-            chunkDropCountCache.get(chunkCoordinate).addAndGet(dropCount);
-        }
     }
 
     @EventHandler

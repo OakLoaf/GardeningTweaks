@@ -1,6 +1,7 @@
 package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.gardeningtweaks.util.ChunkCoordinate;
 import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
 import me.dave.platyutils.utils.BlockPosition;
@@ -9,8 +10,11 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Leaves;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
@@ -22,6 +26,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class FastLeafDecay extends Module implements EventListener {
@@ -32,10 +37,12 @@ public class FastLeafDecay extends Module implements EventListener {
     private final FixedMetadataValue ignoredBlockMetaData = new FixedMetadataValue(GardeningTweaks.getInstance(), "ignored");
 
     private BukkitTask decayTask;
-    private HashMap<Integer, Deque<BlockPosition>> blockScheduleMap;
+    private ConcurrentHashMap<Integer, Deque<BlockPosition>> blockScheduleMap;
+    private ConcurrentHashMap<ChunkCoordinate, AtomicInteger> chunkDropCountCache;
     private Boolean sounds;
     private Boolean particles;
     private Boolean ignorePersistence;
+    private int limitDrops;
 
     public FastLeafDecay() {
         super(ID);
@@ -47,11 +54,15 @@ public class FastLeafDecay extends Module implements EventListener {
         plugin.saveDefaultResource("modules/fast-leaf-decay.yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/fast-leaf-decay.yml"));
 
-        blockScheduleMap = new HashMap<>();
-
         sounds = config.getBoolean("sounds", false);
         particles = config.getBoolean("particles", false);
         ignorePersistence = config.getBoolean("ignore-persistence", false);
+        limitDrops = config.getInt("limit-drops", -1);
+
+        blockScheduleMap = new ConcurrentHashMap<>();
+        if (limitDrops >= 0) {
+            chunkDropCountCache = new ConcurrentHashMap<>();
+        }
 
         decayTask = Bukkit.getScheduler().runTaskTimer(GardeningTweaks.getInstance(), () -> {
             if (blockScheduleMap == null || blockScheduleMap.isEmpty()) {
@@ -79,11 +90,34 @@ public class FastLeafDecay extends Module implements EventListener {
                     return;
                 }
 
+                ChunkCoordinate chunkCoordinate = ChunkCoordinate.from(block.getChunk());
+                if (chunkDropCountCache != null && !chunkDropCountCache.containsKey(chunkCoordinate)) {
+                    int droppedItemCount = 0;
+                    for (Entity entity : chunkCoordinate.getChunk().getEntities()) {
+                        if (entity.getType().equals(EntityType.DROPPED_ITEM)) {
+                            droppedItemCount++;
+                        }
+                    }
+
+                    chunkDropCountCache.put(chunkCoordinate, new AtomicInteger(droppedItemCount));
+                    Bukkit.getScheduler().runTaskLaterAsynchronously(GardeningTweaks.getInstance(), () -> chunkDropCountCache.remove(chunkCoordinate), 100);
+                }
+
                 leavesBroken.getAndIncrement();
                 BlockData blockData = block.getType().createBlockData();
                 Location location = block.getLocation();
                 World world = block.getWorld();
-                block.breakNaturally();
+
+                if (chunkDropCountCache != null) {
+                    AtomicInteger entityCount = chunkDropCountCache.get(ChunkCoordinate.from(block.getChunk()));
+                    if (entityCount != null && entityCount.get() > limitDrops) {
+                        block.setType(Material.AIR);
+                    } else {
+                        block.breakNaturally();
+                    }
+                } else {
+                    block.breakNaturally();
+                }
 
                 if (sounds) {
                     world.playSound(location.clone().add(0.5, 0.5, 0.5), blockData.getSoundGroup().getBreakSound(), 1f, 1f);
@@ -108,9 +142,15 @@ public class FastLeafDecay extends Module implements EventListener {
             blockScheduleMap = null;
         }
 
+        if (chunkDropCountCache != null) {
+            chunkDropCountCache.clear();
+            chunkDropCountCache = null;
+        }
+
         sounds = null;
         particles = null;
         ignorePersistence = null;
+        limitDrops = -1;
     }
 
     @EventHandler
@@ -166,6 +206,24 @@ public class FastLeafDecay extends Module implements EventListener {
             return;
         }
         updateLeaf(block.getLocation(), false);
+    }
+
+    @EventHandler
+    public void onBlockDropItem(BlockDropItemEvent event) {
+        if (limitDrops < 0) {
+            return;
+        }
+
+        Block block = event.getBlock();
+        if (!Tag.LEAVES.isTagged(block.getType())) {
+            return;
+        }
+
+        ChunkCoordinate chunkCoordinate = ChunkCoordinate.from(block.getChunk());
+        if (chunkDropCountCache.containsKey(chunkCoordinate)) {
+            int dropCount = event.getItems().size();
+            chunkDropCountCache.get(chunkCoordinate).addAndGet(dropCount);
+        }
     }
 
     @EventHandler

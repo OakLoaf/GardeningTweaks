@@ -4,3 +4,5 @@ sounds: false
 particles: false
 # ignore-persistence: Whether persistent leaves should decay (Leaves placed by players will not decay)
 ignore-persistence: false # WARNING: Enabling this will cause leaves previously placed by players to decay.
+# limit-drops: Stops dropping items from decaying leaves when there are more than X amount of dropped items in the chunk (Set to -1 to disable)
+limit-drops: 32

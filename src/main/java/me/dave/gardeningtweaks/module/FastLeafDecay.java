@@ -110,7 +110,7 @@ public class FastLeafDecay extends Module implements EventListener {
 
                 if (chunkDropCountCache != null) {
                     AtomicInteger entityCount = chunkDropCountCache.get(ChunkCoordinate.from(block.getChunk()));
-                    if (entityCount != null && entityCount.get() > limitDrops) {
+                    if (entityCount != null && entityCount.get() >= limitDrops) {
                         block.setType(Material.AIR);
                     } else {
                         if (chunkDropCountCache.containsKey(chunkCoordinate)) {

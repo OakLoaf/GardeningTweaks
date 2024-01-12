@@ -27,11 +27,9 @@ import java.io.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
 
 public class FastLeafDecay extends Module implements EventListener {
     public static final String ID = "FAST_LEAF_DECAY";
-    private static final int MAX_LEAVES_PER_RUN = 512;
 
     private final NamespacedKey ignoredKey = new NamespacedKey(GardeningTweaks.getInstance(), "FLD");
     private final FixedMetadataValue ignoredBlockMetaData = new FixedMetadataValue(GardeningTweaks.getInstance(), "ignored");
@@ -42,6 +40,7 @@ public class FastLeafDecay extends Module implements EventListener {
     private Boolean sounds;
     private Boolean particles;
     private Boolean ignorePersistence;
+    private int maxLeavesDecayPerRun;
     private int limitDrops;
 
     public FastLeafDecay() {
@@ -58,6 +57,7 @@ public class FastLeafDecay extends Module implements EventListener {
         particles = config.getBoolean("particles", false);
         ignorePersistence = config.getBoolean("ignore-persistence", false);
         limitDrops = config.getInt("limit-drops", -1);
+        maxLeavesDecayPerRun = config.getInt("max-leaves-decay-per-tick", -1) * 3;
 
         blockScheduleMap = new ConcurrentHashMap<>();
         if (limitDrops >= 0) {
@@ -76,7 +76,7 @@ public class FastLeafDecay extends Module implements EventListener {
                     return;
                 }
 
-                if (leavesBroken.get() >= MAX_LEAVES_PER_RUN) {
+                if (leavesBroken.get() >= maxLeavesDecayPerRun) {
                     return;
                 }
 
@@ -100,7 +100,7 @@ public class FastLeafDecay extends Module implements EventListener {
                     }
 
                     chunkDropCountCache.put(chunkCoordinate, new AtomicInteger(droppedItemCount));
-                    Bukkit.getScheduler().runTaskLaterAsynchronously(GardeningTweaks.getInstance(), () -> chunkDropCountCache.remove(chunkCoordinate), 100);
+                    Bukkit.getScheduler().runTaskLaterAsynchronously(GardeningTweaks.getInstance(), () -> chunkDropCountCache.remove(chunkCoordinate), 200);
                 }
 
                 leavesBroken.getAndIncrement();

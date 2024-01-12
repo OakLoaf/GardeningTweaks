@@ -10,8 +10,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Leaves;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
@@ -92,14 +90,7 @@ public class FastLeafDecay extends Module implements EventListener {
 
                 ChunkCoordinate chunkCoordinate = ChunkCoordinate.from(block.getChunk());
                 if (chunkDropCountCache != null && !chunkDropCountCache.containsKey(chunkCoordinate)) {
-                    int droppedItemCount = 0;
-                    for (Entity entity : chunkCoordinate.getChunk().getEntities()) {
-                        if (entity.getType().equals(EntityType.DROPPED_ITEM)) {
-                            droppedItemCount++;
-                        }
-                    }
-
-                    chunkDropCountCache.put(chunkCoordinate, new AtomicInteger(droppedItemCount));
+                    chunkDropCountCache.put(chunkCoordinate, new AtomicInteger(0));
                     Bukkit.getScheduler().runTaskLaterAsynchronously(GardeningTweaks.getInstance(), () -> chunkDropCountCache.remove(chunkCoordinate), 200);
                 }
 
@@ -246,7 +237,7 @@ public class FastLeafDecay extends Module implements EventListener {
         dataContainer.set(ignoredKey, PersistentDataType.BYTE_ARRAY, serialize(chunkLocations));
     }
 
-    private byte[] serialize(HashSet<ChunkLocation> chunkLocations) {
+    private static byte[] serialize(HashSet<ChunkLocation> chunkLocations) {
         try {
             ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
             ObjectOutputStream out = new ObjectOutputStream(byteOut);
@@ -260,7 +251,7 @@ public class FastLeafDecay extends Module implements EventListener {
         }
     }
 
-    private HashSet<ChunkLocation> deserialize(byte[] bytes) {
+    private static HashSet<ChunkLocation> deserialize(byte[] bytes) {
         try {
             if (bytes == null) return new HashSet<>();
             ByteArrayInputStream byteIn = new ByteArrayInputStream(bytes);

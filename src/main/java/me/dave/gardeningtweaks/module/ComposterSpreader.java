@@ -4,6 +4,7 @@ import me.dave.gardeningtweaks.api.events.ComposterCropGrowEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
+import me.dave.platyutils.utils.BlockPosition;
 import me.dave.platyutils.utils.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -27,9 +28,10 @@ public class ComposterSpreader extends Module implements EventListener {
     public static final String ID = "COMPOSTER_SPREADER";
 
     private BukkitTask task;
-    private HashSet<Location> composterLocationList;
+    private HashSet<Location> composterLocations;
     private int chance;
     private List<Material> blocks;
+    private List<Material> cropBlocks;
 
     public ComposterSpreader() {
         super(ID);
@@ -51,14 +53,25 @@ public class ComposterSpreader extends Module implements EventListener {
 
             return material;
         }).filter(Objects::nonNull).toList();
+        cropBlocks = config.getStringList("crop-blocks").stream().map((materialRaw) -> {
+            Material material = StringUtils.getEnum(materialRaw, Material.class).orElse(null);
+            if (material == null) {
+                plugin.getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.");
+            }
 
-        composterLocationList = new HashSet<>();
+            return material;
+        }).filter(Objects::nonNull).toList();
+
+        composterLocations = new HashSet<>();
         task = Bukkit.getScheduler().runTaskTimer(plugin, () ->  {
-            composterLocationList.forEach(location -> {
-                Block block = location.getBlock();
+            composterLocations.forEach(location -> {
+                if (!location.getChunk().isLoaded()) {
+                    return;
+                }
 
+                Block block = location.getBlock();
                 if (block.getType() != Material.COMPOSTER) {
-                    composterLocationList.remove(location);
+                    composterLocations.remove(location);
                     return;
                 }
 
@@ -89,9 +102,9 @@ public class ComposterSpreader extends Module implements EventListener {
             task = null;
         }
 
-        if (composterLocationList != null) {
-            composterLocationList.clear();
-            composterLocationList = null;
+        if (composterLocations != null) {
+            composterLocations.clear();
+            composterLocations = null;
         }
     }
 
@@ -99,28 +112,54 @@ public class ComposterSpreader extends Module implements EventListener {
     public void onBlockPlace(BlockPlaceEvent event) {
         if (event.isCancelled()) return;
         Block block = event.getBlockPlaced();
-        if (block.getType() == Material.COMPOSTER) composterLocationList.add(block.getLocation());
+        if (!composterLocations.contains(block.getLocation()) && isValidComposter(block)) {
+            composterLocations.add(block.getLocation());
+        }
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         if (event.isCancelled()) return;
         Block block = event.getBlock();
-        if (block.getType() == Material.COMPOSTER) composterLocationList.remove(block.getLocation());
+        if (block.getType() == Material.COMPOSTER) {
+            composterLocations.remove(block.getLocation());
+        }
     }
 
     @EventHandler
     public void onBlockPhysicsUpdate(BlockPhysicsEvent event) {
         if (event.isCancelled()) return;
         Block block = event.getBlock();
-        if (block.getType() == Material.COMPOSTER) composterLocationList.add(block.getLocation());
+        if (!composterLocations.contains(block.getLocation()) && isValidComposter(block)) {
+            composterLocations.add(block.getLocation());
+        }
     }
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY) return;
         Block block = event.getClickedBlock();
-        if (block != null && block.getType() == Material.COMPOSTER) composterLocationList.add(block.getLocation());
+        if (block != null && !composterLocations.contains(block.getLocation()) && isValidComposter(block)) {
+            composterLocations.add(block.getLocation());
+        }
+    }
+
+    private boolean isValidComposter(Block block) {
+        if (!block.getType().equals(Material.COMPOSTER)) {
+            return false;
+        }
+
+        Location composterLocation = block.getLocation();
+        for (int indexX = -2; indexX < 3; indexX++) {
+            for (int indexZ = -2; indexZ < 3; indexZ++) {
+                Block currBlock = composterLocation.clone().add(indexX, -1, indexZ).getBlock();
+                if (cropBlocks.contains(currBlock.getType())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private boolean growCrops(Location location) {

@@ -18,3 +18,11 @@ blocks:
   - "TWISTING_VINES"
   - "WEEPING_VINES"
   - "WHEAT"
+
+# crop-blocks: A list of blocks that will define whether a composter spreads or not
+# (a block of one of these types needs to be within 2 blocks of the composter)
+crop-blocks:
+  - "FARMLAND"
+  - "GRASS_BLOCK"
+  - "DIRT"
+  - "COARSE_DIRT"

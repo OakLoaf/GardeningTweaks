@@ -16,6 +16,7 @@ import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -114,7 +115,7 @@ public final class GardeningTweaks extends SpigotPlugin {
 
     private void addHook(String pluginName, Runnable runnable) {
         PluginManager pluginManager = getServer().getPluginManager();
-        if (pluginManager.getPlugin(pluginName) != null && pluginManager.getPlugin(pluginName).isEnabled()) {
+        if (pluginManager.getPlugin(pluginName) instanceof JavaPlugin hookPlugin && hookPlugin.isEnabled()) {
             getLogger().info("Found plugin \"" + pluginName +"\". Enabling " + pluginName + " support.");
             runnable.run();
         }

@@ -9,6 +9,7 @@ import me.dave.platyutils.PlatyUtils;
 import me.dave.platyutils.hook.Hook;
 import me.dave.platyutils.plugin.SpigotPlugin;
 import me.dave.platyutils.utils.Updater;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
@@ -63,6 +64,9 @@ public final class GardeningTweaks extends SpigotPlugin {
         getCommand("gardeningtweaks").setExecutor(new GardeningTweaksCmd());
 
         Bukkit.getScheduler().runTaskTimer(this, () -> currTick += 1, 1, 1);
+
+        Metrics metrics = new Metrics(this, 20745);
+        metrics.addCustomChart(new Metrics.SimplePie("gardeningtweaks_enabled_modules", () -> "My value"));
     }
 
     @Override

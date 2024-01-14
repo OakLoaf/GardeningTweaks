@@ -27,6 +27,7 @@ dependencies {
     compileOnly("net.william278:husktowns:2.6.1")
     compileOnly("com.github.TechFortress:GriefPrevention:16.18")
     compileOnly("com.github.angeschossen:LandsAPI:6.42.15")
+    implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation(files("libs/PlatyUtils-0.1.20.jar"))
     implementation("com.github.CoolDCB:ChatColorHandler:v2.1.5")
 }
@@ -41,6 +42,9 @@ tasks {
     }
 
     shadowJar {
+        relocate("org.bstats", "me.dave.gardeningtweaks.libraries.bstats")
+        relocate("me.dave.chatcolorhandler", "me.dave.gardeningtweaks.libraries.chatcolor")
+
         val folder = System.getenv("pluginFolder_1-20")
         if (folder != null) destinationDirectory.set(file(folder))
         archiveFileName.set("${project.name}-${project.version}.jar")

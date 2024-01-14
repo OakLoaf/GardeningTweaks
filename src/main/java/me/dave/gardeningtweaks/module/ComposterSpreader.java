@@ -149,12 +149,16 @@ public class ComposterSpreader extends Module implements EventListener {
             return false;
         }
 
-        Location composterLocation = block.getLocation();
-        for (int indexX = -2; indexX < 3; indexX++) {
-            for (int indexZ = -2; indexZ < 3; indexZ++) {
-                Block currBlock = composterLocation.clone().add(indexX, -1, indexZ).getBlock();
-                if (cropBlocks.contains(currBlock.getType())) {
-                    return true;
+        if (cropBlocks.isEmpty()) {
+            return true;
+        } else {
+            Location composterLocation = block.getLocation();
+            for (int indexX = -2; indexX < 3; indexX++) {
+                for (int indexZ = -2; indexZ < 3; indexZ++) {
+                    Block currBlock = composterLocation.clone().add(indexX, -1, indexZ).getBlock();
+                    if (cropBlocks.contains(currBlock.getType())) {
+                        return true;
+                    }
                 }
             }
         }

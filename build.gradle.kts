@@ -28,7 +28,7 @@ dependencies {
     compileOnly("com.github.TechFortress:GriefPrevention:16.18")
     compileOnly("com.github.angeschossen:LandsAPI:6.42.15")
     implementation("org.bstats:bstats-bukkit:3.0.2")
-    implementation(files("libs/PlatyUtils-0.1.20.jar"))
+    implementation(files("libs/PlatyUtils-0.1.21.jar"))
     implementation("com.github.CoolDCB:ChatColorHandler:v2.1.5")
 }
 

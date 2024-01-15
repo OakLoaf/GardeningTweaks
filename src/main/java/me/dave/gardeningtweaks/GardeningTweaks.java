@@ -104,23 +104,6 @@ public final class GardeningTweaks extends SpigotPlugin {
         return plugin;
     }
 
-    public boolean callEvent(Event event) {
-        Bukkit.getServer().getPluginManager().callEvent(event);
-        if (event instanceof Cancellable cancellable) {
-            return !cancellable.isCancelled();
-        } else {
-            return true;
-        }
-    }
-
-    private void addHook(String pluginName, Runnable runnable) {
-        PluginManager pluginManager = getServer().getPluginManager();
-        if (pluginManager.getPlugin(pluginName) instanceof JavaPlugin hookPlugin && hookPlugin.isEnabled()) {
-            getLogger().info("Found plugin \"" + pluginName +"\". Enabling " + pluginName + " support.");
-            runnable.run();
-        }
-    }
-
     public boolean hasPrivateClaimAt(Location location) {
         for (Hook hook : hooks.values()) {
             if (hook instanceof ClaimHook claimHook && claimHook.hasClaimAt(location)) {

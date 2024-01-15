@@ -19,16 +19,12 @@ import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.util.BoundingBox;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class FancyTrees extends Module implements EventListener {
     public static final String ID = "FANCY_TREES";
 
-    private TreeData defaultTreeData;
-    private final HashMap<String, TreeData> treeMap = new HashMap<>();
+    private HashMap<String, TreeData> treeMap;
 
     public FancyTrees() {
         super(ID);
@@ -36,47 +32,72 @@ public class FancyTrees extends Module implements EventListener {
 
     @Override
     public void onEnable() {
+        treeMap = new HashMap<>();
         GardeningTweaks plugin = GardeningTweaks.getInstance();
         plugin.saveDefaultResource("modules/fancy-trees.yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/fancy-trees.yml"));;
 
-        treeMap.clear();
-
-        defaultTreeData = new TreeData(List.of("GRASS_BLOCK"), List.of("DIRT", "COARSE_DIRT"), new HashMap<>());
         ConfigurationSection treesSection = config.getConfigurationSection("trees");
         if (treesSection != null) {
-            ConfigurationSection treeTypeSection = treesSection.getConfigurationSection("DEFAULT");
-            if (treeTypeSection != null) {
-                ConfigurationSection flowerSection = treeTypeSection.getConfigurationSection("flowers");
-                if (flowerSection != null) {
-                    HashMap<String, Double> flowerMap = new HashMap<>();
-                    for (String flowerStr : flowerSection.getKeys(false)) {
-                        flowerMap.put(flowerStr, flowerSection.getDouble(flowerStr));
-                    }
-                    defaultTreeData = new TreeData(treeTypeSection.getStringList("spread-blocks"), treeTypeSection.getStringList("spread-blocks-on"), flowerMap);
-                }
-            }
-
-            for (String treeType : treesSection.getKeys(false)) {
-                if (treeType.equals("DEFAULT")) continue;
-                treeTypeSection = treesSection.getConfigurationSection(treeType);
+            treesSection.getKeys(false).forEach(treeType -> {
+                ConfigurationSection treeTypeSection = treesSection.getConfigurationSection(treeType);
                 if (treeTypeSection != null) {
                     ConfigurationSection flowerSection = treeTypeSection.getConfigurationSection("flowers");
                     if (flowerSection != null) {
-                        HashMap<String, Double> flowerMap = new HashMap<>();
-                        for (String flowerStr : flowerSection.getKeys(false)) {
-                            flowerMap.put(flowerStr, flowerSection.getDouble(flowerStr));
-                        }
-                        TreeData treeData = new TreeData(treeTypeSection.getStringList("spread-blocks"), treeTypeSection.getStringList("spread-blocks-on"), flowerMap);
-                        if (treeType.equals("OAK")) {
+                        List<Material> spreadBlocks = treeTypeSection.getStringList("spread-blocks").stream()
+                            .map(materialRaw -> {
+                                Optional<Material> optionalMaterial = StringUtils.getEnum(materialRaw, Material.class);
+                                if (optionalMaterial.isPresent()) {
+                                    return optionalMaterial.get();
+                                } else {
+                                    GardeningTweaks.getInstance().getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.");
+                                    return null;
+                                }
+                            })
+                            .filter(Objects::nonNull)
+                            .toList();
+
+                        List<Material> spreadBlocksOn = treeTypeSection.getStringList("spread-blocks-on").stream()
+                            .map(materialRaw -> {
+                                Optional<Material> optionalMaterial = StringUtils.getEnum(materialRaw, Material.class);
+                                if (optionalMaterial.isPresent()) {
+                                    return optionalMaterial.get();
+                                } else {
+                                    GardeningTweaks.getInstance().getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.");
+                                    return null;
+                                }
+                            })
+                            .filter(Objects::nonNull)
+                            .toList();
+
+                        RandomCollection<Material> flowerCollection = new RandomCollection<>();
+                        flowerSection.getKeys(false).forEach(materialRaw -> StringUtils.getEnum(materialRaw, Material.class).ifPresentOrElse(
+                            material -> flowerCollection.add(material, flowerSection.getDouble(materialRaw)),
+                            () -> GardeningTweaks.getInstance().getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material."))
+                        );
+
+                        TreeData treeData = new TreeData(spreadBlocks,spreadBlocksOn, flowerCollection);
+                        if (treeType.equalsIgnoreCase("OAK")) {
                             treeMap.put("TREE", treeData);
+                        } else if (treeType.equalsIgnoreCase("BIG_OAK")) {
                             treeMap.put("BIG_TREE", treeData);
                         } else {
                             treeMap.put(treeType.toUpperCase(), treeData);
                         }
                     }
                 }
-            }
+            });
+        } else {
+            GardeningTweaks.getInstance().getLogger().warning("There are no valid trees configured, automatically disabling the '" + ID  + "' module");
+            disable();
+        }
+    }
+
+    @Override
+    protected void onDisable() {
+        if (treeMap != null) {
+            treeMap.clear();
+            treeMap = null;
         }
     }
 
@@ -86,16 +107,17 @@ public class FancyTrees extends Module implements EventListener {
             return;
         }
 
-        TreeData treeData = treeMap.getOrDefault(event.getSpecies().toString(), defaultTreeData);
-        Location location = event.getLocation();
+        TreeData treeData = treeMap.getOrDefault(event.getSpecies().toString(), treeMap.get("DEFAULT"));
+        if (treeData != null) {
+            Location location = event.getLocation();
+            if (treeData.spreadsBlocks()) {
+                spreadBlocks(treeData, location);
+            }
 
-        if (treeData.spreadsBlocks()) {
-            spreadBlocks(treeData, location);
-        }
-
-        RandomCollection<Material> flowerCollection = treeData.getFlowerCollection();
-        if (flowerCollection != null) {
-            growFlowers(flowerCollection, location);
+            RandomCollection<Material> flowerCollection = treeData.getFlowerCollection();
+            if (flowerCollection != null) {
+                growFlowers(flowerCollection, location);
+            }
         }
     }
 
@@ -170,29 +192,14 @@ public class FancyTrees extends Module implements EventListener {
     }
 
     private static class TreeData {
-        private final List<Material> spreadBlocks = new ArrayList<>();
-        private final List<Material> spreadBlocksOn = new ArrayList<>();
-        private final RandomCollection<Material> flowerList = new RandomCollection<>();
+        private final List<Material> spreadBlocks;
+        private final List<Material> spreadBlocksOn;
+        private final RandomCollection<Material> flowerList;
 
-        public TreeData(List<String> spreadBlocks, List<String> spreadBlocksOn, HashMap<String, Double> flowerList) {
-            spreadBlocks.forEach(materialRaw -> {
-                StringUtils.getEnum(materialRaw, Material.class).ifPresentOrElse(
-                    this.spreadBlocks::add,
-                    () -> GardeningTweaks.getInstance().getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.")
-                );
-            });
-            spreadBlocksOn.forEach(materialRaw -> {
-                StringUtils.getEnum(materialRaw, Material.class).ifPresentOrElse(
-                    this.spreadBlocksOn::add,
-                    () -> GardeningTweaks.getInstance().getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.")
-                );
-            });
-            flowerList.forEach((materialRaw, weight) -> {
-                StringUtils.getEnum(materialRaw, Material.class).ifPresentOrElse(
-                    material -> this.flowerList.add(material, weight),
-                    () -> GardeningTweaks.getInstance().getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.")
-                );
-            });
+        public TreeData(List<Material> spreadBlocks, List<Material> spreadBlocksOn, RandomCollection<Material> flowerList) {
+            this.spreadBlocks = spreadBlocks;
+            this.spreadBlocksOn = spreadBlocksOn;
+            this.flowerList = flowerList;
         }
 
         public boolean spreadsBlocks() {

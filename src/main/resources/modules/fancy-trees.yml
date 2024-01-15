@@ -4,7 +4,7 @@
 trees:
   # DEFAULT: The tree type that is effected (DEFAULT will affect all trees not defined)
   DEFAULT:
-    # spread-blocks: Whether this tree type will change surrounding dirt/coarse dirt to grass blocks when grown
+    # spread-blocks: The blocks to be spread on surrounding blocks (Leave empty to disable)
     spread-blocks:
       - "GRASS_BLOCK"
     # spread-blocks-on: The blocks that will be replaced by 'spread-blocks' (Leave empty to replace all full blocks)

@@ -75,6 +75,14 @@ public class ConfigManager {
                 plugin.unregisterModule(DynamicTrample.ID);
             }
 
+            if (modulesSection.getBoolean("fancy-trees", false)) {
+                if (plugin.getModule(FancyTrees.ID).isEmpty()) {
+                    plugin.registerModule(new FancyTrees());
+                }
+            } else {
+                plugin.unregisterModule(FancyTrees.ID);
+            }
+
             if (modulesSection.getBoolean("fast-leaf-decay", false)) {
                 if (plugin.getModule(FastLeafDecay.ID).isEmpty()) {
                     plugin.registerModule(new FastLeafDecay());
@@ -142,14 +150,6 @@ public class ConfigManager {
                 }
             } else {
                 plugin.unregisterModule(SnifferDrops.ID);
-            }
-
-            if (modulesSection.getBoolean("tree-spread", false)) {
-                if (plugin.getModule(TreeSpread.ID).isEmpty()) {
-                    plugin.registerModule(new TreeSpread());
-                }
-            } else {
-                plugin.unregisterModule(TreeSpread.ID);
             }
 
             GardeningTweaks.getInstance().getModules().forEach(Module::reload);

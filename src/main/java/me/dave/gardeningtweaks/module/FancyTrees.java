@@ -24,21 +24,21 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class TreeSpread extends Module implements EventListener {
-    public static final String ID = "TREE_SPREAD";
+public class FancyTrees extends Module implements EventListener {
+    public static final String ID = "FANCY_TREES";
 
     private TreeData defaultTreeData;
     private final HashMap<String, TreeData> treeMap = new HashMap<>();
 
-    public TreeSpread() {
+    public FancyTrees() {
         super(ID);
     }
 
     @Override
     public void onEnable() {
         GardeningTweaks plugin = GardeningTweaks.getInstance();
-        plugin.saveDefaultResource("modules/tree-spread.yml");
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/tree-spread.yml"));;
+        plugin.saveDefaultResource("modules/fancy-trees.yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/fancy-trees.yml"));;
 
         treeMap.clear();
 

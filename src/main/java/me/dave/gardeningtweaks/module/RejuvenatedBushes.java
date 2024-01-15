@@ -41,7 +41,7 @@ public class RejuvenatedBushes extends Module implements EventListener {
         if (flowersSection != null) {
             flowersSection.getValues(false).forEach((fromRaw, toRaw) -> {
                 StringUtils.getEnum(String.valueOf(fromRaw), Material.class).ifPresentOrElse(
-                    from -> StringUtils.getEnum(String.valueOf(fromRaw), Material.class).ifPresentOrElse(
+                    from -> StringUtils.getEnum(String.valueOf(toRaw), Material.class).ifPresentOrElse(
                         to -> items.put(from, to),
                         () -> GardeningTweaks.getInstance().getLogger().warning("'" + toRaw + "' is not a valid material")
                     ),

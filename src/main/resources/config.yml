@@ -7,19 +7,33 @@
 
 # A list of modules and whether they are enabled
 modules:
+  # Bone Meal Flowers: Grow small flowers into double tall flowers
   bone-meal-flowers: false
+  # Composter Output: Change the items that you can get from filling a composter
   composter-output: true
+  # Composter Spreader: The contents of composters will be used to fertilise crops around a composter
   composter-spreader: false
+  # Decoarsify: Breaking coarse dirt will drop normal dirt (Respects silk touch)
   decoarsify: true
+  # Dynamic Trample: Players with feather falling or in creative mode will not be able to trample farmland
   dynamic-trample: true
+  # Fancy Trees: Grass blocks spread and flowers grow around the base of trees when they grow
   fancy-trees: false
+  # Fast Leaf Decay: Leaves decay faster
   fast-leaf-decay: false
+  # Grass Drops: Change the items that can drop from breaking grass
   grass-drops: true
+  # Growth Dance: Crouching frequently near crops will make them grow faster
   growth-dance: false
+  # Interactive Harvest: Right-clicking fully grown crops will harvest and replace the seed automatically
   interactive-harvest: true
+  # Lumberjack: Breaking a log with an axe will break logs above it
   lumberjack: false
+  # Rejuvenated Bushes: Right-clicking different seeds on dead bushes will transform them into saplings
   rejuvenated-bushes: false
+  # Sapling Replant: Saplings dropped on the floor will replant themselves
   sapling-replant: false
+  # Sniffer Drops: Change the items that sniffers sniff from the ground
   sniffer-drops: false
 
 # Don't edit this value

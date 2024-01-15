@@ -4,7 +4,6 @@ import me.dave.gardeningtweaks.api.events.ComposterCropGrowEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
-import me.dave.platyutils.utils.BlockPosition;
 import me.dave.platyutils.utils.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;

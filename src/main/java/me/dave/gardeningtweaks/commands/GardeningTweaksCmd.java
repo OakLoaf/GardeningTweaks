@@ -66,7 +66,12 @@ public class GardeningTweaksCmd implements CommandExecutor, TabCompleter {
         boolean wordCompletionSuccess = false;
 
         if (args.length == 1) {
-            if (sender.hasPermission("gardeningtweaks.admin.reload")) tabComplete.add("reload");
+            if (sender.hasPermission("gardeningtweaks.admin.reload")) {
+                tabComplete.add("reload");
+            }
+            if (sender.hasPermission("gardeningtweaks.update")) {
+                tabComplete.add("update");
+            }
         }
 
         for (String currTab : tabComplete) {

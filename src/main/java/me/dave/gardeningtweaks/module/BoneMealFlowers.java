@@ -66,7 +66,7 @@ public class BoneMealFlowers extends Module implements EventListener {
         }
 
         if (this.flowers.isEmpty()) {
-            GardeningTweaks.getInstance().getLogger().warning("There are no valid materials configured, automatically disabling the 'bone-meal-flowers' module");
+            GardeningTweaks.getInstance().getLogger().warning("There are no valid materials configured, automatically disabling the '" + ID  + "' module");
             disable();
         }
     }

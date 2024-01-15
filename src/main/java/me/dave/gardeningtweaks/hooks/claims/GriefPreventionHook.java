@@ -1,18 +1,13 @@
 package me.dave.gardeningtweaks.hooks.claims;
 
+import me.dave.gardeningtweaks.hooks.HookId;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.Location;
 
 public class GriefPreventionHook extends ClaimHook {
-    public static String ID = "grief-prevention";
 
     public GriefPreventionHook() {
-        super(ID);
-    }
-
-    @Override
-    public String getId() {
-        return ID;
+        super(HookId.GRIEF_PREVENTION.toString());
     }
 
     @Override

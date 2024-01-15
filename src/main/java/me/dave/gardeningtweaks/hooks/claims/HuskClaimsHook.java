@@ -1,15 +1,15 @@
 package me.dave.gardeningtweaks.hooks.claims;
 
+import me.dave.gardeningtweaks.hooks.HookId;
 import net.william278.huskclaims.api.BukkitHuskClaimsAPI;
 import net.william278.huskclaims.libraries.cloplib.operation.Operation;
 import net.william278.huskclaims.libraries.cloplib.operation.OperationType;
 import org.bukkit.Location;
 
 public class HuskClaimsHook extends ClaimHook {
-    public static String ID = "husk-claims";
 
     public HuskClaimsHook() {
-        super(ID);
+        super(HookId.HUSK_CLAIMS.toString());
     }
 
     @Override

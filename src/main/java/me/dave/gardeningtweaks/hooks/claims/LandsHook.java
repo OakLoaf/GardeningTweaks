@@ -2,13 +2,13 @@ package me.dave.gardeningtweaks.hooks.claims;
 
 import me.angeschossen.lands.api.LandsIntegration;
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.gardeningtweaks.hooks.HookId;
 import org.bukkit.Location;
 
 public class LandsHook extends ClaimHook {
-    public static final String ID = "LANDS";
 
     public LandsHook() {
-        super(ID);
+        super(HookId.LANDS.toString());
     }
 
     @Override

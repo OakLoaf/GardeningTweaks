@@ -2,6 +2,7 @@ package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.api.events.FlowerBoneMealEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.gardeningtweaks.hooks.HookId;
 import me.dave.gardeningtweaks.hooks.ProtocolLibHook;
 import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
@@ -108,7 +109,7 @@ public class BoneMealFlowers extends Module implements EventListener {
             if (flowerType.createBlockData() instanceof Bisected && !GardeningTweaks.callEvent(new BlockPlaceEvent(block.getRelative(BlockFace.UP), block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.BONE_MEAL), player, true, EquipmentSlot.HAND))) return;
 
             if (player.getGameMode() != GameMode.CREATIVE && mainHand != null) mainHand.setAmount(mainHand.getAmount() - 1);
-            GardeningTweaks.getInstance().getHook(ProtocolLibHook.ID).ifPresent(hook -> ((ProtocolLibHook) hook).armInteractAnimation(player));
+            GardeningTweaks.getInstance().getHook(HookId.PROTOCOL_LIB.toString()).ifPresent(hook -> ((ProtocolLibHook) hook).armInteractAnimation(player));
         }
 
         world.spawnParticle(Particle.VILLAGER_HAPPY, location.clone().add(0.5, 0.2, 0.5), 10, 0.2, 0.2, 0.2);

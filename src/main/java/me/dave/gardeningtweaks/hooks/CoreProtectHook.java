@@ -12,16 +12,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CoreProtectHook extends Hook {
-    public static String ID = "core-protect";
     private CoreProtectAPI coreProtect;
 
-    @Override
-    public String getId() {
-        return ID;
-    }
-
     public CoreProtectHook() {
-        super(ID);
+        super(HookId.CORE_PROTECT.toString());
         Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("CoreProtect");
 
         // Check that the API is enabled

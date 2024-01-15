@@ -10,11 +10,10 @@ import org.bukkit.entity.Player;
 import java.lang.reflect.InvocationTargetException;
 
 public class ProtocolLibHook extends Hook {
-    public static String ID = "protocol-lib";
     private final ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
 
     public ProtocolLibHook() {
-        super(ID);
+        super(HookId.PROTOCOL_LIB.toString());
     }
 
     public void armInteractAnimation(Player player) {

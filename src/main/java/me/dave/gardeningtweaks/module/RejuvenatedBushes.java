@@ -2,6 +2,7 @@ package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.api.events.BushRejuvenateEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.gardeningtweaks.hooks.HookId;
 import me.dave.gardeningtweaks.hooks.ProtocolLibHook;
 import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
@@ -92,7 +93,7 @@ public class RejuvenatedBushes extends Module implements EventListener {
         if (player.getGameMode() != GameMode.CREATIVE) mainHand.setAmount(mainHand.getAmount() - 1);
         block.setType(saplingType);
 
-        GardeningTweaks.getInstance().getHook(ProtocolLibHook.ID).ifPresent(hook -> ((ProtocolLibHook) hook).armInteractAnimation(player));
+        GardeningTweaks.getInstance().getHook(HookId.PROTOCOL_LIB.toString()).ifPresent(hook -> ((ProtocolLibHook) hook).armInteractAnimation(player));
 
         World world = block.getWorld();
         Location location = block.getLocation();

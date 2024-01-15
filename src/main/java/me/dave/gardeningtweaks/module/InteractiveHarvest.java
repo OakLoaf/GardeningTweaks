@@ -1,6 +1,7 @@
 package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.gardeningtweaks.hooks.HookId;
 import me.dave.gardeningtweaks.hooks.ProtocolLibHook;
 import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
@@ -106,7 +107,7 @@ public class InteractiveHarvest extends Module implements EventListener {
                     }
                 }
 
-                GardeningTweaks.getInstance().getHook(ProtocolLibHook.ID).ifPresent(hook -> ((ProtocolLibHook) hook).armInteractAnimation(player));
+                GardeningTweaks.getInstance().getHook(HookId.PROTOCOL_LIB.toString()).ifPresent(hook -> ((ProtocolLibHook) hook).armInteractAnimation(player));
 
                 world.spawnParticle(Particle.BLOCK_DUST, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3, crop);
                 world.playSound(location, crop.getSoundGroup().getBreakSound(), 1f, 1f);

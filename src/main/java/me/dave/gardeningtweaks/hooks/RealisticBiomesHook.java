@@ -9,10 +9,9 @@ import org.bukkit.block.Block;
 import org.bukkit.plugin.PluginManager;
 
 public class RealisticBiomesHook extends Hook {
-    public static String ID = "realistic-biomes";
 
     public RealisticBiomesHook() {
-        super(ID);
+        super(HookId.REALISTIC_BIOMES.toString());
     }
 
     public void setBlockType(Block block, Material material) {

@@ -2,6 +2,7 @@ package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.api.events.TreeSpreadBlockEvent;
+import me.dave.gardeningtweaks.hooks.HookId;
 import me.dave.gardeningtweaks.hooks.RealisticBiomesHook;
 import me.dave.platyutils.listener.EventListener;
 import me.dave.platyutils.module.Module;
@@ -188,7 +189,7 @@ public class FancyTrees extends Module implements EventListener {
     }
 
     private void setBlockMaterial(Block block, Material material) {
-        GardeningTweaks.getInstance().getHook(RealisticBiomesHook.ID).ifPresentOrElse(hook -> ((RealisticBiomesHook) hook).setBlockType(block, material), () -> block.setType(material));
+        GardeningTweaks.getInstance().getHook(HookId.REALISTIC_BIOMES.toString()).ifPresentOrElse(hook -> ((RealisticBiomesHook) hook).setBlockType(block, material), () -> block.setType(material));
     }
 
     private static class TreeData {

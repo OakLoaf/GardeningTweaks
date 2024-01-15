@@ -135,7 +135,7 @@ public class FancyTrees extends Module implements EventListener {
                     if (treeData.isSpreadableMaterial(currBlock) && currBlock.getRelative(BlockFace.UP).isPassable()) {
                         List<Material> spreadMaterials = treeData.getSpreadMaterials();
                         Material spreadMaterial = spreadMaterials.get(GardeningTweaks.getRandom().nextInt(spreadMaterials.size()));
-                        if (!GardeningTweaks.callEvent(new TreeSpreadBlockEvent(currBlock, spreadMaterial, saplingLoc.getBlock()))) {
+                        if (!GardeningTweaks.getInstance().callEvent(new TreeSpreadBlockEvent(currBlock, spreadMaterial, saplingLoc.getBlock()))) {
                             continue;
                         }
                         setBlockMaterial(currBlock, spreadMaterial);
@@ -145,7 +145,7 @@ public class FancyTrees extends Module implements EventListener {
                         if (treeData.isSpreadableMaterial(currBlock) && currBlock.getRelative(BlockFace.UP).isPassable()) {
                             List<Material> spreadMaterials = treeData.getSpreadMaterials();
                             Material spreadMaterial = spreadMaterials.get(GardeningTweaks.getRandom().nextInt(spreadMaterials.size()));
-                            if (!GardeningTweaks.callEvent(new TreeSpreadBlockEvent(currBlock, spreadMaterial, saplingLoc.getBlock()))) {
+                            if (!GardeningTweaks.getInstance().callEvent(new TreeSpreadBlockEvent(currBlock, spreadMaterial, saplingLoc.getBlock()))) {
                                 continue;
                             }
                             setBlockMaterial(currBlock, spreadMaterial);
@@ -175,7 +175,7 @@ public class FancyTrees extends Module implements EventListener {
                     if (GardeningTweaks.getRandom().nextInt(2) < 1) {
                         Material flowerMaterial = flowerCollection.next();
                         if (currBlock.isEmpty() && flowerMaterial.createBlockData().isSupported(currBlock)) {
-                            if (!GardeningTweaks.callEvent(new TreeSpreadBlockEvent(currBlock, flowerMaterial, saplingLoc.getBlock()))) {
+                            if (!GardeningTweaks.getInstance().callEvent(new TreeSpreadBlockEvent(currBlock, flowerMaterial, saplingLoc.getBlock()))) {
                                 continue;
                             }
 

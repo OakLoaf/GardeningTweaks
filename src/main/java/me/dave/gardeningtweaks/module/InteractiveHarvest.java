@@ -80,10 +80,10 @@ public class InteractiveHarvest extends Module implements EventListener {
                     event.setCancelled(true);
                 }
 
-                if (!GardeningTweaks.callEvent(new BlockBreakEvent(block, player))) {
+                if (!GardeningTweaks.getInstance().callEvent(new BlockBreakEvent(block, player))) {
                     return;
                 }
-                if (!GardeningTweaks.callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.AIR), player, true, EquipmentSlot.HAND))) {
+                if (!GardeningTweaks.getInstance().callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.AIR), player, true, EquipmentSlot.HAND))) {
                     return;
                 }
 
@@ -102,7 +102,7 @@ public class InteractiveHarvest extends Module implements EventListener {
                 }
 
                 if (!entities.isEmpty()) {
-                    if (!GardeningTweaks.callEvent(new BlockDropItemEvent(block, blockState, player, entities))) {
+                    if (!GardeningTweaks.getInstance().callEvent(new BlockDropItemEvent(block, blockState, player, entities))) {
                         entities.forEach(Entity::remove);
                     }
                 }

@@ -176,7 +176,7 @@ public class ComposterSpreader extends Module implements EventListener {
                 if (currBlock.getBlockData() instanceof Ageable crop && blocks.contains(currBlock.getType())) {
                     if (GardeningTweaks.getRandom().nextBoolean()) {
                         if (crop.getAge() == crop.getMaximumAge()) continue;
-                        if (!GardeningTweaks.callEvent(new ComposterCropGrowEvent(currBlock))) continue;
+                        if (!GardeningTweaks.getInstance().callEvent(new ComposterCropGrowEvent(currBlock))) continue;
                         int newAge = crop.getAge() + 1 + GardeningTweaks.getRandom().nextInt(3);
                         int maxAge = crop.getMaximumAge();
                         if (newAge > maxAge) newAge = maxAge;

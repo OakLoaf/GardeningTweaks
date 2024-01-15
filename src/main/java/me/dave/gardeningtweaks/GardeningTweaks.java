@@ -104,7 +104,7 @@ public final class GardeningTweaks extends SpigotPlugin {
         return plugin;
     }
 
-    public static boolean callEvent(Event event) {
+    public boolean callEvent(Event event) {
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (event instanceof Cancellable cancellable) {
             return !cancellable.isCancelled();

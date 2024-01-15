@@ -102,11 +102,11 @@ public class BoneMealFlowers extends Module implements EventListener {
         World world = block.getWorld();
         Location location = block.getLocation();
 
-        if (!GardeningTweaks.callEvent(new FlowerBoneMealEvent(block))) return;
+        if (!GardeningTweaks.getInstance().callEvent(new FlowerBoneMealEvent(block))) return;
 
         if (player != null) {
-            if (!GardeningTweaks.callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.BONE_MEAL), player, true, EquipmentSlot.HAND))) return;
-            if (flowerType.createBlockData() instanceof Bisected && !GardeningTweaks.callEvent(new BlockPlaceEvent(block.getRelative(BlockFace.UP), block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.BONE_MEAL), player, true, EquipmentSlot.HAND))) return;
+            if (!GardeningTweaks.getInstance().callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.BONE_MEAL), player, true, EquipmentSlot.HAND))) return;
+            if (flowerType.createBlockData() instanceof Bisected && !GardeningTweaks.getInstance().callEvent(new BlockPlaceEvent(block.getRelative(BlockFace.UP), block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.BONE_MEAL), player, true, EquipmentSlot.HAND))) return;
 
             if (player.getGameMode() != GameMode.CREATIVE && mainHand != null) mainHand.setAmount(mainHand.getAmount() - 1);
             GardeningTweaks.getInstance().getHook(HookId.PROTOCOL_LIB.toString()).ifPresent(hook -> ((ProtocolLibHook) hook).armInteractAnimation(player));

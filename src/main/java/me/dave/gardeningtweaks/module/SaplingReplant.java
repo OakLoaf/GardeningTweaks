@@ -106,12 +106,12 @@ public class SaplingReplant extends Module implements EventListener {
                 }
 
                 if (PLANTABLE_BLOCKS.contains(block.getRelative(BlockFace.DOWN).getType())) {
-                    if (!GardeningTweaks.callEvent(new SaplingReplantEvent(block, player, itemEntity, material))) {
+                    if (!GardeningTweaks.getInstance().callEvent(new SaplingReplantEvent(block, player, itemEntity, material))) {
                         cancel();
                         return;
                     }
 
-                    if (player != null && !GardeningTweaks.callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), itemEntity.getItemStack(), player, true, EquipmentSlot.HAND))) {
+                    if (player != null && !GardeningTweaks.getInstance().callEvent(new BlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), itemEntity.getItemStack(), player, true, EquipmentSlot.HAND))) {
                         cancel();
                         return;
                     }

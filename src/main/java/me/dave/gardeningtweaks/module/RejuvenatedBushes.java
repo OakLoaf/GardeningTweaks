@@ -88,7 +88,7 @@ public class RejuvenatedBushes extends Module implements EventListener {
     }
 
     public void bushToSapling(Player player, ItemStack mainHand, Block block, Material saplingType) {
-        if (!GardeningTweaks.callEvent(new BushRejuvenateEvent(block, player, mainHand, saplingType))) return;
+        if (!GardeningTweaks.getInstance().callEvent(new BushRejuvenateEvent(block, player, mainHand, saplingType))) return;
 
         if (player.getGameMode() != GameMode.CREATIVE) mainHand.setAmount(mainHand.getAmount() - 1);
         block.setType(saplingType);

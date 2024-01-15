@@ -85,7 +85,7 @@ public class Lumberjack extends Module implements EventListener {
                 return;
             }
 
-            if (!GardeningTweaks.callEvent(new BlockLumberEvent(block, player)) || !GardeningTweaks.callEvent(new BlockBreakEvent(block, player))) {
+            if (!GardeningTweaks.getInstance().callEvent(new BlockLumberEvent(block, player)) || !GardeningTweaks.getInstance().callEvent(new BlockBreakEvent(block, player))) {
                 return;
             }
 

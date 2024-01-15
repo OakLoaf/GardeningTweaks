@@ -13,6 +13,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Directional;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
@@ -24,6 +25,7 @@ import java.util.*;
 
 public class FancyTrees extends Module implements EventListener {
     public static final String ID = "FANCY_TREES";
+    private static final EnumSet<BlockFace> HORIZONTAL_BLOCK_FACES = EnumSet.of(BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST);
 
     private HashMap<String, TreeData> treeMap;
 
@@ -190,6 +192,11 @@ public class FancyTrees extends Module implements EventListener {
 
     private void setBlockMaterial(Block block, Material material) {
         GardeningTweaks.getInstance().getHook(HookId.REALISTIC_BIOMES.toString()).ifPresentOrElse(hook -> ((RealisticBiomesHook) hook).setBlockType(block, material), () -> block.setType(material));
+        if (block.getBlockData() instanceof Directional directional) {
+            BlockFace[] blockFaces = HORIZONTAL_BLOCK_FACES.toArray(new BlockFace[0]);
+            directional.setFacing(blockFaces[GardeningTweaks.getRandom().nextInt(blockFaces.length)]);
+            block.setBlockData(directional);
+        }
     }
 
     private static class TreeData {

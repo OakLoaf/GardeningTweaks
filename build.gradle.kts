@@ -8,7 +8,7 @@ group = "me.dave"
 version = "2.0.0"
 
 repositories {
-    mavenCentral()
+    mavenCentral() // bStats
     mavenLocal() // PlatyUtils
     maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") } // Spigot
     maven { url = uri("https://repo.dmulloy2.net/repository/public/")} // ProtocolLib

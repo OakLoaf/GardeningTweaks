@@ -74,7 +74,7 @@ public class FastLeafDecay extends Module implements EventListener {
                     return;
                 }
 
-                if (leavesBroken.get() >= maxLeavesDecayPerRun) {
+                if (leavesBroken.get() >= maxLeavesDecayPerRun && maxLeavesDecayPerRun > 0) {
                     return;
                 }
 

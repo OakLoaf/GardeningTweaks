@@ -6,5 +6,5 @@ particles: false
 ignore-persistence: false # WARNING: Enabling this will cause leaves previously placed by players to decay.
 # limit-drops: Stops dropping items from decaying leaves when there are more than X amount of dropped items in the chunk (Set to -1 to disable)
 limit-drops: 32
-# max-leaves-decay-per-tick: Maximum number of leaves that will decay per tick
+# max-leaves-decay-per-tick: Maximum number of leaves that will decay per tick (Set to -1 to disable)
 max-leaves-decay-per-tick: 100

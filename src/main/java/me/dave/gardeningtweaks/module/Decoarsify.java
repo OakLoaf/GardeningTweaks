@@ -32,11 +32,14 @@ public class Decoarsify extends Module implements EventListener {
         }
 
         ItemMeta mainHandMeta = player.getInventory().getItemInMainHand().getItemMeta();
-        if (mainHandMeta == null || mainHandMeta.hasEnchant(Enchantment.SILK_TOUCH)) {
+        if (mainHandMeta != null && mainHandMeta.hasEnchant(Enchantment.SILK_TOUCH)) {
             return;
         }
 
-        event.setCancelled(true);
-        blockState.getWorld().dropItemNaturally(blockState.getLocation(), new ItemStack(Material.DIRT));
+        event.getItems().forEach(item -> {
+            if (item.getItemStack().getType().equals(Material.COARSE_DIRT)) {
+                item.setItemStack(new ItemStack(Material.DIRT));
+            }
+        });
     }
 }

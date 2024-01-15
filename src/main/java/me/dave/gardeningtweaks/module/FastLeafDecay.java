@@ -161,7 +161,7 @@ public class FastLeafDecay extends Module implements EventListener {
         }
 
         if (leaves.getDistance() >= 7) {
-            int currTick = GardeningTweaks.getCurrentTick();
+            int currTick = GardeningTweaks.getInstance().getCurrentTick();
             if (blockScheduleMap.containsKey(currTick)) {
                 Deque<BlockPosition> blockSchedule = blockScheduleMap.get(currTick);
                 BlockPosition blockPos = BlockPosition.adapt(block.getLocation());

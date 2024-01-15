@@ -24,7 +24,7 @@ public class GardeningTweaksCmd implements CommandExecutor, TabCompleter {
                         ChatColorHandler.sendMessage(sender, "&cYou have insufficient permissions.");
                         return true;
                     }
-                    GardeningTweaks.getConfigManager().reloadConfig();
+                    GardeningTweaks.getInstance().getConfigManager().reloadConfig();
                     ChatColorHandler.sendMessage(sender, "&#feb5ff✿ &#96D590GardeningTweaks has been reloaded.");
                     return true;
                 }

@@ -23,11 +23,11 @@ import java.util.Random;
 import java.util.logging.Level;
 
 public final class GardeningTweaks extends SpigotPlugin {
-    private static final Random random = new Random();
+    private static final Random RANDOM = new Random();
     private static GardeningTweaks plugin;
+    private ConfigManager configManager;
     private Updater updater;
-    private static ConfigManager configManager;
-    private static int currTick = 0;
+    private int currTick = 0;
 
     @Override
     public void onLoad() {
@@ -84,24 +84,24 @@ public final class GardeningTweaks extends SpigotPlugin {
         PlatyUtils.disable();
     }
 
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+
     public Updater getUpdater() {
         return updater;
     }
 
+    public int getCurrentTick() {
+        return currTick;
+    }
+
     public static Random getRandom() {
-        return random;
+        return RANDOM;
     }
 
     public static GardeningTweaks getInstance() {
         return plugin;
-    }
-
-    public static ConfigManager getConfigManager() {
-        return configManager;
-    }
-
-    public static int getCurrentTick() {
-        return currTick;
     }
 
     public static boolean callEvent(Event event) {

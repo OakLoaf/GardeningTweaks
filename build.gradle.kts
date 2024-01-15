@@ -59,3 +59,15 @@ tasks {
         }
     }
 }
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            groupId = group.toString()
+            artifactId = rootProject.name
+            version = version
+
+            from(components["java"])
+        }
+    }
+}

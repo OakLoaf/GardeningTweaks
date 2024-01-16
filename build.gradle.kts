@@ -13,8 +13,7 @@ repositories {
     maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") } // Spigot
     maven { url = uri("https://repo.dmulloy2.net/repository/public/")} // ProtocolLib
     maven { url = uri("https://maven.playpro.com")} // CoreProtect
-    maven { url = uri("https://repo.william278.net/snapshots") } // HuskClaims
-    maven { url = uri("https://repo.william278.net/releases") } // HuskTowns
+    maven { url = uri("https://repo.william278.net/releases") } // HuskClaims, HuskTowns
     maven { url = uri("https://jitpack.io")} // ChatColorHandler, GardeningTweaks, GriefPrevention, RealisticBiomes, Lands
 }
 
@@ -23,7 +22,7 @@ dependencies {
     compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
     compileOnly("net.coreprotect:coreprotect:21.3")
     compileOnly("com.github.Maroon28:RealisticBiomes:3d292ea32a")
-    compileOnly("net.william278.huskclaims:huskclaims-bukkit:1.0-8818300")
+    compileOnly("net.william278.huskclaims:huskclaims-bukkit:1.0.1")
     compileOnly("net.william278:husktowns:2.6.1")
     compileOnly("com.github.TechFortress:GriefPrevention:16.18")
     compileOnly("com.github.angeschossen:LandsAPI:6.42.15")

@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "me.dave"
-version = "2.0.0.2"
+version = "2.0.0.3"
 
 repositories {
     mavenCentral() // bStats
@@ -28,7 +28,7 @@ dependencies {
     compileOnly("com.github.angeschossen:LandsAPI:6.42.15")
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation(files("libs/PlatyUtils-0.1.21.jar"))
-    implementation("com.github.CoolDCB:ChatColorHandler:v2.1.5")
+    implementation("com.github.CoolDCB:ChatColorHandler:v2.5.1")
 }
 
 java {

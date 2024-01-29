@@ -13,6 +13,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -174,7 +175,7 @@ public class FancyTrees extends Module implements EventListener {
 
                     if (GardeningTweaks.getRandom().nextInt(2) < 1) {
                         Material flowerMaterial = flowerCollection.next();
-                        if (currBlock.isEmpty() && flowerMaterial.createBlockData().isSupported(currBlock)) {
+                        if (currBlock.isEmpty() && isSupported(flowerMaterial.createBlockData(), currBlock)) {
                             if (!GardeningTweaks.getInstance().callEvent(new TreeSpreadBlockEvent(currBlock, flowerMaterial, saplingLoc.getBlock()))) {
                                 continue;
                             }
@@ -196,6 +197,15 @@ public class FancyTrees extends Module implements EventListener {
             BlockFace[] blockFaces = HORIZONTAL_BLOCK_FACES.toArray(new BlockFace[0]);
             directional.setFacing(blockFaces[GardeningTweaks.getRandom().nextInt(blockFaces.length)]);
             block.setBlockData(directional);
+        }
+    }
+
+    private boolean isSupported(BlockData blockData, Block block) {
+        String serverVersion = Bukkit.getVersion();
+        if (serverVersion.contains("1.16") || serverVersion.contains("1.17") || serverVersion.contains("1.18")) {
+            return block.getRelative(BlockFace.DOWN).getType().isSolid();
+        } else {
+            return blockData.isSupported(block);
         }
     }
 

@@ -29,6 +29,7 @@ public class SaplingReplant extends Module implements EventListener {
     private Boolean includePlayerDrops;
     private Boolean includeLeafDrops;
     private Integer leafDelay;
+    private Double distanceFromOrigin;
 
     public SaplingReplant() {
         super(ID);
@@ -43,6 +44,7 @@ public class SaplingReplant extends Module implements EventListener {
         includePlayerDrops = config.getBoolean("include-player-drops", false);
         includeLeafDrops = config.getBoolean("include-leaf-drops", false);
         leafDelay = config.getInt("leaf-delay", 10);
+        distanceFromOrigin = config.getDouble("distance-from-origin", 1.5);
     }
 
     @EventHandler
@@ -135,10 +137,10 @@ public class SaplingReplant extends Module implements EventListener {
     }
 
     private boolean inRangeOfOrigin(Location origin, Location location) {
-        return (location.getX() < (origin.getX() + 1.5)) // Upper X Bound
-            && (location.getX() > (origin.getX() - 1.5)) // Lower X Bound
-            && (location.getY() < (origin.getY() + 1.5)) // Upper Y Bound
-            && (location.getZ() < (origin.getZ() + 1.5)) // Upper Z Bound
-            && (location.getZ() > (origin.getZ() - 1.5)); // Lower Z Bound
+        return (location.getX() < (origin.getX() + distanceFromOrigin)) // Upper X Bound
+            && (location.getX() > (origin.getX() - distanceFromOrigin)) // Lower X Bound
+            && (location.getY() < (origin.getY() + distanceFromOrigin)) // Upper Y Bound
+            && (location.getZ() < (origin.getZ() + distanceFromOrigin)) // Upper Z Bound
+            && (location.getZ() > (origin.getZ() - distanceFromOrigin)); // Lower Z Bound
     }
 }

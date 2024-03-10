@@ -4,3 +4,5 @@ include-player-drops: true
 include-leaf-drops: true
 # leaf-delay: The time (in seconds) that a sapling will wait, after falling from a leaf, before trying to replant itself
 leaf-delay: 10
+# distance-from-origin: The maximum distance (horizontally) from the leaf that dropped it that a sapling is able to replant
+distance-from-origin: 1.5

@@ -96,6 +96,10 @@ public class GrowthDance extends Module implements EventListener {
                         continue;
                     }
 
+                    if (crop.getAge() == crop.getMaximumAge()) {
+                        continue;
+                    }
+
                     if (GardeningTweaks.getRandom().nextDouble(0, 1) > chance) {
                         continue;
                     }

@@ -29,9 +29,10 @@ public class GardeningTweaksAPI {
      * @param location Center location
      * @param chance Chance of growing per crop
      * @param radius Radius around the location to find crops
+     * @return List of grown blocks
      */
-    public static void growCrops(Location location, double chance, int radius) {
-        GrowthDance.growCrops(location, chance, radius);
+    public static List<Block> growCrops(Location location, double chance, int radius) {
+        return GrowthDance.growCrops(location, chance, radius);
     }
 
     /**
@@ -40,9 +41,10 @@ public class GardeningTweaksAPI {
      * @param chance Chance of growing per crop
      * @param radius Radius around the location to find crops
      * @param crops List of materials that will be affected
+     * @return List of grown blocks
      */
-    public static void growCrops(Location location, double chance, int radius, @Nullable List<Material> crops) {
-        GrowthDance.growCrops(location, chance, radius, crops);
+    public static List<Block> growCrops(Location location, double chance, int radius, @Nullable List<Material> crops) {
+        return GrowthDance.growCrops(location, chance, radius, crops);
     }
 
     /**
@@ -52,9 +54,10 @@ public class GardeningTweaksAPI {
      * @param radius Radius around the location to find crops
      * @param height Height to check above and including the location
      * @param crops List of materials that will be affected
+     * @return List of grown blocks
      */
-    public static void growCrops(Location location, double chance, int radius, int height, @Nullable List<Material> crops) {
-        GrowthDance.growCrops(location, chance, radius, height, crops);
+    public static List<Block> growCrops(Location location, double chance, int radius, int height, @Nullable List<Material> crops) {
+        return GrowthDance.growCrops(location, chance, radius, height, crops);
     }
 
     /**

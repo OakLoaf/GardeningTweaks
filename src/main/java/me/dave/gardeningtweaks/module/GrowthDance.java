@@ -18,10 +18,7 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class GrowthDance extends Module implements EventListener {
     public static final String ID = "GROWTH_DANCE";
@@ -79,35 +76,52 @@ public class GrowthDance extends Module implements EventListener {
         growCrops(player.getLocation(), 0.5, 2, blocks);
     }
 
-    public static void growCrops(Location location, double chance, int radius) {
-        growCrops(location, chance, radius, 2, null);
+    public static List<Block> growCrops(Location location, double chance, int radius) {
+        return growCrops(location, chance, radius, 2, null);
     }
 
-    public static void growCrops(Location location, double chance, int radius, @Nullable List<Material> crops) {
-        growCrops(location, chance, radius, 2, crops);
+    public static List<Block> growCrops(Location location, double chance, int radius, @Nullable List<Material> crops) {
+        return growCrops(location, chance, radius, 2, crops);
     }
 
-    public static void growCrops(Location location, double chance, int radius, int height, @Nullable List<Material> crops) {
+    public static List<Block> growCrops(Location location, double chance, int radius, int height, @Nullable List<Material> crops) {
+        List<Block> grownBlocks = new ArrayList<>();
         Location currLocation = location.clone();
 
         for (int indexY = 0; indexY < height; indexY++) {
             for (int indexX = -radius; indexX <= radius; indexX++) {
                 for (int indexZ = -radius; indexZ <= radius; indexZ++) {
                     Block currBlock = currLocation.clone().add(indexX, indexY, indexZ).getBlock();
-
-                    if (currBlock.getBlockData() instanceof Ageable crop && (crops == null || crops.contains(currBlock.getType()))) {
-                        if (GardeningTweaks.getRandom().nextDouble(0, 1) <= chance) {
-                            if (!GardeningTweaks.getInstance().callEvent(new CropGrowEvent(currBlock))) continue;
-
-                            int newAge = crop.getAge() + GardeningTweaks.getRandom().nextInt(3);
-                            int maxAge = crop.getMaximumAge();
-                            if (newAge > maxAge) newAge = maxAge;
-                            crop.setAge(newAge);
-                            currBlock.setBlockData(crop);
-                        }
+                    if (!(currBlock.getBlockData() instanceof Ageable crop) || crops == null || !crops.contains(currBlock.getType())) {
+                        continue;
                     }
+
+                    if (GardeningTweaks.getRandom().nextDouble(0, 1) > chance) {
+                        continue;
+                    }
+
+                    if (!GardeningTweaks.getInstance().callEvent(new CropGrowEvent(currBlock))) {
+                        continue;
+                    }
+
+                    int increment = GardeningTweaks.getRandom().nextInt(3);
+                    if (increment == 0) {
+                        continue;
+                    }
+
+                    int newAge = crop.getAge() + increment;
+                    int maxAge = crop.getMaximumAge();
+                    if (newAge > maxAge) {
+                        newAge = maxAge;
+                    }
+
+                    crop.setAge(newAge);
+                    currBlock.setBlockData(crop);
+                    grownBlocks.add(currBlock);
                 }
             }
         }
+
+        return grownBlocks;
     }
 }

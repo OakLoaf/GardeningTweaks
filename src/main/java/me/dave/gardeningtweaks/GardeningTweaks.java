@@ -9,6 +9,7 @@ import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.lushplugins.lushlib.LushLib;
 import org.lushplugins.lushlib.hook.Hook;
 import org.lushplugins.lushlib.plugin.SpigotPlugin;
 import org.lushplugins.lushlib.utils.Updater;
@@ -31,6 +32,7 @@ public final class GardeningTweaks extends SpigotPlugin {
 
     @Override
     public void onEnable() {
+        LushLib.getInstance().enable(this);
         updater = new Updater(this, "gardening-tweaks", "gardeningtweaks.update", "gardeningtweaks update");
 
         configManager = new ConfigManager();
@@ -74,6 +76,7 @@ public final class GardeningTweaks extends SpigotPlugin {
     public void onDisable() {
         unregisterAllHooks();
         unregisterAllModules();
+        LushLib.getInstance().disable();
     }
 
     public ConfigManager getConfigManager() {

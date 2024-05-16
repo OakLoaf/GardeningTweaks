@@ -9,7 +9,7 @@ version = "2.1.0"
 
 repositories {
     mavenCentral() // bStats
-    mavenLocal() // PlatyUtils
+    mavenLocal()
     maven(url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/") // Spigot
     maven(url = "https://repo.dmulloy2.net/repository/public/") // ProtocolLib
     maven(url = "https://maven.playpro.com") // CoreProtect

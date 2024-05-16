@@ -10,29 +10,36 @@ version = "2.0.2"
 repositories {
     mavenCentral() // bStats
     mavenLocal() // PlatyUtils
-    maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") } // Spigot
-    maven { url = uri("https://repo.dmulloy2.net/repository/public/")} // ProtocolLib
-    maven { url = uri("https://maven.playpro.com")} // CoreProtect
-    maven { url = uri("https://repo.william278.net/releases") } // HuskClaims, HuskTowns
-    maven { url = uri("https://jitpack.io")} // ChatColorHandler, GardeningTweaks, GriefPrevention, RealisticBiomes, Lands
+    maven(url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/") // Spigot
+    maven(url = "https://repo.dmulloy2.net/repository/public/") // ProtocolLib
+    maven(url = "https://maven.playpro.com") // CoreProtect
+    maven(url = "https://repo.william278.net/releases") // HuskClaims, HuskTowns
+    maven(url = "https://jitpack.io") // ChatColorHandler, GardeningTweaks, GriefPrevention, RealisticBiomes, Lands
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT")
-    compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
-    compileOnly("net.coreprotect:coreprotect:21.3")
-    compileOnly("com.github.Maroon28:RealisticBiomes:3d292ea32a")
-    compileOnly("net.william278.huskclaims:huskclaims-bukkit:1.0.1")
-    compileOnly("net.william278:husktowns:2.6.1")
-    compileOnly("com.github.TechFortress:GriefPrevention:16.18")
-    compileOnly("com.github.angeschossen:LandsAPI:6.42.15")
-    implementation("org.bstats:bstats-bukkit:3.0.2")
-    implementation(files("libs/PlatyUtils-0.1.21.jar"))
-    implementation("com.github.CoolDCB:ChatColorHandler:v2.5.1")
+    // Dependencies
+    compileOnly("org.spigotmc:spigot-api:${findProperty("minecraftVersion")}-R0.1-SNAPSHOT")
+    compileOnly("com.comphenix.protocol:ProtocolLib:${findProperty("protocollibVersion")}")
+
+    // Soft Dependencies
+    compileOnly("net.coreprotect:coreprotect:${findProperty("coreprotectVersion")}")
+    compileOnly("com.github.TechFortress:GriefPrevention:${findProperty("griefpreventionVersion")}")
+    compileOnly("net.william278.huskclaims:huskclaims-bukkit:${findProperty("huskclaimsVersion")}")
+    compileOnly("net.william278:husktowns:${findProperty("husktownsVersion")}")
+    compileOnly("com.github.angeschossen:LandsAPI:${findProperty("landsVersion")}")
+    compileOnly("com.github.Maroon28:RealisticBiomes:${findProperty("realisticbiomesVersion")}")
+
+    // Libraries
+    implementation("org.bstats:bstats-bukkit:${findProperty("bstatsVersion")}")
+    implementation("com.github.CoolDCB:ChatColorHandler:${findProperty("chatcolorhandlerVersion")}")
+    implementation(files("libs/PlatyUtils-${findProperty("platyutilsVersion")}.jar"))
 }
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+
+    withSourcesJar()
 }
 
 tasks {
@@ -44,8 +51,12 @@ tasks {
         relocate("org.bstats", "me.dave.gardeningtweaks.libraries.bstats")
         relocate("me.dave.chatcolorhandler", "me.dave.gardeningtweaks.libraries.chatcolor")
 
+        minimize()
+
         val folder = System.getenv("pluginFolder_1-20")
-        if (folder != null) destinationDirectory.set(file(folder))
+        if (folder != null) {
+            destinationDirectory.set(file(folder))
+        }
         archiveFileName.set("${project.name}-${project.version}.jar")
     }
 
@@ -60,13 +71,36 @@ tasks {
 }
 
 publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            groupId = group.toString()
-            artifactId = rootProject.name
-            version = version
+    publishing {
+        repositories {
+            maven {
+                name = "smrt1Releases"
+                url = uri("https://repo.smrt-1.com/releases")
+                credentials(PasswordCredentials::class)
+                authentication {
+                    isAllowInsecureProtocol = true
+                    create<BasicAuthentication>("basic")
+                }
+            }
 
-            from(components["java"])
+            maven {
+                name = "smrt1Snapshots"
+                url = uri("https://repo.smrt-1.com/snapshots")
+                credentials(PasswordCredentials::class)
+                authentication {
+                    isAllowInsecureProtocol = true
+                    create<BasicAuthentication>("basic")
+                }
+            }
+        }
+
+        publications {
+            create<MavenPublication>("maven") {
+                groupId = rootProject.group.toString()
+                artifactId = rootProject.name
+                version = rootProject.version.toString()
+                from(project.components["java"])
+            }
         }
     }
 }

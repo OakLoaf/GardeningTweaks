@@ -2,7 +2,7 @@ package me.dave.gardeningtweaks.config;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.module.*;
-import me.dave.platyutils.module.Module;
+import org.lushplugins.lushlib.module.Module;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;

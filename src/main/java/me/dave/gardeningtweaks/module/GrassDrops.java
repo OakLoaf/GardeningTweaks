@@ -1,10 +1,10 @@
 package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.platyutils.listener.EventListener;
-import me.dave.platyutils.module.Module;
-import me.dave.platyutils.utils.RandomCollection;
-import me.dave.platyutils.utils.StringUtils;
+import org.lushplugins.lushlib.listener.EventListener;
+import org.lushplugins.lushlib.module.Module;
+import org.lushplugins.lushlib.utils.RandomCollection;
+import org.lushplugins.lushlib.utils.StringUtils;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;

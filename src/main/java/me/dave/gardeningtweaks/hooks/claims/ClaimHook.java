@@ -1,6 +1,6 @@
 package me.dave.gardeningtweaks.hooks.claims;
 
-import me.dave.platyutils.hook.Hook;
+import org.lushplugins.lushlib.hook.Hook;
 import org.bukkit.Location;
 
 public abstract class ClaimHook extends Hook {

@@ -1,6 +1,6 @@
 package me.dave.gardeningtweaks.hooks;
 
-import me.dave.platyutils.hook.Hook;
+import org.lushplugins.lushlib.hook.Hook;
 import me.maroon28.realisticbiomes.api.BlockAddEvent;
 import me.maroon28.realisticbiomes.api.BlockRemoveEvent;
 import org.bukkit.Bukkit;

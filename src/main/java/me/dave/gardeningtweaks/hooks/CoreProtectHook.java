@@ -1,7 +1,7 @@
 package me.dave.gardeningtweaks.hooks;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.platyutils.hook.Hook;
+import org.lushplugins.lushlib.hook.Hook;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
 import org.bukkit.Bukkit;

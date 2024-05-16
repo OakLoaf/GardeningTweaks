@@ -2,8 +2,8 @@ package me.dave.gardeningtweaks.listener;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.api.events.SaplingReplantEvent;
-import me.dave.platyutils.listener.EventListener;
 import org.bukkit.event.EventHandler;
+import org.lushplugins.lushlib.listener.EventListener;
 
 public class GardeningTweaksListener implements EventListener {
 

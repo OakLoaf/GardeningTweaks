@@ -4,7 +4,7 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
-import me.dave.platyutils.hook.Hook;
+import org.lushplugins.lushlib.hook.Hook;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.InvocationTargetException;

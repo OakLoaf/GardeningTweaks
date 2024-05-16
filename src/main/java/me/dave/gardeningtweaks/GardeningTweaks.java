@@ -5,18 +5,13 @@ import me.dave.gardeningtweaks.config.ConfigManager;
 import me.dave.gardeningtweaks.hooks.*;
 import me.dave.gardeningtweaks.hooks.claims.*;
 import me.dave.gardeningtweaks.listener.GardeningTweaksListener;
-import me.dave.platyutils.PlatyUtils;
-import me.dave.platyutils.hook.Hook;
-import me.dave.platyutils.plugin.SpigotPlugin;
-import me.dave.platyutils.utils.Updater;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.lushplugins.lushlib.hook.Hook;
+import org.lushplugins.lushlib.plugin.SpigotPlugin;
+import org.lushplugins.lushlib.utils.Updater;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -36,7 +31,6 @@ public final class GardeningTweaks extends SpigotPlugin {
 
     @Override
     public void onEnable() {
-        PlatyUtils.enable(this);
         updater = new Updater(this, "gardening-tweaks", "gardeningtweaks.update", "gardeningtweaks update");
 
         configManager = new ConfigManager();
@@ -80,8 +74,6 @@ public final class GardeningTweaks extends SpigotPlugin {
     public void onDisable() {
         unregisterAllHooks();
         unregisterAllModules();
-
-        PlatyUtils.disable();
     }
 
     public ConfigManager getConfigManager() {

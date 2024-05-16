@@ -2,8 +2,8 @@ package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.api.events.SaplingReplantEvent;
-import me.dave.platyutils.listener.EventListener;
-import me.dave.platyutils.module.Module;
+import org.lushplugins.lushlib.listener.EventListener;
+import org.lushplugins.lushlib.module.Module;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;

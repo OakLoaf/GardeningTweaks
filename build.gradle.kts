@@ -13,8 +13,10 @@ repositories {
     maven(url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/") // Spigot
     maven(url = "https://repo.dmulloy2.net/repository/public/") // ProtocolLib
     maven(url = "https://maven.playpro.com") // CoreProtect
+    maven(url = "https://repo.lushplugins.org/releases") // LushLib
+    maven(url = "https://repo.lushplugins.org/snapshots") // LushLib
     maven(url = "https://repo.william278.net/releases") // HuskClaims, HuskTowns
-    maven(url = "https://jitpack.io") // ChatColorHandler, GardeningTweaks, GriefPrevention, RealisticBiomes, Lands
+    maven(url = "https://jitpack.io") // GriefPrevention, RealisticBiomes, Lands
 }
 
 dependencies {
@@ -32,8 +34,7 @@ dependencies {
 
     // Libraries
     implementation("org.bstats:bstats-bukkit:${findProperty("bstatsVersion")}")
-    implementation("com.github.CoolDCB:ChatColorHandler:${findProperty("chatcolorhandlerVersion")}")
-    implementation(files("libs/PlatyUtils-${findProperty("platyutilsVersion")}.jar"))
+    implementation("org.lushplugins:LushLib:${findProperty("lushlibVersion")}")
 }
 
 java {

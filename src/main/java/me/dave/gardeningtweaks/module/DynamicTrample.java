@@ -1,8 +1,8 @@
 package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.platyutils.listener.EventListener;
-import me.dave.platyutils.module.Module;
+import org.lushplugins.lushlib.listener.EventListener;
+import org.lushplugins.lushlib.module.Module;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

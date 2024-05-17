@@ -88,22 +88,29 @@ public class InteractiveHarvest extends Module implements EventListener {
                 }
 
                 Material material = block.getType();
-                Collection<ItemStack> drops = block.getDrops(mainHand);
+                Collection<ItemStack> items = block.getDrops(mainHand);
                 block.setType(material);
                 Location location = block.getLocation();
                 World world = block.getWorld();
-                List<Item> entities = new ArrayList<>();
-                for (ItemStack drop : drops) {
-                    if (drop.getType().toString().contains("SEEDS")) {
-                        drop.setAmount(drop.getAmount() - 1);
+                List<Item> plannedDrops = new ArrayList<>();
+                for (ItemStack item : items) {
+                    if (item.getType().toString().contains("SEEDS")) {
+                        item.setAmount(item.getAmount() - 1);
                     }
 
-                    entities.add(world.dropItemNaturally(location.clone().add(0.5, 0.5, 0.5), drop));
+                    plannedDrops.add(world.dropItemNaturally(location.clone().add(0.5, 0.5, 0.5), item));
                 }
 
-                if (!entities.isEmpty()) {
-                    if (!GardeningTweaks.getInstance().callEvent(new BlockDropItemEvent(block, blockState, player, entities))) {
-                        entities.forEach(Entity::remove);
+                if (!plannedDrops.isEmpty()) {
+                    BlockDropItemEvent dropItemEvent = new BlockDropItemEvent(block, blockState, player, plannedDrops);
+                    if (!GardeningTweaks.getInstance().callEvent(dropItemEvent)) {
+                        plannedDrops.forEach(Entity::remove);
+                    } else {
+                        plannedDrops.forEach(drop -> {
+                            if (!dropItemEvent.getItems().contains(drop)) {
+                                drop.remove();
+                            }
+                        });
                     }
                 }
 

@@ -74,12 +74,13 @@ public class ComposterSpreader extends Module implements EventListener {
                     return;
                 }
 
-                if (!(block.getBlockData() instanceof Levelled composterData)) return;
-                if (composterData.getLevel() == 0) return;
+                if (!(block.getBlockData() instanceof Levelled composterData) || composterData.getLevel() == 0) {
+                    return;
+                }
 
                 if (GardeningTweaks.getRandom().nextInt(100) < chance) {
                     if (growCrops(location)) {
-                        composterData.setLevel(composterData.getLevel() - composterData.getLevel() == composterData.getMaximumLevel() ? -2 : 1);
+                        composterData.setLevel(composterData.getLevel() - 1);
                         block.setBlockData(composterData);
 
                         Location blockCenter = location.clone().add(0.5, 1, 0.5);

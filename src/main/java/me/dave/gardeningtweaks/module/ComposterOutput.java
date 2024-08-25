@@ -23,7 +23,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
-import java.util.List;
 
 public class ComposterOutput extends Module implements EventListener {
     public static final String ID = "COMPOSTER_OUTPUT";
@@ -69,16 +68,11 @@ public class ComposterOutput extends Module implements EventListener {
             return;
         }
 
-        event.setCancelled(true);
-        List<ItemStack> drops = event.getItems().stream().map(Item::getItemStack).toList();
-        Location location = blockState.getLocation();
-        World world = blockState.getWorld();
-        for (ItemStack item : drops) {
-            if (item.getType() == Material.BONE_MEAL) {
-                item.setType(items.next());
+        for (Item item : event.getItems()) {
+            ItemStack itemStack = item.getItemStack();
+            if (itemStack.getType() == Material.BONE_MEAL) {
+                itemStack.setType(items.next());
             }
-
-            world.dropItemNaturally(location, item);
         }
     }
 

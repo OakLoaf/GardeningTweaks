@@ -54,7 +54,7 @@ tasks {
 
         minimize()
 
-        val folder = System.getenv("pluginFolder_1-20")
+        val folder = System.getenv("pluginFolder")
         if (folder != null) {
             destinationDirectory.set(file(folder))
         }

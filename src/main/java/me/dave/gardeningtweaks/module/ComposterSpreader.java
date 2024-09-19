@@ -29,6 +29,7 @@ public class ComposterSpreader extends Module implements EventListener {
     private BukkitTask task;
     private HashSet<Location> composterLocations;
     private int chance;
+    private int radius;
     private List<Material> blocks;
     private List<Material> cropBlocks;
 
@@ -44,6 +45,7 @@ public class ComposterSpreader extends Module implements EventListener {
 
         int timer = config.getInt("timer", 10) * 20;
         chance = (int) Math.round(config.getDouble("chance", 50));
+        radius = config.getInt("radius", 2);
         blocks = config.getStringList("blocks").stream().map((materialRaw) -> {
             Material material = StringUtils.getEnum(materialRaw, Material.class).orElse(null);
             if (material == null) {
@@ -171,9 +173,9 @@ public class ComposterSpreader extends Module implements EventListener {
         Location currLocation = location.clone();
         boolean grownCrops = false;
 
-        for (int indexX = -2; indexX < 3; indexX++) {
-            for (int indexZ = -2; indexZ < 3; indexZ++) {
-                Block currBlock = currLocation.clone().add(indexX, 0, indexZ).getBlock();
+        for (int offsetX = -radius; offsetX <= radius; offsetX++) {
+            for (int offsetZ = -radius; offsetZ <= radius; offsetZ++) {
+                Block currBlock = currLocation.clone().add(offsetX, 0, offsetZ).getBlock();
 
                 if (currBlock.getBlockData() instanceof Ageable crop && blocks.contains(currBlock.getType())) {
                     if (GardeningTweaks.getRandom().nextBoolean()) {

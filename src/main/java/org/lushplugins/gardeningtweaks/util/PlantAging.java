@@ -24,8 +24,10 @@ public class PlantAging {
             boolean verticalCrop = cropType == Material.SUGAR_CANE || cropType == Material.CACTUS;
 
             if (verticalCrop) {
-                if (findPlantEnd(plant, BlockFace.UP).getBlockData() instanceof Ageable plantEnd) {
-                    crop = plantEnd;
+                Block plantEnd = findPlantEnd(plant, BlockFace.UP);
+                if (plantEnd.getBlockData() instanceof Ageable plantEndData) {
+                    plant = plantEnd;
+                    crop = plantEndData;
                 }
             }
 

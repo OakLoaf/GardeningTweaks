@@ -1,8 +1,8 @@
 package me.dave.gardeningtweaks.module;
 
-import me.dave.gardeningtweaks.api.events.CropGrowEvent;
 import me.dave.gardeningtweaks.api.events.PlayerGrowthDanceEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.gardeningtweaks.util.PlantAging;
 import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
 import org.lushplugins.lushlib.utils.StringUtils;
@@ -10,7 +10,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.Ageable;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,7 +24,7 @@ public class GrowthDance extends Module implements EventListener {
 
     private HashSet<UUID> cooldownList;
     private Integer cooldownLength;
-    private List<Material> blocks;
+    private List<Material> blockTypes;
 
     public GrowthDance() {
         super(ID);
@@ -40,7 +39,7 @@ public class GrowthDance extends Module implements EventListener {
         cooldownList = new HashSet<>();
 
         cooldownLength = config.getInt("growth-rate", 2);
-        blocks = config.getStringList("blocks").stream().map((materialRaw) -> {
+        blockTypes = config.getStringList("blocks").stream().map((materialRaw) -> {
             Material material = StringUtils.getEnum(materialRaw, Material.class).orElse(null);
             if (material == null) {
                 plugin.getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.");
@@ -57,7 +56,7 @@ public class GrowthDance extends Module implements EventListener {
             cooldownList = null;
         }
 
-        blocks = null;
+        blockTypes = null;
         cooldownLength = null;
     }
 
@@ -71,9 +70,10 @@ public class GrowthDance extends Module implements EventListener {
         if (cooldownList.contains(player.getUniqueId()) || !GardeningTweaks.getInstance().callEvent(new PlayerGrowthDanceEvent(player))) {
             return;
         }
+
         cooldownList.add(player.getUniqueId());
         Bukkit.getScheduler().runTaskLater(GardeningTweaks.getInstance(), () -> cooldownList.remove(player.getUniqueId()), cooldownLength);
-        growCrops(player.getLocation(), 0.5, 2, blocks);
+        growCrops(player.getLocation(), 0.5, 2, blockTypes);
     }
 
     public static List<Block> growCrops(Location location, double chance, int radius) {
@@ -91,12 +91,8 @@ public class GrowthDance extends Module implements EventListener {
         for (int indexY = 0; indexY < height; indexY++) {
             for (int indexX = -radius; indexX <= radius; indexX++) {
                 for (int indexZ = -radius; indexZ <= radius; indexZ++) {
-                    Block currBlock = currLocation.clone().add(indexX, indexY, indexZ).getBlock();
-                    if (!(currBlock.getBlockData() instanceof Ageable crop) || crops == null || !crops.contains(currBlock.getType())) {
-                        continue;
-                    }
-
-                    if (crop.getAge() == crop.getMaximumAge()) {
+                    Block block = currLocation.clone().add(indexX, indexY, indexZ).getBlock();
+                    if (crops != null && !crops.contains(block.getType())) {
                         continue;
                     }
 
@@ -104,24 +100,10 @@ public class GrowthDance extends Module implements EventListener {
                         continue;
                     }
 
-                    if (!GardeningTweaks.getInstance().callEvent(new CropGrowEvent(currBlock))) {
-                        continue;
+                    Block grownBlock = PlantAging.agePlantData(block);
+                    if (grownBlock != null) {
+                        grownBlocks.add(grownBlock);
                     }
-
-                    int increment = GardeningTweaks.getRandom().nextInt(3);
-                    if (increment == 0) {
-                        continue;
-                    }
-
-                    int newAge = crop.getAge() + increment;
-                    int maxAge = crop.getMaximumAge();
-                    if (newAge > maxAge) {
-                        newAge = maxAge;
-                    }
-
-                    crop.setAge(newAge);
-                    currBlock.setBlockData(crop);
-                    grownBlocks.add(currBlock);
                 }
             }
         }

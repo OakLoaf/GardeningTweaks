@@ -4,7 +4,7 @@ import me.dave.gardeningtweaks.api.events.FlowerBoneMealEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
-import org.lushplugins.lushlib.utils.StringUtils;
+import org.lushplugins.lushlib.registry.RegistryUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -42,25 +42,23 @@ public class BoneMealFlowers extends Module implements EventListener {
         ConfigurationSection flowersSection = config.getConfigurationSection("flowers");
         if (flowersSection != null) {
             flowersSection.getValues(false).forEach((fromRaw, toRaw) -> {
-                StringUtils.getEnum(fromRaw, Material.class).ifPresentOrElse(
-                    from -> {
-                        if (Tag.FLOWERS.isTagged(from)) {
-                            StringUtils.getEnum(String.valueOf(toRaw), Material.class).ifPresentOrElse(
-                                to -> {
-                                    if (Tag.FLOWERS.isTagged(from)) {
-                                        this.flowers.put(from, to);
-                                    } else {
-                                        GardeningTweaks.getInstance().getLogger().warning("'" + toRaw + "' is not a flower");
-                                    }
-                                },
-                                () -> GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material")
-                            );
-                        } else {
-                            GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a flower");
-                        }
-                    },
-                    () -> GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material")
-                );
+                Material from = RegistryUtils.parseString(fromRaw, Registry.MATERIAL);
+                Material to = RegistryUtils.parseString(String.valueOf(toRaw), Registry.MATERIAL);
+                if (from == null) {
+                    GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material");
+                    return;
+                } else if (to == null) {
+                    GardeningTweaks.getInstance().getLogger().warning("'" + toRaw + "' is not a valid material");
+                    return;
+                }
+
+                if (!Tag.FLOWERS.isTagged(from)) {
+                    GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a flower");
+                } else if (!Tag.FLOWERS.isTagged(to)) {
+                    GardeningTweaks.getInstance().getLogger().warning("'" + toRaw + "' is not a flower");
+                } else {
+                    this.flowers.put(from, to);
+                }
             });
         }
 

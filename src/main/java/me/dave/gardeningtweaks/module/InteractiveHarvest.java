@@ -4,7 +4,6 @@ import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.util.ConfigUtils;
 import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
-import org.lushplugins.lushlib.utils.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -30,7 +29,7 @@ public class InteractiveHarvest extends Module implements EventListener {
     public static final String ID = "INTERACTIVE_HARVEST";
 
     private final HashSet<UUID> harvestCooldownSet = new HashSet<>();
-    private List<Material> blocks;
+    private Collection<Material> blocks;
 
     public InteractiveHarvest() {
         super(ID);
@@ -42,14 +41,7 @@ public class InteractiveHarvest extends Module implements EventListener {
         plugin.saveDefaultResource("modules/interactive-harvest.yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/interactive-harvest.yml"));
 
-        blocks = config.getStringList("blocks").stream().map((materialRaw) -> {
-            Material material = StringUtils.getEnum(materialRaw, Material.class).orElse(null);
-            if (material == null) {
-                plugin.getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.");
-            }
-
-            return material;
-        }).filter(Objects::nonNull).toList();
+        blocks = ConfigUtils.getRegistryValues(config, "blocks", Registry.MATERIAL);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

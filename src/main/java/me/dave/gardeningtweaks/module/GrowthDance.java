@@ -2,10 +2,11 @@ package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.api.events.PlayerGrowthDanceEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.gardeningtweaks.util.ConfigUtils;
 import me.dave.gardeningtweaks.util.PlantAging;
+import org.bukkit.Registry;
 import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
-import org.lushplugins.lushlib.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -24,7 +25,7 @@ public class GrowthDance extends Module implements EventListener {
 
     private HashSet<UUID> cooldownList;
     private Integer cooldownLength;
-    private List<Material> blockTypes;
+    private Collection<Material> blockTypes;
 
     public GrowthDance() {
         super(ID);
@@ -39,14 +40,7 @@ public class GrowthDance extends Module implements EventListener {
         cooldownList = new HashSet<>();
 
         cooldownLength = config.getInt("growth-rate", 2);
-        blockTypes = config.getStringList("blocks").stream().map((materialRaw) -> {
-            Material material = StringUtils.getEnum(materialRaw, Material.class).orElse(null);
-            if (material == null) {
-                plugin.getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.");
-            }
-
-            return material;
-        }).filter(Objects::nonNull).toList();
+        blockTypes = ConfigUtils.getRegistryValues(config, "blocks", Registry.MATERIAL);
     }
 
     @Override
@@ -80,11 +74,11 @@ public class GrowthDance extends Module implements EventListener {
         return growCrops(location, chance, radius, 2, null);
     }
 
-    public static List<Block> growCrops(Location location, double chance, int radius, @Nullable List<Material> crops) {
+    public static List<Block> growCrops(Location location, double chance, int radius, @Nullable Collection<Material> crops) {
         return growCrops(location, chance, radius, 2, crops);
     }
 
-    public static List<Block> growCrops(Location location, double chance, int radius, int height, @Nullable List<Material> crops) {
+    public static List<Block> growCrops(Location location, double chance, int radius, int height, @Nullable Collection<Material> crops) {
         List<Block> grownBlocks = new ArrayList<>();
         Location currLocation = location.clone();
 

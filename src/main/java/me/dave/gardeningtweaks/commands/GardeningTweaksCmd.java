@@ -1,6 +1,5 @@
 package me.dave.gardeningtweaks.commands;
 
-import me.dave.chatcolorhandler.ChatColorHandler;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -8,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.jetbrains.annotations.NotNull;
+import org.lushplugins.lushlib.libraries.chatcolor.ChatColorHandler;
 import org.lushplugins.lushlib.utils.Updater;
 
 import java.util.ArrayList;

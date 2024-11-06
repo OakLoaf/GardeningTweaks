@@ -1,10 +1,11 @@
 package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
+import org.bukkit.Registry;
 import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
+import org.lushplugins.lushlib.registry.RegistryUtils;
 import org.lushplugins.lushlib.utils.RandomCollection;
-import org.lushplugins.lushlib.utils.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -33,10 +34,14 @@ public class SnifferDrops extends Module implements EventListener {
         drops = new RandomCollection<>();
         ConfigurationSection itemsSection = config.getConfigurationSection("items");
         if (itemsSection != null) {
-            itemsSection.getValues(false).forEach((fromRaw, toRaw) -> StringUtils.getEnum(fromRaw, Material.class).ifPresentOrElse(
-                (material) -> drops.add(material, Double.parseDouble(String.valueOf(toRaw))),
-                () -> GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material")
-            ));
+            itemsSection.getValues(false).forEach((fromRaw, toRaw) -> {
+                Material material = RegistryUtils.parseString(fromRaw, Registry.MATERIAL);
+                if (material != null) {
+                    drops.add(material, Double.parseDouble(String.valueOf(toRaw)));
+                } else {
+                    GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material");
+                }
+            });
         }
     }
 

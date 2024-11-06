@@ -2,9 +2,9 @@ package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.api.events.BlockLumberEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.gardeningtweaks.util.ConfigUtils;
 import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
-import org.lushplugins.lushlib.utils.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -16,15 +16,14 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.EnumSet;
-import java.util.List;
-import java.util.Objects;
 
 public class Lumberjack extends Module implements EventListener {
     public static final String ID = "LUMBERJACK";
     private static final EnumSet<Material> AXES = EnumSet.of(Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE);
 
-    private List<Material> blocks;
+    private Collection<Material> blocks;
 
     public Lumberjack() {
         super(ID);
@@ -36,14 +35,7 @@ public class Lumberjack extends Module implements EventListener {
         plugin.saveDefaultResource("modules/lumberjack.yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/lumberjack.yml"));
 
-        blocks = config.getStringList("blocks").stream().map((materialRaw) -> {
-            Material material = StringUtils.getEnum(materialRaw, Material.class).orElse(null);
-            if (material == null) {
-                plugin.getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.");
-            }
-
-            return material;
-        }).filter(Objects::nonNull).toList();
+        blocks = ConfigUtils.getRegistryValues(config, "blocks", Registry.MATERIAL);
     }
 
     @Override

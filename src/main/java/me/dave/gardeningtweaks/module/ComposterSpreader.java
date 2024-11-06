@@ -2,9 +2,9 @@ package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.api.events.ComposterCropGrowEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
+import me.dave.gardeningtweaks.util.ConfigUtils;
 import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
-import org.lushplugins.lushlib.utils.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
@@ -19,9 +19,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
 
 public class ComposterSpreader extends Module implements EventListener {
     public static final String ID = "COMPOSTER_SPREADER";
@@ -30,8 +29,8 @@ public class ComposterSpreader extends Module implements EventListener {
     private HashSet<Location> composterLocations;
     private int chance;
     private int radius;
-    private List<Material> blocks;
-    private List<Material> cropBlocks;
+    private Collection<Material> blocks;
+    private Collection<Material> cropBlocks;
 
     public ComposterSpreader() {
         super(ID);
@@ -46,22 +45,8 @@ public class ComposterSpreader extends Module implements EventListener {
         int timer = config.getInt("timer", 10) * 20;
         chance = (int) Math.round(config.getDouble("chance", 50));
         radius = config.getInt("radius", 2);
-        blocks = config.getStringList("blocks").stream().map((materialRaw) -> {
-            Material material = StringUtils.getEnum(materialRaw, Material.class).orElse(null);
-            if (material == null) {
-                plugin.getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.");
-            }
-
-            return material;
-        }).filter(Objects::nonNull).toList();
-        cropBlocks = config.getStringList("crop-blocks").stream().map((materialRaw) -> {
-            Material material = StringUtils.getEnum(materialRaw, Material.class).orElse(null);
-            if (material == null) {
-                plugin.getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.");
-            }
-
-            return material;
-        }).filter(Objects::nonNull).toList();
+        blocks = ConfigUtils.getRegistryValues(config, "blocks", Registry.MATERIAL);
+        cropBlocks = ConfigUtils.getRegistryValues(config, "crop-blocks", Registry.MATERIAL);
 
         composterLocations = new HashSet<>();
         task = Bukkit.getScheduler().runTaskTimer(plugin, () ->  {

@@ -4,7 +4,7 @@ import me.dave.gardeningtweaks.api.events.BushRejuvenateEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
-import org.lushplugins.lushlib.utils.StringUtils;
+import org.lushplugins.lushlib.registry.RegistryUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
@@ -34,21 +34,25 @@ public class RejuvenatedBushes extends Module implements EventListener {
         plugin.saveDefaultResource("modules/rejuvenated-bushes.yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/rejuvenated-bushes.yml"));
 
-        items = new HashMap<>();
+        this.items = new HashMap<>();
         ConfigurationSection flowersSection = config.getConfigurationSection("items");
         if (flowersSection != null) {
             flowersSection.getValues(false).forEach((fromRaw, toRaw) -> {
-                StringUtils.getEnum(String.valueOf(fromRaw), Material.class).ifPresentOrElse(
-                    from -> StringUtils.getEnum(String.valueOf(toRaw), Material.class).ifPresentOrElse(
-                        to -> items.put(from, to),
-                        () -> GardeningTweaks.getInstance().getLogger().warning("'" + toRaw + "' is not a valid material")
-                    ),
-                    () -> GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material")
-                );
+                Material from = RegistryUtils.parseString(fromRaw, Registry.MATERIAL);
+                Material to = RegistryUtils.parseString(String.valueOf(toRaw), Registry.MATERIAL);
+                if (from == null) {
+                    GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material");
+                    return;
+                } else if (to == null) {
+                    GardeningTweaks.getInstance().getLogger().warning("'" + toRaw + "' is not a valid material");
+                    return;
+                }
+
+                this.items.put(from, to);
             });
         }
 
-        if (items.isEmpty()) {
+        if (this.items.isEmpty()) {
             GardeningTweaks.getInstance().getLogger().warning("There are no valid materials configured, automatically disabling the 'rejuvenated-bushes' module");
             disable();
         }

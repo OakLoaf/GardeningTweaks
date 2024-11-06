@@ -1,14 +1,11 @@
 package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
+import org.bukkit.*;
 import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
+import org.lushplugins.lushlib.registry.RegistryUtils;
 import org.lushplugins.lushlib.utils.RandomCollection;
-import org.lushplugins.lushlib.utils.StringUtils;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.BlockState;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -40,10 +37,12 @@ public class GrassDrops extends Module implements EventListener {
         ConfigurationSection itemsSection = config.getConfigurationSection("items");
         if (itemsSection != null) {
             itemsSection.getValues(false).forEach((fromRaw, toRaw) -> {
-                StringUtils.getEnum(String.valueOf(fromRaw), Material.class).ifPresentOrElse(
-                    from ->  items.add(from, Double.parseDouble(String.valueOf(toRaw))),
-                    () -> GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material")
-                );
+                Material from = RegistryUtils.parseString(fromRaw, Registry.MATERIAL);
+                if (from != null) {
+                    items.add(from, Double.parseDouble(String.valueOf(toRaw)));
+                } else {
+                    GardeningTweaks.getInstance().getLogger().warning("'" + fromRaw + "' is not a valid material");
+                }
             });
         }
     }

@@ -4,10 +4,12 @@ import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.api.events.TreeSpreadBlockEvent;
 import me.dave.gardeningtweaks.hooks.HookId;
 import me.dave.gardeningtweaks.hooks.RealisticBiomesHook;
+import me.dave.gardeningtweaks.util.ConfigUtils;
+import org.bukkit.Registry;
 import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
+import org.lushplugins.lushlib.registry.RegistryUtils;
 import org.lushplugins.lushlib.utils.RandomCollection;
-import org.lushplugins.lushlib.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -39,48 +41,29 @@ public class FancyTrees extends Module implements EventListener {
         treeMap = new HashMap<>();
         GardeningTweaks plugin = GardeningTweaks.getInstance();
         plugin.saveDefaultResource("modules/fancy-trees.yml");
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/fancy-trees.yml"));;
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/fancy-trees.yml"));
+        ;
 
         ConfigurationSection treesSection = config.getConfigurationSection("trees");
         if (treesSection != null) {
-            treesSection.getKeys(false).forEach(treeType -> {
-                ConfigurationSection treeTypeSection = treesSection.getConfigurationSection(treeType);
-                if (treeTypeSection != null) {
+            treesSection.getValues(false).forEach((treeType, value) -> {
+                if (value instanceof ConfigurationSection treeTypeSection) {
                     ConfigurationSection flowerSection = treeTypeSection.getConfigurationSection("flowers");
                     if (flowerSection != null) {
-                        List<Material> spreadBlocks = treeTypeSection.getStringList("spread-blocks").stream()
-                            .map(materialRaw -> {
-                                Optional<Material> optionalMaterial = StringUtils.getEnum(materialRaw, Material.class);
-                                if (optionalMaterial.isPresent()) {
-                                    return optionalMaterial.get();
-                                } else {
-                                    GardeningTweaks.getInstance().getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.");
-                                    return null;
-                                }
-                            })
-                            .filter(Objects::nonNull)
-                            .toList();
-
-                        List<Material> spreadBlocksOn = treeTypeSection.getStringList("spread-blocks-on").stream()
-                            .map(materialRaw -> {
-                                Optional<Material> optionalMaterial = StringUtils.getEnum(materialRaw, Material.class);
-                                if (optionalMaterial.isPresent()) {
-                                    return optionalMaterial.get();
-                                } else {
-                                    GardeningTweaks.getInstance().getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.");
-                                    return null;
-                                }
-                            })
-                            .filter(Objects::nonNull)
-                            .toList();
+                        List<Material> spreadBlocks = List.copyOf(ConfigUtils.getRegistryValues(treeTypeSection, "spread-blocks", Registry.MATERIAL));
+                        List<Material> spreadBlocksOn = List.copyOf(ConfigUtils.getRegistryValues(treeTypeSection, "spread-blocks-on", Registry.MATERIAL));
 
                         RandomCollection<Material> flowerCollection = new RandomCollection<>();
-                        flowerSection.getKeys(false).forEach(materialRaw -> StringUtils.getEnum(materialRaw, Material.class).ifPresentOrElse(
-                            material -> flowerCollection.add(material, flowerSection.getDouble(materialRaw)),
-                            () -> GardeningTweaks.getInstance().getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material."))
-                        );
+                        flowerSection.getValues(false).forEach((materialRaw, chance) -> {
+                            Material material = RegistryUtils.parseString(materialRaw, Registry.MATERIAL);
+                            if (material != null) {
+                                flowerCollection.add(material, flowerSection.getDouble(materialRaw));
+                            } else {
+                                GardeningTweaks.getInstance().getLogger().warning("Ignoring " + materialRaw + ", that is not a valid material.");
+                            }
+                        });
 
-                        TreeData treeData = new TreeData(spreadBlocks,spreadBlocksOn, flowerCollection);
+                        TreeData treeData = new TreeData(spreadBlocks, spreadBlocksOn, flowerCollection);
                         if (treeType.equalsIgnoreCase("OAK")) {
                             treeMap.put("TREE", treeData);
                         } else if (treeType.equalsIgnoreCase("BIG_OAK")) {
@@ -92,7 +75,7 @@ public class FancyTrees extends Module implements EventListener {
                 }
             });
         } else {
-            GardeningTweaks.getInstance().getLogger().warning("There are no valid trees configured, automatically disabling the '" + ID  + "' module");
+            GardeningTweaks.getInstance().getLogger().warning("There are no valid trees configured, automatically disabling the '" + ID + "' module");
             disable();
         }
     }
@@ -107,7 +90,7 @@ public class FancyTrees extends Module implements EventListener {
 
     @EventHandler
     public void onTreeGrow(StructureGrowEvent event) {
-        if (event.isCancelled()){
+        if (event.isCancelled()) {
             return;
         }
 
@@ -125,30 +108,22 @@ public class FancyTrees extends Module implements EventListener {
         }
     }
 
-    public void spreadBlocks(TreeData treeData, Location saplingLoc) {
+    private void spreadBlocks(TreeData treeData, Location saplingLoc) {
         Location currLocation = saplingLoc.clone().add(-2, -1, -2);
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 Block currBlock = currLocation.getBlock();
 
-                if ((i >= 1 && i <= 3) && (j >= 1 && j <= 3)) {
+                boolean inSpreadRange = (i >= 1 && i <= 3) && (j >= 1 && j <= 3);
+                boolean edgeSpread = (i != 0 && i != 4) || (j != 0 && j != 4);
+
+                if (inSpreadRange || (edgeSpread && GardeningTweaks.getRandom().nextBoolean())) {
                     if (treeData.isSpreadableMaterial(currBlock) && currBlock.getRelative(BlockFace.UP).isPassable()) {
-                        List<Material> spreadMaterials = treeData.getSpreadMaterials();
+                        List<Material> spreadMaterials = treeData.spreadBlocks();
                         Material spreadMaterial = spreadMaterials.get(GardeningTweaks.getRandom().nextInt(spreadMaterials.size()));
-                        if (!GardeningTweaks.getInstance().callEvent(new TreeSpreadBlockEvent(currBlock, spreadMaterial, saplingLoc.getBlock()))) {
-                            continue;
-                        }
-                        setBlockMaterial(currBlock, spreadMaterial);
-                    }
-                } else if ((i != 0 && i != 4) || (j != 0 && j != 4)) {
-                    if (GardeningTweaks.getRandom().nextBoolean()) {
-                        if (treeData.isSpreadableMaterial(currBlock) && currBlock.getRelative(BlockFace.UP).isPassable()) {
-                            List<Material> spreadMaterials = treeData.getSpreadMaterials();
-                            Material spreadMaterial = spreadMaterials.get(GardeningTweaks.getRandom().nextInt(spreadMaterials.size()));
-                            if (!GardeningTweaks.getInstance().callEvent(new TreeSpreadBlockEvent(currBlock, spreadMaterial, saplingLoc.getBlock()))) {
-                                continue;
-                            }
+
+                        if (GardeningTweaks.getInstance().callEvent(new TreeSpreadBlockEvent(currBlock, spreadMaterial, saplingLoc.getBlock()))) {
                             setBlockMaterial(currBlock, spreadMaterial);
                         }
                     }
@@ -209,33 +184,21 @@ public class FancyTrees extends Module implements EventListener {
         }
     }
 
-    private static class TreeData {
-        private final List<Material> spreadBlocks;
-        private final List<Material> spreadBlocksOn;
-        private final RandomCollection<Material> flowerList;
-
-        public TreeData(List<Material> spreadBlocks, List<Material> spreadBlocksOn, RandomCollection<Material> flowerList) {
-            this.spreadBlocks = spreadBlocks;
-            this.spreadBlocksOn = spreadBlocksOn;
-            this.flowerList = flowerList;
-        }
+    private record TreeData(List<Material> spreadBlocks, List<Material> spreadBlocksOn, RandomCollection<Material> flowerList) {
 
         public boolean spreadsBlocks() {
-            return spreadBlocks.size() > 0;
-        }
-
-        public List<Material> getSpreadMaterials() {
-            return spreadBlocks;
+            return !spreadBlocks.isEmpty();
         }
 
         public boolean isSpreadableMaterial(Block block) {
-            if (spreadBlocksOn.size() == 0) {
+            if (spreadBlocksOn.isEmpty()) {
                 Collection<BoundingBox> boundingBoxes = block.getCollisionShape().getBoundingBoxes();
                 if (boundingBoxes.size() == 1) {
                     BoundingBox boundingBox = boundingBoxes.iterator().next();
                     return boundingBox.getWidthX() == 1.0 && boundingBox.getWidthZ() == 1.0 && boundingBox.getHeight() == 1.0;
                 }
             }
+
             return spreadBlocksOn.contains(block.getType());
         }
 

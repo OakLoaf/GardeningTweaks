@@ -10,13 +10,13 @@ version = "2.1.3-beta1"
 repositories {
     mavenCentral() // bStats
     mavenLocal()
-    maven(url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/") // Spigot
-    maven(url = "https://repo.dmulloy2.net/repository/public/") // ProtocolLib
-    maven(url = "https://maven.playpro.com") // CoreProtect
-    maven(url = "https://repo.lushplugins.org/releases") // LushLib
-    maven(url = "https://repo.lushplugins.org/snapshots") // LushLib
-    maven(url = "https://repo.william278.net/releases") // HuskClaims, HuskTowns
-    maven(url = "https://jitpack.io") // GriefPrevention, RealisticBiomes, Lands
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") // Spigot
+    maven("https://repo.dmulloy2.net/repository/public/") // ProtocolLib
+    maven("https://maven.playpro.com") // CoreProtect
+    maven("https://repo.lushplugins.org/releases") // LushLib
+    maven("https://repo.lushplugins.org/snapshots") // LushLib
+    maven("https://repo.william278.net/releases") // HuskClaims, HuskTowns
+    maven("https://jitpack.io") // GriefPrevention, RealisticBiomes, Lands
 }
 
 dependencies {

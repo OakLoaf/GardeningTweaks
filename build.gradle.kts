@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "org.lushplugins"
-version = "2.1.3-beta1"
+version = "3.0.0"
 
 repositories {
     mavenCentral() // bStats

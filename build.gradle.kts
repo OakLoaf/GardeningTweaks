@@ -51,8 +51,8 @@ tasks {
     }
 
     shadowJar {
-        relocate("org.bstats", "me.dave.gardeningtweaks.libs.bstats")
-        relocate("org.lushplugins.lushlib", "me.dave.gardeningtweaks.libs.lushlib")
+        relocate("org.bstats", "org.lushplugins.gardeningtweaks.libs.bstats")
+        relocate("org.lushplugins.lushlib", "org.lushplugins.gardeningtweaks.libs.lushlib")
 
         minimize()
 

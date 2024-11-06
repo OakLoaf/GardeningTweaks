@@ -1,6 +1,6 @@
 name: GardeningTweaks
 version: '${project.version}'
-main: me.dave.gardeningtweaks.GardeningTweaks
+main: org.lushplugins.gardeningtweaks.GardeningTweaks
 api-version: 1.16
 authors: [ OakLoaf ]
 description: Spruces up your gardening

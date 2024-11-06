@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"me.dave.gardeningtweaks.api"},{"l":"me.dave.gardeningtweaks.api.events"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"org.lushplugins.gardeningtweaks.api"},{"l":"org.lushplugins.gardeningtweaks.api.events"}];updateSearchResults();

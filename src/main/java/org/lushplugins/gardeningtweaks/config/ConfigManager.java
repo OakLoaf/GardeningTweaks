@@ -1,7 +1,6 @@
 package org.lushplugins.gardeningtweaks.config;
 
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
-import me.dave.gardeningtweaks.module.*;
 import org.lushplugins.gardeningtweaks.module.*;
 import org.lushplugins.lushlib.module.Module;
 import org.bukkit.Bukkit;

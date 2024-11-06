@@ -4,7 +4,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version("8.1.1")
 }
 
-group = "me.dave"
+group = "org.lushplugins"
 version = "2.1.3-beta1"
 
 repositories {

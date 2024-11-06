@@ -2,8 +2,6 @@ package org.lushplugins.gardeningtweaks;
 
 import org.lushplugins.gardeningtweaks.commands.GardeningTweaksCmd;
 import org.lushplugins.gardeningtweaks.config.ConfigManager;
-import me.dave.gardeningtweaks.hooks.*;
-import me.dave.gardeningtweaks.hooks.claims.*;
 import org.lushplugins.gardeningtweaks.hooks.packets.PacketEventsHook;
 import org.lushplugins.gardeningtweaks.hooks.packets.PacketHook;
 import org.lushplugins.gardeningtweaks.hooks.packets.ProtocolLibHook;

@@ -12,6 +12,7 @@ repositories {
     mavenLocal()
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") // Spigot
     maven("https://repo.dmulloy2.net/repository/public/") // ProtocolLib
+    maven("https://repo.codemc.io/repository/maven-releases/") // PacketEvents
     maven("https://maven.playpro.com") // CoreProtect
     maven("https://repo.lushplugins.org/releases") // LushLib
     maven("https://repo.lushplugins.org/snapshots") // LushLib
@@ -22,9 +23,10 @@ repositories {
 dependencies {
     // Dependencies
     compileOnly("org.spigotmc:spigot-api:${findProperty("minecraftVersion")}-R0.1-SNAPSHOT")
-    compileOnly("com.comphenix.protocol:ProtocolLib:${findProperty("protocollibVersion")}")
 
     // Soft Dependencies
+    compileOnly("com.comphenix.protocol:ProtocolLib:${findProperty("protocollibVersion")}")
+    compileOnly("com.github.retrooper:packetevents-spigot:${findProperty("packetEventsVersion")}")
     compileOnly("net.coreprotect:coreprotect:${findProperty("coreprotectVersion")}")
     compileOnly("com.github.TechFortress:GriefPrevention:${findProperty("griefpreventionVersion")}")
     compileOnly("net.william278.huskclaims:huskclaims-bukkit:${findProperty("huskclaimsVersion")}")

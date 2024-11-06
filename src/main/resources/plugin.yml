@@ -6,6 +6,7 @@ authors: [ Dav_e_ ]
 description: Spruces up your gardening
 softdepend:
   - CoreProtect
+  - packetevents
   - ProtocolLib
   - RealisticBiomes
   - GriefPrevention

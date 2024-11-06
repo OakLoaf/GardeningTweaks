@@ -4,12 +4,14 @@ import me.dave.gardeningtweaks.commands.GardeningTweaksCmd;
 import me.dave.gardeningtweaks.config.ConfigManager;
 import me.dave.gardeningtweaks.hooks.*;
 import me.dave.gardeningtweaks.hooks.claims.*;
+import me.dave.gardeningtweaks.hooks.packets.PacketEventsHook;
 import me.dave.gardeningtweaks.hooks.packets.ProtocolLibHook;
 import me.dave.gardeningtweaks.listener.GardeningTweaksListener;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.plugin.PluginManager;
 import org.lushplugins.lushlib.LushLib;
 import org.lushplugins.lushlib.hook.Hook;
 import org.lushplugins.lushlib.plugin.SpigotPlugin;
@@ -39,8 +41,16 @@ public final class GardeningTweaks extends SpigotPlugin {
         configManager = new ConfigManager();
         configManager.reloadConfig();
 
+        PluginManager pluginManager = Bukkit.getPluginManager();
+        if (pluginManager.getPlugin("packetevents") != null) {
+            log(Level.INFO, "Found plugin \"packetevents\". Enabling packetevents support.");
+            registerHook(new PacketEventsHook());
+        } else if (pluginManager.getPlugin("ProtocolLib") != null) {
+            log(Level.INFO, "Found plugin \"ProtocolLib\". Enabling ProtocolLib support.");
+            registerHook(new ProtocolLibHook());
+        }
+
         addHook("CoreProtect", () -> registerHook(new CoreProtectHook()));
-        addHook("ProtocolLib", () -> registerHook(new ProtocolLibHook()));
         addHook("RealisticBiomes", () -> registerHook(new RealisticBiomesHook()));
         addHook("GriefPrevention", () -> {
             registerHook(new GriefPreventionHook());

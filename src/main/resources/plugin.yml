@@ -2,7 +2,7 @@ name: GardeningTweaks
 version: '${project.version}'
 main: me.dave.gardeningtweaks.GardeningTweaks
 api-version: 1.16
-authors: [ Dav_e_ ]
+authors: [ OakLoaf ]
 description: Spruces up your gardening
 softdepend:
   - CoreProtect
@@ -11,6 +11,8 @@ softdepend:
   - RealisticBiomes
   - GriefPrevention
   - HuskClaims
+  - HuskTowns
+  - Lands
 commands:
   gardeningtweaks:
     description: The main GardeningTweaks Command.

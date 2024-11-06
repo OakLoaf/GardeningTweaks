@@ -52,22 +52,25 @@ public final class GardeningTweaks extends SpigotPlugin {
 
         addHook("CoreProtect", () -> registerHook(new CoreProtectHook()));
         addHook("RealisticBiomes", () -> registerHook(new RealisticBiomesHook()));
+
+        log(Level.INFO, "Loading protection hooks");
         addHook("GriefPrevention", () -> {
             registerHook(new GriefPreventionHook());
-            log(Level.INFO, "GardeningTweaks now respects GriefPrevention Claims.");
+            log(Level.INFO, "GardeningTweaks now respects GriefPrevention Claims");
         });
         addHook("HuskClaims", () -> {
             registerHook(new HuskClaimsHook());
-            log(Level.INFO, "GardeningTweaks now respects HuskClaims Claims.");
+            log(Level.INFO, "GardeningTweaks now respects HuskClaims Claims");
         });
         addHook("HuskTowns", () -> {
             registerHook(new HuskTownsHook());
-            log(Level.INFO, "GardeningTweaks now respects HuskTowns Claims.");
+            log(Level.INFO, "GardeningTweaks now respects HuskTowns Claims");
         });
         addHook("Lands", () -> {
             registerHook(new LandsHook());
-            log(Level.INFO, "GardeningTweaks now respects Lands Claims.");
+            log(Level.INFO, "GardeningTweaks now respects Lands Claims");
         });
+        log(Level.INFO, "Finished loading protection hooks");
 
         new GardeningTweaksListener().registerListeners();
 

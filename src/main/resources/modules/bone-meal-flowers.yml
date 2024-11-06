@@ -1,6 +1,6 @@
 # Flowers that can be bone mealed and the flower that they will change to
 flowers:
-  POPPY: ROSE_BUSH
-  PINK_TULIP: LILAC
-  ALLIUM: PEONY
-  DANDELION: SUNFLOWER
+  poppy: rose_bush
+  pink_tulip: lilac
+  allium: peony
+  dandelion: sunflower

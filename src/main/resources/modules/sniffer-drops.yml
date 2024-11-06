@@ -1,5 +1,5 @@
 # items: A list of items and their chance of being sniffed
 items:
-  POTATO: 1
-  CARROT: 1
-  BEETROOT: 1
+  potato: 1
+  carrot: 1
+  beetroot: 1

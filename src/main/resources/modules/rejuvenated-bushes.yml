@@ -1,6 +1,6 @@
 # Items used on a dead bush and the block that it will be changed to
 items:
-  WHEAT_SEEDS: OAK_SAPLING
-  BEETROOT_SEEDS: ACACIA_SAPLING
-  MELON_SEEDS: SPRUCE_SAPLING
-  PUMPKIN_SEEDS: BIRCH_SAPLING
+  wheat_seeds: oak_sapling
+  beetroot_seeds: acacia_sapling
+  melon_seeds: spruce_sapling
+  pumpkin_seeds: birch_sapling

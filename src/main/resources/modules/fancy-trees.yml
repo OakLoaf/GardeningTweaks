@@ -6,43 +6,43 @@ trees:
   DEFAULT:
     # spread-blocks: The blocks to be spread on surrounding blocks (Leave empty to disable)
     spread-blocks:
-      - "GRASS_BLOCK"
+      - "grass_block"
     # spread-blocks-on: The blocks that will be replaced by 'spread-blocks' (Leave empty to replace all full blocks)
     spread-blocks-on:
-      - "DIRT"
-      - "COARSE_DIRT"
+      - "dirt"
+      - "coarse_dirt"
     # flowers: The flowers/blocks that will grow around trees on grass blocks if 'growFlowers' is set to 'true'
     flowers:
       # GRASS: The flower/block type that has a chance to spawn
       # The number following is the weight of the particular block being set
-      GRASS: 75
-      POPPY: 12.5
-      DANDELION: 12.5
+      short_grass: 75
+      poppy: 12.5
+      dandelion: 12.5
 
   TREE: # 'TREE' is 'OAK'
     spread-blocks:
-      - "GRASS_BLOCK"
+      - "grass_block"
     spread-blocks-on:
-      - "DIRT"
-      - "COARSE_DIRT"
+      - "dirt"
+      - "coarse_dirt"
     flowers:
-      POPPY: 1
-      ALLIUM: 1
+      poppy: 1
+      allium: 1
 
   CRIMSON_FUNGUS:
     spread-blocks:
-      - "CRIMSON_NYLIUM"
+      - "crimson_nylium"
     spread-blocks-on:
-      - "NETHERRACK"
-      - "WARPED_NYLIUM"
+      - "netherrack"
+      - "warped_nylium"
     flowers:
-      CRIMSON_ROOTS: 1
+      crimson_roots: 1
 
   WARPED_FUNGUS:
     spread-blocks:
-      - "WARPED_NYLIUM"
+      - "warped_nylium"
     spread-blocks-on:
-      - "NETHERRACK"
-      - "CRIMSON_NYLIUM"
+      - "netherrack"
+      - "crimson_nylium"
     flowers:
-      WARPED_ROOTS: 1
+      warped_roots: 1

@@ -6,25 +6,20 @@ chance: 50
 radius: 2
 # blocks: A list of blocks that will be effected by Composter Spreader
 blocks:
-  - "BEETROOTS"
-  - "CACTUS"
-  - "CARROTS"
-  - "CHORUS_FLOWER"
-  - "KELP"
-  - "MELON_STEM"
-  - "NETHER_WART"
-  - "POTATOES"
-  - "PUMPKIN_STEM"
-  - "SUGAR_CANE"
-  - "SWEET_BERRY_BUSH"
-  - "TWISTING_VINES"
-  - "WEEPING_VINES"
-  - "WHEAT"
+  - "#crops"
+  - "cactus"
+  - "chorus_flower"
+  - "kelp"
+  - "nether_wart"
+  - "sugar_cane"
+  - "sweet_berry_bush"
+  - "twisting_vines"
+  - "weeping_vines"
 
 # crop-blocks: A list of blocks that will define whether a composter spreads or not
 # (a block of one of these types needs to be within 2 blocks of the composter)
 crop-blocks:
-  - "FARMLAND"
-  - "GRASS_BLOCK"
-  - "DIRT"
-  - "COARSE_DIRT"
+  - "coarse_dirt"
+  - "dirt"
+  - "farmland"
+  - "grass_block"

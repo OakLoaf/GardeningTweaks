@@ -9,5 +9,5 @@ public abstract class ClaimHook extends Hook {
         super(id);
     }
 
-    abstract public boolean hasClaimAt(Location location);
+    public abstract boolean hasClaimAt(Location location);
 }

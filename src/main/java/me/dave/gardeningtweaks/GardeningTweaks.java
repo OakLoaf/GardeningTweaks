@@ -4,6 +4,7 @@ import me.dave.gardeningtweaks.commands.GardeningTweaksCmd;
 import me.dave.gardeningtweaks.config.ConfigManager;
 import me.dave.gardeningtweaks.hooks.*;
 import me.dave.gardeningtweaks.hooks.claims.*;
+import me.dave.gardeningtweaks.hooks.packets.ProtocolLibHook;
 import me.dave.gardeningtweaks.listener.GardeningTweaksListener;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;

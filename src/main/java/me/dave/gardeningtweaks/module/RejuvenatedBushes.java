@@ -3,7 +3,7 @@ package me.dave.gardeningtweaks.module;
 import me.dave.gardeningtweaks.api.events.BushRejuvenateEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
 import me.dave.gardeningtweaks.hooks.HookId;
-import me.dave.gardeningtweaks.hooks.ProtocolLibHook;
+import me.dave.gardeningtweaks.hooks.packets.ProtocolLibHook;
 import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
 import org.lushplugins.lushlib.utils.StringUtils;

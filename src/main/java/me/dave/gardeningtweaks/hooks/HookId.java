@@ -6,6 +6,7 @@ public enum HookId {
     HUSK_CLAIMS("husk_claims"),
     HUSK_TOWNS("husk_towns"),
     LANDS("lands"),
+    PACKET_EVENTS("packet_events"),
     PROTOCOL_LIB("protocol_lib"),
     REALISTIC_BIOMES("realistic_biomes");
 

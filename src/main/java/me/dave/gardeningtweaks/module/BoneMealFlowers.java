@@ -2,8 +2,6 @@ package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.api.events.FlowerBoneMealEvent;
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.gardeningtweaks.hooks.HookId;
-import me.dave.gardeningtweaks.hooks.packets.ProtocolLibHook;
 import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
 import org.lushplugins.lushlib.utils.StringUtils;
@@ -109,7 +107,7 @@ public class BoneMealFlowers extends Module implements EventListener {
             if (flowerType.createBlockData() instanceof Bisected && !GardeningTweaks.getInstance().callEvent(new BlockPlaceEvent(block.getRelative(BlockFace.UP), block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.BONE_MEAL), player, true, EquipmentSlot.HAND))) return;
 
             if (player.getGameMode() != GameMode.CREATIVE && mainHand != null) mainHand.setAmount(mainHand.getAmount() - 1);
-            GardeningTweaks.getInstance().getHook(HookId.PROTOCOL_LIB.toString()).ifPresent(hook -> ((ProtocolLibHook) hook).armInteractAnimation(player));
+            GardeningTweaks.getInstance().getPacketHook().ifPresent(packetHook -> packetHook.armInteractAnimation(player));
         }
 
         world.spawnParticle(Particle.VILLAGER_HAPPY, location.clone().add(0.5, 0.2, 0.5), 10, 0.2, 0.2, 0.2);

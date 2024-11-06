@@ -5,6 +5,7 @@ import me.dave.gardeningtweaks.config.ConfigManager;
 import me.dave.gardeningtweaks.hooks.*;
 import me.dave.gardeningtweaks.hooks.claims.*;
 import me.dave.gardeningtweaks.hooks.packets.PacketEventsHook;
+import me.dave.gardeningtweaks.hooks.packets.PacketHook;
 import me.dave.gardeningtweaks.hooks.packets.ProtocolLibHook;
 import me.dave.gardeningtweaks.listener.GardeningTweaksListener;
 import org.bstats.bukkit.Metrics;
@@ -18,6 +19,7 @@ import org.lushplugins.lushlib.plugin.SpigotPlugin;
 import org.lushplugins.lushlib.utils.Updater;
 
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.Random;
 import java.util.logging.Level;
 
@@ -111,6 +113,16 @@ public final class GardeningTweaks extends SpigotPlugin {
 
     public static GardeningTweaks getInstance() {
         return plugin;
+    }
+
+    public Optional<PacketHook> getPacketHook() {
+        for (Hook hook : hooks.values()) {
+            if (hook instanceof PacketHook packetHook) {
+                return Optional.of(packetHook);
+            }
+        }
+
+        return Optional.empty();
     }
 
     public boolean hasPrivateClaimAt(Location location) {

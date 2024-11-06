@@ -1,8 +1,7 @@
 package me.dave.gardeningtweaks.module;
 
 import me.dave.gardeningtweaks.GardeningTweaks;
-import me.dave.gardeningtweaks.hooks.HookId;
-import me.dave.gardeningtweaks.hooks.packets.ProtocolLibHook;
+import me.dave.gardeningtweaks.util.ConfigUtils;
 import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
 import org.lushplugins.lushlib.utils.StringUtils;
@@ -114,7 +113,7 @@ public class InteractiveHarvest extends Module implements EventListener {
                     }
                 }
 
-                GardeningTweaks.getInstance().getHook(HookId.PROTOCOL_LIB.toString()).ifPresent(hook -> ((ProtocolLibHook) hook).armInteractAnimation(player));
+                GardeningTweaks.getInstance().getPacketHook().ifPresent(packetHook -> packetHook.armInteractAnimation(player));
 
                 world.spawnParticle(Particle.BLOCK_DUST, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3, crop);
                 world.playSound(location, crop.getSoundGroup().getBreakSound(), 1f, 1f);

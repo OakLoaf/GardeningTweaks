@@ -24,6 +24,7 @@ public class Lumberjack extends Module implements EventListener {
     private static final EnumSet<Material> AXES = EnumSet.of(Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE);
 
     private Collection<Material> blocks;
+    private String condition;
 
     public Lumberjack() {
         super(ID);
@@ -36,6 +37,7 @@ public class Lumberjack extends Module implements EventListener {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "modules/lumberjack.yml"));
 
         blocks = ConfigUtils.getRegistryValues(config, "blocks", Registry.MATERIAL);
+        this.condition = config.getString("condition", "crouching").toLowerCase();
     }
 
     @Override
@@ -45,8 +47,14 @@ public class Lumberjack extends Module implements EventListener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
+        if (event.isCancelled())  {
+            return;
+        }
+
         Player player = event.getPlayer();
-        if (event.isCancelled() || !player.isSneaking())  {
+        if (condition.equals("standing") && player.isSneaking()) {
+            return;
+        } else if (condition.equals("crouching") && !player.isSneaking()) {
             return;
         }
 

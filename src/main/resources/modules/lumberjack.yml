@@ -10,3 +10,9 @@ blocks:
   - "oak_log"
   - "spruce_log"
   - "warped_stem"
+
+# condition: The condition required for lumberjack to work
+# Options:
+# - standing: only works if the player is standing
+# - crouching: only works if the player is crouching
+condition: standing

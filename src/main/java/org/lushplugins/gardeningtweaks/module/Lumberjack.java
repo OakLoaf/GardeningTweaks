@@ -45,16 +45,25 @@ public class Lumberjack extends Module implements EventListener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
-        if (event.isCancelled()) return;
+        Player player = event.getPlayer();
+        if (event.isCancelled() || !player.isSneaking())  {
+            return;
+        }
+
         Block block = event.getBlock();
         Material blockType = block.getType();
+        if (!blocks.contains(blockType)) {
+            return;
+        }
 
-        if (blocks.contains(blockType)) {
-            Player player = event.getPlayer();
-            ItemStack mainHand = player.getInventory().getItemInMainHand();
-            if (!AXES.contains(mainHand.getType()) || player.isSneaking()) return;
-            Block blockAbove = block.getRelative(BlockFace.UP);
-            if (blockAbove.getType() == blockType) Bukkit.getScheduler().runTaskLater(GardeningTweaks.getInstance(), () -> new LogLumber(blockAbove, player), 5);
+        ItemStack mainHand = player.getInventory().getItemInMainHand();
+        if (!AXES.contains(mainHand.getType())) {
+            return;
+        }
+
+        Block blockAbove = block.getRelative(BlockFace.UP);
+        if (blockAbove.getType() == blockType) {
+            Bukkit.getScheduler().runTaskLater(GardeningTweaks.getInstance(), () -> new LogLumber(blockAbove, player), 5);
         }
     }
 

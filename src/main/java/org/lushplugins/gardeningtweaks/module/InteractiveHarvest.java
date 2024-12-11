@@ -24,6 +24,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class InteractiveHarvest extends Module implements EventListener {
     public static final String ID = "INTERACTIVE_HARVEST";
@@ -83,25 +84,24 @@ public class InteractiveHarvest extends Module implements EventListener {
                 block.setType(material);
                 Location location = block.getLocation();
                 World world = block.getWorld();
-                List<Item> plannedDrops = new ArrayList<>();
-                for (ItemStack item : items) {
-                    if (item.getType().toString().contains("SEEDS")) {
-                        item.setAmount(item.getAmount() - 1);
-                    }
+                List<Item> drops = items.stream()
+                    .map(item -> {
+                        if (item.getType().toString().contains("SEEDS")) {
+                            item.setAmount(item.getAmount() - 1);
+                        }
 
-                    plannedDrops.add(world.dropItemNaturally(location.clone().add(0.5, 0.5, 0.5), item));
-                }
+                        Item droppedItem = world.createEntity(location.clone().add(0.5, 0.5, 0.5), Item.class);
+                        droppedItem.setItemStack(item);
+                        return droppedItem;
+                    })
+                    .collect(Collectors.toList());
 
-                if (!plannedDrops.isEmpty()) {
-                    BlockDropItemEvent dropItemEvent = new BlockDropItemEvent(block, blockState, player, plannedDrops);
-                    if (!GardeningTweaks.getInstance().callEvent(dropItemEvent)) {
-                        plannedDrops.forEach(Entity::remove);
+                if (!drops.isEmpty()) {
+                    BlockDropItemEvent dropItemEvent = new BlockDropItemEvent(block, blockState, player, drops);
+                    if (GardeningTweaks.getInstance().callEvent(dropItemEvent)) {
+                        drops.forEach(world::addEntity);
                     } else {
-                        plannedDrops.forEach(drop -> {
-                            if (!dropItemEvent.getItems().contains(drop)) {
-                                drop.remove();
-                            }
-                        });
+                        drops.forEach(Item::remove);
                     }
                 }
 

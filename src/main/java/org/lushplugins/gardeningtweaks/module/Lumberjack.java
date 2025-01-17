@@ -145,7 +145,7 @@ public class Lumberjack extends Module implements EventListener {
 
                         Location currLoc = startLocation.clone().add(indexX, indexY, indexZ);
                         Block nextBlock = currLoc.getBlock();
-                        if (nextBlock.getType() == type) {
+                        if (types.contains(nextBlock.getType())) {
                             return nextBlock;
                         }
                     }

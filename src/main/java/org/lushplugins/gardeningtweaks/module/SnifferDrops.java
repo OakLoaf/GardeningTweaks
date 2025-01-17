@@ -55,7 +55,11 @@ public class SnifferDrops extends Module implements EventListener {
 
     @EventHandler
     public void onSnifferSniffItem(EntityDropItemEvent event) {
-        if (event.isCancelled() || !(event.getEntity() instanceof Sniffer) || drops.isEmpty()) {
+        if (event.isCancelled() || !(event.getEntity() instanceof Sniffer sniffer) || drops.isEmpty()) {
+            return;
+        }
+
+        if (sniffer.getState() != Sniffer.State.DIGGING) {
             return;
         }
 

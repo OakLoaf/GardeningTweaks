@@ -16,3 +16,6 @@ blocks:
 # - standing: only works if the player is standing
 # - crouching: only works if the player is crouching
 condition: standing
+
+# This does not include the initial block broken by the player
+break-limit: 31

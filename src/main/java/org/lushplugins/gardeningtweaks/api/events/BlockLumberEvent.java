@@ -6,19 +6,19 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.block.BlockEvent;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class BlockLumberEvent extends BlockEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancel = false;
     private final Player player;
 
-    public BlockLumberEvent(@NotNull Block block, @NotNull Player player) {
+    public BlockLumberEvent(@NotNull Block block, @Nullable Player player) {
         super(block);
         this.player = player;
     }
 
-    @NotNull
-    public Player getPlayer() {
+    public @Nullable Player getPlayer() {
         return player;
     }
 
@@ -32,14 +32,12 @@ public class BlockLumberEvent extends BlockEvent implements Cancellable {
         this.cancel = cancel;
     }
 
-    @NotNull
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 
-    @NotNull
-    public static HandlerList getHandlerList() {
+    public static @NotNull HandlerList getHandlerList() {
         return handlers;
     }
 }

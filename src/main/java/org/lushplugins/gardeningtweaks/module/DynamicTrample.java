@@ -1,5 +1,6 @@
 package org.lushplugins.gardeningtweaks.module;
 
+import org.bukkit.event.EventPriority;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
 import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
@@ -44,7 +45,7 @@ public class DynamicTrample extends Module implements EventListener {
         creativeMode = null;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.useInteractedBlock() == Event.Result.DENY || event.useItemInHand() == Event.Result.DENY) return;
 

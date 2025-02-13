@@ -1,6 +1,7 @@
 package org.lushplugins.gardeningtweaks.module;
 
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
+import org.lushplugins.gardeningtweaks.hooks.HookId;
 import org.lushplugins.gardeningtweaks.hooks.claims.HuskClaimsHook;
 import org.lushplugins.gardeningtweaks.util.ConfigUtils;
 import org.lushplugins.lushlib.hook.Hook;
@@ -73,7 +74,7 @@ public class InteractiveHarvest extends Module implements EventListener {
                     event.setCancelled(true);
                 }
 
-                Optional<Hook> huskClaims = GardeningTweaks.getInstance().getHook("HuskClaims");
+                Optional<Hook> huskClaims = GardeningTweaks.getInstance().getHook(HookId.HUSK_CLAIMS.toString());
                 if (huskClaims.isPresent()) {
                     if (((HuskClaimsHook) huskClaims.get()).isInteractiveHarvestCancelled(player, block.getLocation())) {
                         return;

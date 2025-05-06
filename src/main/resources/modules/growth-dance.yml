@@ -11,3 +11,4 @@ blocks:
   - "sweet_berry_bush"
   - "twisting_vines"
   - "weeping_vines"
+particle: "villager_happy"

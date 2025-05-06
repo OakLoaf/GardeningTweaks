@@ -1,31 +1,30 @@
 package org.lushplugins.gardeningtweaks.module;
 
+import org.bukkit.*;
+import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.api.events.PlayerGrowthDanceEvent;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
 import org.lushplugins.gardeningtweaks.util.ConfigUtils;
 import org.lushplugins.gardeningtweaks.util.PlantAging;
-import org.bukkit.Registry;
-import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.jetbrains.annotations.Nullable;
+import org.lushplugins.lushlib.utils.StringUtils;
 
 import java.io.File;
 import java.util.*;
 
-public class GrowthDance extends Module implements EventListener {
+public class GrowthDance extends Module implements Listener {
     public static final String ID = "GROWTH_DANCE";
 
     private HashSet<UUID> cooldownList;
     private Integer cooldownLength;
     private Collection<Material> blockTypes;
+    private Particle particle;
 
     public GrowthDance() {
         super(ID);
@@ -41,6 +40,13 @@ public class GrowthDance extends Module implements EventListener {
 
         cooldownLength = config.getInt("growth-rate", 2);
         blockTypes = ConfigUtils.getRegistryValues(config, "blocks", Registry.MATERIAL);
+
+        String particleRaw = config.getString("particle");
+        if (particleRaw != null) {
+            particle = StringUtils.getEnum(particleRaw, Particle.class).orElse(null);
+        } else {
+            particle = null;
+        }
     }
 
     @Override
@@ -52,6 +58,7 @@ public class GrowthDance extends Module implements EventListener {
 
         blockTypes = null;
         cooldownLength = null;
+        particle = null;
     }
 
     @EventHandler
@@ -67,7 +74,11 @@ public class GrowthDance extends Module implements EventListener {
 
         cooldownList.add(player.getUniqueId());
         Bukkit.getScheduler().runTaskLater(GardeningTweaks.getInstance(), () -> cooldownList.remove(player.getUniqueId()), cooldownLength);
-        growCrops(player.getLocation(), 0.5, 2, blockTypes);
+        List<Block> grownCrops = growCrops(player.getLocation(), 0.5, 2, blockTypes);
+
+        if (particle != null) {
+            grownCrops.forEach(block -> block.getWorld().spawnParticle(particle, block.getLocation().clone().add(0.5, 0.5, 0.5), 3, 0.5, 0.5, 0.5, 0));
+        }
     }
 
     public static List<Block> growCrops(Location location, double chance, int radius) {

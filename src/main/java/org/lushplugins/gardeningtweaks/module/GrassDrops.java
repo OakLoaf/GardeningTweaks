@@ -1,8 +1,8 @@
 package org.lushplugins.gardeningtweaks.module;
 
+import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
-import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
 import org.lushplugins.lushlib.registry.RegistryUtils;
 import org.lushplugins.lushlib.utils.RandomCollection;
@@ -18,8 +18,19 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.util.List;
 
-public class GrassDrops extends Module implements EventListener {
+public class GrassDrops extends Module implements Listener {
     public static final String ID = "GRASS_DROPS";
+    private static final Material GRASS_MATERIAL;
+
+    static {
+        Material grassMaterial;
+        try {
+            grassMaterial = Material.SHORT_GRASS;
+        } catch (NoSuchFieldError ignored) {
+            grassMaterial = RegistryUtils.parseString("grass", Registry.MATERIAL);
+        }
+        GRASS_MATERIAL = grassMaterial;
+    }
 
     private RandomCollection<Material> items;
 
@@ -65,7 +76,7 @@ public class GrassDrops extends Module implements EventListener {
         ItemStack mainHand = player.getInventory().getItemInMainHand();
         BlockState blockState = event.getBlockState();
         List<ItemStack> drops = event.getItems().stream().map(Item::getItemStack).toList();
-        if (blockState.getType() != Material.GRASS || drops.size() == 0) {
+        if (blockState.getType() != GRASS_MATERIAL || drops.isEmpty()) {
             return;
         }
 

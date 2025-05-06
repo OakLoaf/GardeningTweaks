@@ -1,11 +1,11 @@
 package org.lushplugins.gardeningtweaks.listener;
 
+import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
 import org.lushplugins.gardeningtweaks.api.events.SaplingReplantEvent;
 import org.bukkit.event.EventHandler;
-import org.lushplugins.lushlib.listener.EventListener;
 
-public class GardeningTweaksListener implements EventListener {
+public class GardeningTweaksListener implements Listener {
 
     @EventHandler
     public void onSaplingReplant(SaplingReplantEvent event) {

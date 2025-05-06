@@ -1,12 +1,12 @@
 package org.lushplugins.gardeningtweaks.module;
 
+import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
 import org.lushplugins.gardeningtweaks.api.events.TreeSpreadBlockEvent;
 import org.lushplugins.gardeningtweaks.hooks.HookId;
 import org.lushplugins.gardeningtweaks.hooks.RealisticBiomesHook;
 import org.lushplugins.gardeningtweaks.util.ConfigUtils;
 import org.bukkit.Registry;
-import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
 import org.lushplugins.lushlib.registry.RegistryUtils;
 import org.lushplugins.lushlib.utils.RandomCollection;
@@ -26,7 +26,7 @@ import org.bukkit.util.BoundingBox;
 import java.io.File;
 import java.util.*;
 
-public class FancyTrees extends Module implements EventListener {
+public class FancyTrees extends Module implements Listener {
     public static final String ID = "FANCY_TREES";
     private static final EnumSet<BlockFace> HORIZONTAL_BLOCK_FACES = EnumSet.of(BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST);
 

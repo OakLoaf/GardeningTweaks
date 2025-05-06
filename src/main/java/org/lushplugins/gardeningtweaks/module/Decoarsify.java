@@ -1,6 +1,6 @@
 package org.lushplugins.gardeningtweaks.module;
 
-import org.lushplugins.lushlib.listener.EventListener;
+import org.bukkit.event.Listener;
 import org.lushplugins.lushlib.module.Module;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -12,7 +12,7 @@ import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class Decoarsify extends Module implements EventListener {
+public class Decoarsify extends Module implements Listener {
     public static final String ID = "DECOARSIFY";
 
     public Decoarsify() {

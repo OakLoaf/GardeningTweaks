@@ -1,7 +1,7 @@
 package org.lushplugins.gardeningtweaks.module;
 
+import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
-import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
 import org.lushplugins.lushlib.registry.RegistryUtils;
 import org.lushplugins.lushlib.utils.RandomCollection;
@@ -24,7 +24,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 
-public class ComposterOutput extends Module implements EventListener {
+public class ComposterOutput extends Module implements Listener {
     public static final String ID = "COMPOSTER_OUTPUT";
 
     private RandomCollection<Material> items;

@@ -1,10 +1,10 @@
 package org.lushplugins.gardeningtweaks.module;
 
+import org.bukkit.event.Listener;
 import org.jetbrains.annotations.Nullable;
 import org.lushplugins.gardeningtweaks.api.events.BlockLumberEvent;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
 import org.lushplugins.gardeningtweaks.util.ConfigUtils;
-import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -21,7 +21,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class Lumberjack extends Module implements EventListener {
+public class Lumberjack extends Module implements Listener {
     public static final String ID = "LUMBERJACK";
 
     private Collection<Material> blocks;

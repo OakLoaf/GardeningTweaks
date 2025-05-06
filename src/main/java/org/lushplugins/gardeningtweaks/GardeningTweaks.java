@@ -75,7 +75,7 @@ public final class GardeningTweaks extends SpigotPlugin {
         });
         log(Level.INFO, "Finished loading protection hooks");
 
-        new GardeningTweaksListener().registerListeners();
+        registerListener(new GardeningTweaksListener());
 
         getCommand("gardeningtweaks").setExecutor(new GardeningTweaksCmd());
 

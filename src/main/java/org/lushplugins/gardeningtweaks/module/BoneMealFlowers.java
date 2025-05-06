@@ -1,8 +1,8 @@
 package org.lushplugins.gardeningtweaks.module;
 
+import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.api.events.FlowerBoneMealEvent;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
-import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
 import org.lushplugins.lushlib.registry.RegistryUtils;
 import org.bukkit.*;
@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.util.HashMap;
 
-public class BoneMealFlowers extends Module implements EventListener {
+public class BoneMealFlowers extends Module implements Listener {
     public static final String ID = "BONE_MEAL_FLOWERS";
 
     private HashMap<Material, Material> flowers;

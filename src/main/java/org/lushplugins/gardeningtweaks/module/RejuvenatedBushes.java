@@ -1,8 +1,8 @@
 package org.lushplugins.gardeningtweaks.module;
 
+import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.api.events.BushRejuvenateEvent;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
-import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
 import org.lushplugins.lushlib.registry.RegistryUtils;
 import org.bukkit.*;
@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.util.HashMap;
 
-public class RejuvenatedBushes extends Module implements EventListener {
+public class RejuvenatedBushes extends Module implements Listener {
     public static final String ID = "REJUVENATED_BUSHES";
 
     private HashMap<Material, Material> items;

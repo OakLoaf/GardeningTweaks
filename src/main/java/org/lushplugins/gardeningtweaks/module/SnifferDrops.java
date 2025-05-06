@@ -1,8 +1,8 @@
 package org.lushplugins.gardeningtweaks.module;
 
+import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
 import org.bukkit.Registry;
-import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
 import org.lushplugins.lushlib.registry.RegistryUtils;
 import org.lushplugins.lushlib.utils.RandomCollection;
@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 
-public class SnifferDrops extends Module implements EventListener {
+public class SnifferDrops extends Module implements Listener {
     public static final String ID = "SNIFFER_DROPS";
 
     private RandomCollection<Material> drops;

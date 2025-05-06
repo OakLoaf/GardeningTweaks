@@ -1,9 +1,9 @@
 package org.lushplugins.gardeningtweaks.module;
 
+import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.api.events.ComposterCropGrowEvent;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
 import org.lushplugins.gardeningtweaks.util.ConfigUtils;
-import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
 
-public class ComposterSpreader extends Module implements EventListener {
+public class ComposterSpreader extends Module implements Listener {
     public static final String ID = "COMPOSTER_SPREADER";
 
     private BukkitTask task;

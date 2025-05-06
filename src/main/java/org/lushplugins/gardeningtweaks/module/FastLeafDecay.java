@@ -1,8 +1,8 @@
 package org.lushplugins.gardeningtweaks.module;
 
+import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
 import org.lushplugins.gardeningtweaks.util.ChunkCoordinate;
-import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
 import org.lushplugins.lushlib.utils.BlockPosition;
 import org.bukkit.*;
@@ -26,7 +26,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class FastLeafDecay extends Module implements EventListener {
+public class FastLeafDecay extends Module implements Listener {
     public static final String ID = "FAST_LEAF_DECAY";
 
     private final NamespacedKey ignoredKey = new NamespacedKey(GardeningTweaks.getInstance(), "FLD");

@@ -1,8 +1,8 @@
 package org.lushplugins.gardeningtweaks.module;
 
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
-import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -19,7 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
 
-public class DynamicTrample extends Module implements EventListener {
+public class DynamicTrample extends Module implements Listener {
     public static final String ID = "DYNAMIC_TRAMPLE";
 
     private Boolean featherFalling;

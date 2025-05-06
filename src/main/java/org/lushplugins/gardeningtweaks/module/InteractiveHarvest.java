@@ -5,7 +5,6 @@ import org.lushplugins.gardeningtweaks.hooks.HookId;
 import org.lushplugins.gardeningtweaks.hooks.claims.HuskClaimsHook;
 import org.lushplugins.gardeningtweaks.util.ConfigUtils;
 import org.lushplugins.lushlib.hook.Hook;
-import org.lushplugins.lushlib.listener.EventListener;
 import org.lushplugins.lushlib.module.Module;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -28,7 +27,7 @@ import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class InteractiveHarvest extends Module implements EventListener {
+public class InteractiveHarvest extends Module implements Listener {
     public static final String ID = "INTERACTIVE_HARVEST";
 
     private final HashSet<UUID> harvestCooldownSet = new HashSet<>();

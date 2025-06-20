@@ -13,8 +13,3 @@ softdepend:
   - HuskClaims
   - HuskTowns
   - Lands
-commands:
-  gardeningtweaks:
-    description: The main GardeningTweaks Command.
-    aliases: gt
-    usage: /gardeningtweaks

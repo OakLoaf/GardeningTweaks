@@ -9,13 +9,12 @@ group = "org.lushplugins"
 version = "3.0.5"
 
 repositories {
-    mavenCentral() // bStats
     mavenLocal()
+    mavenCentral() // bStats
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") // Spigot
     maven("https://repo.dmulloy2.net/repository/public/") // ProtocolLib
     maven("https://repo.codemc.io/repository/maven-releases/") // PacketEvents
     maven("https://maven.playpro.com") // CoreProtect
-    maven("https://repo.lushplugins.org/releases") // LushLib
     maven("https://repo.lushplugins.org/snapshots") // LushLib
     maven("https://repo.william278.net/releases") // HuskClaims, HuskTowns
     maven("https://jitpack.io") // GriefPrevention, RealisticBiomes, Lands
@@ -30,7 +29,7 @@ dependencies {
     compileOnly("com.github.retrooper:packetevents-spigot:2.6.0")
     compileOnly("com.github.TechFortress:GriefPrevention:17.0.0")
     compileOnly("net.william278.huskclaims:huskclaims-bukkit:1.5")
-    compileOnly("net.william278:husktowns:2.6.1")
+    compileOnly("net.william278.husktowns:husktowns-bukkit:3.1.2")
     compileOnly("com.github.angeschossen:LandsAPI:7.15.20")
     compileOnly("com.github.Maroon28:RealisticBiomes:3d292ea32a")
 

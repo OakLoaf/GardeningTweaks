@@ -9,8 +9,8 @@ group = "org.lushplugins"
 version = "3.0.5"
 
 repositories {
-    mavenCentral() // bStats
     mavenLocal()
+    mavenCentral() // bStats
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") // Spigot
     maven("https://repo.dmulloy2.net/repository/public/") // ProtocolLib
     maven("https://repo.codemc.io/repository/maven-releases/") // PacketEvents

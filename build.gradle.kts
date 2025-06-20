@@ -1,7 +1,8 @@
 plugins {
-    java
+    `java-library`
     `maven-publish`
-    id("com.github.johnrengelman.shadow") version("8.1.1")
+    id("com.gradleup.shadow") version("8.3.0")
+    id("xyz.jpenilla.run-paper") version("2.2.4")
 }
 
 group = "org.lushplugins"
@@ -22,25 +23,28 @@ repositories {
 
 dependencies {
     // Dependencies
-    compileOnly("org.spigotmc:spigot-api:${findProperty("minecraftVersion")}-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
 
     // Soft Dependencies
-    compileOnly("com.comphenix.protocol:ProtocolLib:${findProperty("protocollibVersion")}")
-    compileOnly("com.github.retrooper:packetevents-spigot:${findProperty("packetEventsVersion")}")
-    compileOnly("net.coreprotect:coreprotect:${findProperty("coreprotectVersion")}")
-    compileOnly("com.github.TechFortress:GriefPrevention:${findProperty("griefpreventionVersion")}")
-    compileOnly("net.william278.huskclaims:huskclaims-bukkit:${findProperty("huskclaimsVersion")}")
-    compileOnly("net.william278:husktowns:${findProperty("husktownsVersion")}")
-    compileOnly("com.github.angeschossen:LandsAPI:${findProperty("landsVersion")}")
-    compileOnly("com.github.Maroon28:RealisticBiomes:${findProperty("realisticbiomesVersion")}")
+    compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
+    compileOnly("com.github.retrooper:packetevents-spigot:2.6.0")
+    compileOnly("com.github.TechFortress:GriefPrevention:16.18")
+    compileOnly("net.william278.huskclaims:huskclaims-bukkit:1.5")
+    compileOnly("net.william278:husktowns:2.6.1")
+    compileOnly("com.github.angeschossen:LandsAPI:6.42.15")
+    compileOnly("com.github.Maroon28:RealisticBiomes:3d292ea32a")
 
     // Libraries
-    implementation("org.bstats:bstats-bukkit:${findProperty("bstatsVersion")}")
-    implementation("org.lushplugins:LushLib:${findProperty("lushlibVersion")}")
+    implementation("org.bstats:bstats-bukkit:3.0.2")
+    implementation("org.lushplugins:LushLib:0.10.66")
 }
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+
+    registerFeature("optional") {
+        usingSourceSet(sourceSets["main"])
+    }
 
     withSourcesJar()
 }
@@ -56,20 +60,22 @@ tasks {
 
         minimize()
 
-        val folder = System.getenv("pluginFolder")
-        if (folder != null) {
-            destinationDirectory.set(file(folder))
-        }
         archiveFileName.set("${project.name}-${project.version}.jar")
     }
 
     processResources{
-        expand(project.properties)
+        filesMatching("plugin.yml") {
+            expand(project.properties)
+        }
 
         inputs.property("version", rootProject.version)
         filesMatching("plugin.yml") {
             expand("version" to rootProject.version)
         }
+    }
+
+    runServer {
+        minecraftVersion("1.21.6")
     }
 }
 

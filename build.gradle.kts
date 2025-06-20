@@ -35,7 +35,7 @@ dependencies {
     compileOnly("com.github.Maroon28:RealisticBiomes:3d292ea32a")
 
     // Libraries
-    implementation("org.bstats:bstats-bukkit:3.0.2")
+    implementation("org.bstats:bstats-bukkit:3.1.0")
     implementation("org.lushplugins:LushLib:0.10.75")
 }
 

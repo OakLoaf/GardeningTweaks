@@ -25,7 +25,7 @@ dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
 
     // Soft Dependencies
-    compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
+    compileOnly("com.comphenix.protocol:ProtocolLib:5.3.0")
     compileOnly("com.github.retrooper:packetevents-spigot:2.8.0")
     compileOnly("com.github.TechFortress:GriefPrevention:17.0.0")
     compileOnly("net.william278.huskclaims:huskclaims-bukkit:1.5.8")

@@ -18,17 +18,15 @@ public class ProtocolLibHook extends PacketHook {
 
     @Override
     public void armInteractAnimation(Player player) {
-        if (protocolManager != null) {
-            PacketContainer armAnimation = new PacketContainer(PacketType.Play.Server.ANIMATION);
-            armAnimation.getIntegers()
-                .write(0, player.getEntityId())
-                .write(1, 0);
-
-            try {
-                protocolManager.sendServerPacket(player, armAnimation);
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
+        if (this.protocolManager == null) {
+            return;
         }
+
+        PacketContainer armAnimation = new PacketContainer(PacketType.Play.Server.ANIMATION);
+        armAnimation.getIntegers()
+            .write(0, player.getEntityId())
+            .write(1, 0);
+
+        protocolManager.sendServerPacket(player, armAnimation);
     }
 }

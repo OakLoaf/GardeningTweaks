@@ -15,7 +15,6 @@ repositories {
     maven("https://repo.dmulloy2.net/repository/public/") // ProtocolLib
     maven("https://repo.codemc.io/repository/maven-releases/") // PacketEvents
     maven("https://maven.playpro.com") // CoreProtect
-    maven("https://repo.lushplugins.org/releases") // LushLib
     maven("https://repo.lushplugins.org/snapshots") // LushLib
     maven("https://repo.william278.net/releases") // HuskClaims, HuskTowns
     maven("https://jitpack.io") // GriefPrevention, RealisticBiomes, Lands

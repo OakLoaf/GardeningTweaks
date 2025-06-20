@@ -57,8 +57,10 @@ tasks {
     }
 
     shadowJar {
-        relocate("org.bstats", "org.lushplugins.gardeningtweaks.libs.bstats")
-        relocate("org.lushplugins.lushlib", "org.lushplugins.gardeningtweaks.libs.lushlib")
+        relocate("org.bstats", "org.lushplugins.gardeningtweaks.libraries.bstats")
+        relocate("org.lushplugins.lushlib", "org.lushplugins.gardeningtweaks.libraries.lushlib")
+        relocate("revxrsal.commands", "org.lushplugins.gardeningtweaks.libraries.lamp")
+        relocate("org.lushplugins.pluginupdater", "org.lushplugins.gardeningtweaks.libraries.plugin")
 
         minimize()
 

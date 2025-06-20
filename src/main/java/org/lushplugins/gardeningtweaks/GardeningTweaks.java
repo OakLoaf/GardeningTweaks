@@ -1,6 +1,6 @@
 package org.lushplugins.gardeningtweaks;
 
-import org.lushplugins.gardeningtweaks.commands.GardeningTweaksCmd;
+import org.lushplugins.gardeningtweaks.commands.GardeningTweaksCommand;
 import org.lushplugins.gardeningtweaks.config.ConfigManager;
 import org.lushplugins.gardeningtweaks.hooks.packets.PacketEventsHook;
 import org.lushplugins.gardeningtweaks.hooks.packets.PacketHook;
@@ -10,13 +10,16 @@ import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.plugin.PluginManager;
 import org.lushplugins.gardeningtweaks.hooks.RealisticBiomesHook;
 import org.lushplugins.gardeningtweaks.hooks.claims.*;
+import org.lushplugins.gardeningtweaks.util.lamp.response.StringMessageResponseHandler;
 import org.lushplugins.lushlib.LushLib;
 import org.lushplugins.lushlib.hook.Hook;
 import org.lushplugins.lushlib.plugin.SpigotPlugin;
-import org.lushplugins.lushlib.utils.Updater;
+import org.lushplugins.pluginupdater.api.updater.Updater;
+import revxrsal.commands.Lamp;
+import revxrsal.commands.bukkit.BukkitLamp;
+import revxrsal.commands.bukkit.actor.BukkitCommandActor;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -38,20 +41,23 @@ public final class GardeningTweaks extends SpigotPlugin {
     @Override
     public void onEnable() {
         LushLib.getInstance().enable(this);
-        updater = new Updater(this, "gardening-tweaks", "gardeningtweaks.update", "gardeningtweaks update");
+        this.configManager = new ConfigManager();
+        this.configManager.reloadConfig();
 
-        configManager = new ConfigManager();
-        configManager.reloadConfig();
-
-        PluginManager pluginManager = Bukkit.getPluginManager();
-        if (pluginManager.getPlugin("packetevents") != null) {
-            log(Level.INFO, "Found plugin \"packetevents\". Enabling packetevents support.");
-            registerHook(new PacketEventsHook());
-        } else if (pluginManager.getPlugin("ProtocolLib") != null) {
-            log(Level.INFO, "Found plugin \"ProtocolLib\". Enabling ProtocolLib support.");
-            registerHook(new ProtocolLibHook());
+        if (this.configManager.shouldCheckUpdates()) {
+            this.updater = new Updater.Builder(plugin)
+                .modrinth("ilX5LKrx", true)
+                .checkSchedule(900)
+                .notify(true)
+                .notificationPermission("gardeningtweaks.update")
+                .notificationMessage("&#e0c01b%plugin% &#ffe27ahas an update! Type &#e0c01b/gardeningtweaks update &#ffe27ato update! (&#e0c01b%current_version% &#ffe27a-> &#e0c01b%latest_version%&#ffe27a)")
+                .build();
+        } else {
+            this.updater = null;
         }
 
+        ifPluginPresent("packetevents", () -> registerHook(new PacketEventsHook()));
+        ifPluginPresent("ProtocolLib", () -> registerHook(new ProtocolLibHook()));
         ifPluginEnabled("RealisticBiomes", () -> registerHook(new RealisticBiomesHook()));
 
         log(Level.INFO, "Loading protection hooks");
@@ -75,7 +81,10 @@ public final class GardeningTweaks extends SpigotPlugin {
 
         registerListener(new GardeningTweaksListener());
 
-        getCommand("gardeningtweaks").setExecutor(new GardeningTweaksCmd());
+        Lamp<BukkitCommandActor> lamp = BukkitLamp.builder(this)
+            .responseHandler(String.class, new StringMessageResponseHandler())
+            .build();
+        lamp.register(new GardeningTweaksCommand());
 
         Bukkit.getScheduler().runTaskTimer(this, () -> currTick += 1, 1, 1);
 

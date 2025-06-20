@@ -10,6 +10,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.io.File;
 
 public class ConfigManager {
+    private boolean checkUpdates;
 
     public ConfigManager() {
         GardeningTweaks.getInstance().saveDefaultConfig();
@@ -32,6 +33,8 @@ public class ConfigManager {
             reloadConfig(false);
             return;
         }
+
+        this.checkUpdates = config.getBoolean("check-updates", true);
 
         ConfigurationSection modulesSection = config.getConfigurationSection("modules");
         if (modulesSection != null) {
@@ -154,5 +157,9 @@ public class ConfigManager {
 
             GardeningTweaks.getInstance().getModules().forEach(Module::reload);
         }
+    }
+
+    public boolean shouldCheckUpdates() {
+        return checkUpdates;
     }
 }

@@ -10,7 +10,7 @@ version = "3.0.6"
 
 repositories {
     mavenLocal()
-    mavenCentral() // bStats
+    mavenCentral() // bStats, Lamp
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") // Spigot
     maven("https://repo.dmulloy2.net/repository/public/") // ProtocolLib
     maven("https://repo.codemc.io/repository/maven-releases/") // PacketEvents
@@ -36,6 +36,9 @@ dependencies {
     // Libraries
     implementation("org.bstats:bstats-bukkit:3.1.0")
     implementation("org.lushplugins:LushLib:0.10.75")
+    implementation("io.github.revxrsal:lamp.common:4.0.0-rc.12")
+    implementation("io.github.revxrsal:lamp.bukkit:4.0.0-rc.12")
+    implementation("org.lushplugins.pluginupdater:PluginUpdater-API:1.0.3")
 }
 
 java {

@@ -5,6 +5,7 @@
 # If you need any help or support using the plugin please join our support discord,
 # we're more than happy to help you :)
 
+
 # A list of modules and whether they are enabled
 modules:
   # Bone Meal Flowers: Grow small flowers into double tall flowers
@@ -35,6 +36,9 @@ modules:
   sapling-replant: false
   # Sniffer Drops: Change the items that sniffers sniff from the ground
   sniffer-drops: false
+
+# Whether the plugin should check for updates (Requires restart)
+check-updates: true
 
 # Don't edit this value
 config-version: 2

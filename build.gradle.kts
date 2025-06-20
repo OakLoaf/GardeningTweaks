@@ -31,7 +31,7 @@ dependencies {
     compileOnly("com.github.TechFortress:GriefPrevention:16.18")
     compileOnly("net.william278.huskclaims:huskclaims-bukkit:1.5")
     compileOnly("net.william278:husktowns:2.6.1")
-    compileOnly("com.github.angeschossen:LandsAPI:6.42.15")
+    compileOnly("com.github.angeschossen:LandsAPI:7.15.20")
     compileOnly("com.github.Maroon28:RealisticBiomes:3d292ea32a")
 
     // Libraries

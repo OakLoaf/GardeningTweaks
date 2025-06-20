@@ -11,7 +11,6 @@ import org.bstats.charts.AdvancedPie;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.PluginManager;
-import org.lushplugins.gardeningtweaks.hooks.CoreProtectHook;
 import org.lushplugins.gardeningtweaks.hooks.RealisticBiomesHook;
 import org.lushplugins.gardeningtweaks.hooks.claims.*;
 import org.lushplugins.lushlib.LushLib;
@@ -53,7 +52,6 @@ public final class GardeningTweaks extends SpigotPlugin {
             registerHook(new ProtocolLibHook());
         }
 
-        ifPluginEnabled("CoreProtect", () -> registerHook(new CoreProtectHook()));
         ifPluginEnabled("RealisticBiomes", () -> registerHook(new RealisticBiomesHook()));
 
         log(Level.INFO, "Loading protection hooks");

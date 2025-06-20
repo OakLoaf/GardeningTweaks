@@ -1,6 +1,6 @@
 ![Banner](https://imgur.com/lCyzngG.png)
 # GardeningTweaks
-![Version Number](https://img.shields.io/jitpack/version/com.github.cooldcb/GardeningTweaks?label=Version&color=4EC921)
+![Version Number](https://repo.lushplugins.org/api/badge/latest/releases/org/lushplugins/GardeningTweaks?color=40c14a&name=Latest)
 
 Make your gardening life become so much easier with Gardening Tweaks. From crops to trees, Gardening Tweaks adds lots of new features to your server to make it feel that little bit nicer, whilst still keeping the same Minecraft feel to it.
 
@@ -33,9 +33,9 @@ gardeningtweaks.admin.reload - Reload the plugin
 <br/><br/>
 ![API](https://i.imgur.com/BdF7AGF.png)
 
-![Version Number](https://img.shields.io/jitpack/version/com.github.cooldcb/GardeningTweaks?label=Version&color=4EC921)
+![Version Number](https://repo.lushplugins.org/api/badge/latest/releases/org/lushplugins/GardeningTweaks?color=40c14a&name=Latest)
 
-**Javadocs:** https://cooldcb.github.io/GardeningTweaks/
+**Javadocs:** https://oakloaf.github.io/GardeningTweaks/
 
 <details open>
 <summary>Maven</summary>
@@ -44,8 +44,8 @@ gardeningtweaks.admin.reload - Reload the plugin
 ```xml
 <repositories>
     <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
+        <id>lushplugins</id>
+        <url>https://repo.lushplugins.org/releases/</url>
     </repository>
 </repositories>
 ```
@@ -53,9 +53,9 @@ gardeningtweaks.admin.reload - Reload the plugin
 ```xml
 <dependencies>
     <dependency>
-        <groupId>com.github.CoolDCB</groupId>
+        <groupId>org.lushplugins</groupId>
         <artifactId>GardeningTweaks</artifactId>
-        <version>1.3</version>
+        <version>3.0.7</version>
     </dependency>
 </dependencies>
 ```
@@ -68,13 +68,13 @@ gardeningtweaks.admin.reload - Reload the plugin
 ```gradle
 repositories {
     mavenCentral()
-    maven { url = "https://jitpack.io" }
+    maven { url = "https://repo.lushplugins.org/releases/" }
 }
 ```
 **Artifact:**
 ```gradle
 dependencies {
-    compileOnly "com.github.CoolDCB:GardeningTweaks:1.3"
+    compileOnly org.lushplugins:GardeningTweaks:3.0.7"
 }
 ```
 </details>

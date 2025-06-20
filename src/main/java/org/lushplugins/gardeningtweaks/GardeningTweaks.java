@@ -45,7 +45,7 @@ public final class GardeningTweaks extends SpigotPlugin {
         this.configManager.reloadConfig();
 
         if (this.configManager.shouldCheckUpdates()) {
-            this.updater = new Updater.Builder(plugin)
+            this.updater = new Updater.Builder(this)
                 .modrinth("ilX5LKrx", true)
                 .checkSchedule(900)
                 .notify(true)

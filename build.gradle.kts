@@ -36,7 +36,7 @@ dependencies {
 
     // Libraries
     implementation("org.bstats:bstats-bukkit:3.0.2")
-    implementation("org.lushplugins:LushLib:0.10.66")
+    implementation("org.lushplugins:LushLib:0.10.75")
 }
 
 java {

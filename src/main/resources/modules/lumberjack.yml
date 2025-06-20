@@ -1,21 +1,12 @@
 # blocks: A list of blocks that will be effected by Lumberjack
 blocks:
-  - "acacia_log"
-  - "birch_log"
-  - "cherry_log"
-  - "crimson_stem"
-  - "dark_oak_log"
-  - "jungle_log"
-  - "mangrove_log"
-  - "oak_log"
-  - "spruce_log"
-  - "warped_stem"
+  - "#logs"
 
 # condition: The condition required for lumberjack to work
 # Options:
 # - standing: only works if the player is standing
 # - crouching: only works if the player is crouching
-condition: standing
+condition: crouching
 
 # This does not include the initial block broken by the player
 break-limit: 31

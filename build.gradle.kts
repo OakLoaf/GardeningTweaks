@@ -29,7 +29,7 @@ dependencies {
     compileOnly("com.github.retrooper:packetevents-spigot:2.8.0")
     compileOnly("com.github.TechFortress:GriefPrevention:17.0.0")
     compileOnly("net.william278.huskclaims:huskclaims-bukkit:1.5.9")
-    compileOnly("net.william278.husktowns:husktowns-bukkit:3.1.2")
+    compileOnly("net.william278.husktowns:husktowns-bukkit:3.1.3")
     compileOnly("com.github.angeschossen:LandsAPI:7.15.20")
     compileOnly("com.github.Maroon28:RealisticBiomes:3d292ea32a")
 

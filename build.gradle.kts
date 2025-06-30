@@ -22,7 +22,7 @@ repositories {
 
 dependencies {
     // Dependencies
-    compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.21.7-R0.1-SNAPSHOT")
 
     // Soft Dependencies
     compileOnly("com.comphenix.protocol:ProtocolLib:5.3.0")

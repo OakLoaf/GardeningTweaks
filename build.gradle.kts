@@ -26,7 +26,7 @@ dependencies {
 
     // Soft Dependencies
     compileOnly("com.comphenix.protocol:ProtocolLib:5.3.0")
-    compileOnly("com.github.retrooper:packetevents-spigot:2.8.0")
+    compileOnly("com.github.retrooper:packetevents-spigot:2.9.1")
     compileOnly("com.github.TechFortress:GriefPrevention:17.0.0")
     compileOnly("net.william278.huskclaims:huskclaims-bukkit:1.5.10")
     compileOnly("net.william278.husktowns:husktowns-bukkit:3.1.4")

@@ -36,8 +36,8 @@ dependencies {
     // Libraries
     implementation("org.bstats:bstats-bukkit:3.1.0")
     implementation("org.lushplugins:LushLib:1.0.0")
-    implementation("io.github.revxrsal:lamp.common:4.0.0-rc.12")
-    implementation("io.github.revxrsal:lamp.bukkit:4.0.0-rc.12")
+    implementation("io.github.revxrsal:lamp.common:4.0.0-rc.17")
+    implementation("io.github.revxrsal:lamp.bukkit:4.0.0-rc.17")
     implementation("org.lushplugins.pluginupdater:PluginUpdater-API:1.0.3")
 }
 

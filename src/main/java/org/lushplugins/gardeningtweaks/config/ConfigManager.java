@@ -2,12 +2,12 @@ package org.lushplugins.gardeningtweaks.config;
 
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
 import org.lushplugins.gardeningtweaks.module.*;
-import org.lushplugins.lushlib.module.Module;
-import org.bukkit.Bukkit;
+import org.lushplugins.gardeningtweaks.module.Module;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
+import java.util.concurrent.Callable;
 
 public class ConfigManager {
     private boolean checkUpdates;
@@ -38,124 +38,37 @@ public class ConfigManager {
 
         ConfigurationSection modulesSection = config.getConfigurationSection("modules");
         if (modulesSection != null) {
-            if (modulesSection.getBoolean("bone-meal-flowers", false)) {
-                if (plugin.getModule(BoneMealFlowers.ID).isEmpty()) {
-                    plugin.registerModule(new BoneMealFlowers());
-                }
-            } else {
-                plugin.unregisterModule(BoneMealFlowers.ID);
-            }
-
-            if (modulesSection.getBoolean("composter-output", false)) {
-                if (plugin.getModule(ComposterOutput.ID).isEmpty()) {
-                    plugin.registerModule(new ComposterOutput());
-                }
-            } else {
-                plugin.unregisterModule(ComposterOutput.ID);
-            }
-
-            if (modulesSection.getBoolean("composter-spreader", false)) {
-                if (plugin.getModule(ComposterSpreader.ID).isEmpty()) {
-                    plugin.registerModule(new ComposterSpreader());
-                }
-            } else {
-                plugin.unregisterModule(ComposterSpreader.ID);
-            }
-
-            if (modulesSection.getBoolean("decoarsify", false)) {
-                if (plugin.getModule(Decoarsify.ID).isEmpty()) {
-                    plugin.registerModule(new Decoarsify());
-                }
-            } else {
-                plugin.unregisterModule(Decoarsify.ID);
-            }
-
-            if (modulesSection.getBoolean("dynamic-trample", false)) {
-                if (plugin.getModule(DynamicTrample.ID).isEmpty()) {
-                    plugin.registerModule(new DynamicTrample());
-                }
-            } else {
-                plugin.unregisterModule(DynamicTrample.ID);
-            }
-
-            if (modulesSection.getBoolean("fancy-trees", false)) {
-                if (plugin.getModule(FancyTrees.ID).isEmpty()) {
-                    plugin.registerModule(new FancyTrees());
-                }
-            } else {
-                plugin.unregisterModule(FancyTrees.ID);
-            }
-
-            if (modulesSection.getBoolean("fast-leaf-decay", false)) {
-                if (plugin.getModule(FastLeafDecay.ID).isEmpty()) {
-                    plugin.registerModule(new FastLeafDecay());
-                }
-            } else {
-                plugin.unregisterModule(FastLeafDecay.ID);
-            }
-
-            if (modulesSection.getBoolean("grass-drops", false)) {
-                if (plugin.getModule(GrassDrops.ID).isEmpty()) {
-                    plugin.registerModule(new GrassDrops());
-                }
-            } else {
-                plugin.unregisterModule(GrassDrops.ID);
-            }
-
-            if (modulesSection.getBoolean("growth-dance", false)) {
-                if (plugin.getModule(GrowthDance.ID).isEmpty()) {
-                    plugin.registerModule(new GrowthDance());
-                }
-            } else {
-                plugin.unregisterModule(GrowthDance.ID);
-            }
-
-            if (modulesSection.getBoolean("interactive-harvest", false)) {
-                if (plugin.getModule(InteractiveHarvest.ID).isEmpty()) {
-                    plugin.registerModule(new InteractiveHarvest());
-                }
-            } else {
-                plugin.unregisterModule(InteractiveHarvest.ID);
-            }
-
-            if (modulesSection.getBoolean("lumberjack", false)) {
-                if (plugin.getModule(Lumberjack.ID).isEmpty()) {
-                    plugin.registerModule(new Lumberjack());
-                }
-            } else {
-                plugin.unregisterModule(Lumberjack.ID);
-            }
-
-            if (modulesSection.getBoolean("rejuvenated-bushes", false)) {
-                if (plugin.getModule(RejuvenatedBushes.ID).isEmpty()) {
-                    plugin.registerModule(new RejuvenatedBushes());
-                }
-            } else {
-                plugin.unregisterModule(RejuvenatedBushes.ID);
-            }
-
-            if (modulesSection.getBoolean("sapling-replant", false)) {
-                if (plugin.getModule(SaplingReplant.ID).isEmpty()) {
-                    plugin.registerModule(new SaplingReplant());
-                }
-            } else {
-                plugin.unregisterModule(SaplingReplant.ID);
-            }
-
-            if (modulesSection.getBoolean("sniffer-drops", false)) {
-                String serverVersion = Bukkit.getVersion();
-                if (!serverVersion.contains("1.20") && !serverVersion.contains("1.21")) {
-                    plugin.getLogger().severe("The 'sniffer-drops' module requires versions 1.20 and above to function");
-                }
-
-                if (plugin.getModule(SnifferDrops.ID).isEmpty()) {
-                    plugin.registerModule(new SnifferDrops());
-                }
-            } else {
-                plugin.unregisterModule(SnifferDrops.ID);
-            }
+            updateModule(modulesSection, ModuleId.BONE_MEAL_FLOWERS, BoneMealFlowers::new);
+            updateModule(modulesSection, ModuleId.COMPOSTER_OUTPUT, ComposterOutput::new);
+            updateModule(modulesSection, ModuleId.COMPOSTER_SPREADER, ComposterSpreader::new);
+            updateModule(modulesSection, ModuleId.DECOARSIFY, Decoarsify::new);
+            updateModule(modulesSection, ModuleId.DYNAMIC_TRAMPLE, DynamicTrample::new);
+            updateModule(modulesSection, ModuleId.FANCY_TREES, FancyTrees::new);
+            updateModule(modulesSection, ModuleId.FAST_LEAF_DECAY, FastLeafDecay::new);
+            updateModule(modulesSection, ModuleId.GRASS_DROPS, GrassDrops::new);
+            updateModule(modulesSection, ModuleId.GROWTH_DANCE, GrowthDance::new);
+            updateModule(modulesSection, ModuleId.INTERACTIVE_HARVEST, InteractiveHarvest::new);
+            updateModule(modulesSection, ModuleId.LUMBERJACK, Lumberjack::new);
+            updateModule(modulesSection, ModuleId.REJUVENATED_BUSHES, RejuvenatedBushes::new);
+            updateModule(modulesSection, ModuleId.SAPLING_REPLANT, SaplingReplant::new);
+            updateModule(modulesSection, ModuleId.SNIFFER_DROPS, SnifferDrops::new);
 
             GardeningTweaks.getInstance().getModules().forEach(Module::reload);
+        }
+    }
+
+    public void updateModule(ConfigurationSection modulesSection, String moduleId, Callable<Module> module) {
+        GardeningTweaks plugin = GardeningTweaks.getInstance();
+        if (modulesSection.getBoolean(moduleId.replace("_", "-"), false)) {
+            if (plugin.getModule(moduleId) == null) {
+                try {
+                    plugin.registerModule(moduleId, module.call());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        } else {
+            plugin.unregisterModule(moduleId);
         }
     }
 

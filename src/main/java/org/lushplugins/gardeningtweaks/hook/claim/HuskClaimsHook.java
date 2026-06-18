@@ -1,19 +1,17 @@
-package org.lushplugins.gardeningtweaks.hooks.claims;
+package org.lushplugins.gardeningtweaks.hook.claim;
 
 import net.kyori.adventure.key.Key;
 import org.bukkit.entity.Player;
-import org.lushplugins.gardeningtweaks.hooks.HookId;
 import net.william278.huskclaims.api.BukkitHuskClaimsAPI;
 import net.william278.huskclaims.libraries.cloplib.operation.Operation;
 import net.william278.huskclaims.libraries.cloplib.operation.OperationType;
 import org.bukkit.Location;
+import org.lushplugins.gardeningtweaks.hook.Hook;
 
-public class HuskClaimsHook extends ClaimHook {
+public class HuskClaimsHook extends Hook implements ClaimHandler {
     private final OperationType interactiveHarvestOperationType;
 
     public HuskClaimsHook() {
-        super(HookId.HUSK_CLAIMS.toString());
-
         BukkitHuskClaimsAPI huskClaimsAPI = BukkitHuskClaimsAPI.getInstance();
         interactiveHarvestOperationType = huskClaimsAPI.getOperationTypeRegistry().createOperationType(Key.key(
             "gardening_tweaks",

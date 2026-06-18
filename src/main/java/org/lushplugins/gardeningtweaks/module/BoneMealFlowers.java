@@ -3,8 +3,6 @@ package org.lushplugins.gardeningtweaks.module;
 import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.api.events.FlowerBoneMealEvent;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
-import org.lushplugins.lushlib.module.Module;
-import org.lushplugins.lushlib.registry.RegistryUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -19,18 +17,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
+import org.lushplugins.lushlib.utils.registry.RegistryUtils;
 
 import java.io.File;
 import java.util.HashMap;
 
 public class BoneMealFlowers extends Module implements Listener {
-    public static final String ID = "BONE_MEAL_FLOWERS";
-
     private HashMap<Material, Material> flowers;
-
-    public BoneMealFlowers() {
-        super(ID);
-    }
 
     @Override
     public void onEnable() {
@@ -63,7 +56,7 @@ public class BoneMealFlowers extends Module implements Listener {
         }
 
         if (this.flowers.isEmpty()) {
-            GardeningTweaks.getInstance().getLogger().warning("There are no valid materials configured, automatically disabling the '" + ID  + "' module");
+            GardeningTweaks.getInstance().getLogger().warning("There are no valid materials configured, automatically disabling the '" + ModuleId.BONE_MEAL_FLOWERS  + "' module");
             disable();
         }
     }
@@ -105,10 +98,10 @@ public class BoneMealFlowers extends Module implements Listener {
             if (flowerType.createBlockData() instanceof Bisected && !GardeningTweaks.getInstance().callEvent(new BlockPlaceEvent(block.getRelative(BlockFace.UP), block.getState(), block.getRelative(BlockFace.DOWN), new ItemStack(Material.BONE_MEAL), player, true, EquipmentSlot.HAND))) return;
 
             if (player.getGameMode() != GameMode.CREATIVE && mainHand != null) mainHand.setAmount(mainHand.getAmount() - 1);
-            GardeningTweaks.getInstance().getPacketHook().ifPresent(packetHook -> packetHook.armInteractAnimation(player));
+            GardeningTweaks.getInstance().getPacketHandler().ifPresent(packetHook -> packetHook.armInteractAnimation(player));
         }
 
-        world.spawnParticle(Particle.VILLAGER_HAPPY, location.clone().add(0.5, 0.2, 0.5), 10, 0.2, 0.2, 0.2);
+        world.spawnParticle(Particle.HAPPY_VILLAGER, location.clone().add(0.5, 0.2, 0.5), 10, 0.2, 0.2, 0.2);
         world.playSound(location, Sound.ITEM_BONE_MEAL_USE, 0.4f, 1.4f);
 
         if (GardeningTweaks.getRandom().nextInt(100) < chance) {

@@ -6,7 +6,6 @@ import org.lushplugins.gardeningtweaks.api.events.PlayerGrowthDanceEvent;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
 import org.lushplugins.gardeningtweaks.util.ConfigUtils;
 import org.lushplugins.gardeningtweaks.util.PlantAging;
-import org.lushplugins.lushlib.module.Module;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -19,16 +18,10 @@ import java.io.File;
 import java.util.*;
 
 public class GrowthDance extends Module implements Listener {
-    public static final String ID = "GROWTH_DANCE";
-
     private HashSet<UUID> cooldownList;
     private Integer cooldownLength;
     private Collection<Material> blockTypes;
     private Particle particle;
-
-    public GrowthDance() {
-        super(ID);
-    }
 
     @Override
     public void onEnable() {

@@ -2,8 +2,6 @@ package org.lushplugins.gardeningtweaks.module;
 
 import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
-import org.lushplugins.lushlib.module.Module;
-import org.lushplugins.lushlib.registry.RegistryUtils;
 import org.lushplugins.lushlib.utils.RandomCollection;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -21,17 +19,12 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.lushplugins.lushlib.utils.registry.RegistryUtils;
 
 import java.io.File;
 
 public class ComposterOutput extends Module implements Listener {
-    public static final String ID = "COMPOSTER_OUTPUT";
-
     private RandomCollection<Material> items;
-
-    public ComposterOutput() {
-        super(ID);
-    }
 
     @Override
     public void onEnable() {

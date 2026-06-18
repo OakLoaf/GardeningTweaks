@@ -3,8 +3,6 @@ package org.lushplugins.gardeningtweaks.module;
 import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.api.events.BushRejuvenateEvent;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
-import org.lushplugins.lushlib.module.Module;
-import org.lushplugins.lushlib.registry.RegistryUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
@@ -15,18 +13,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.lushplugins.lushlib.utils.registry.RegistryUtils;
 
 import java.io.File;
 import java.util.HashMap;
 
 public class RejuvenatedBushes extends Module implements Listener {
-    public static final String ID = "REJUVENATED_BUSHES";
-
     private HashMap<Material, Material> items;
-
-    public RejuvenatedBushes() {
-        super(ID);
-    }
 
     @Override
     public void onEnable() {
@@ -90,16 +83,20 @@ public class RejuvenatedBushes extends Module implements Listener {
     }
 
     public void bushToSapling(Player player, ItemStack mainHand, Block block, Material saplingType) {
-        if (!GardeningTweaks.getInstance().callEvent(new BushRejuvenateEvent(block, player, mainHand, saplingType))) return;
+        if (!GardeningTweaks.getInstance().callEvent(new BushRejuvenateEvent(block, player, mainHand, saplingType))) {
+            return;
+        }
 
-        if (player.getGameMode() != GameMode.CREATIVE) mainHand.setAmount(mainHand.getAmount() - 1);
+        if (player.getGameMode() != GameMode.CREATIVE) {
+            mainHand.setAmount(mainHand.getAmount() - 1);
+        }
+
         block.setType(saplingType);
-
-        GardeningTweaks.getInstance().getPacketHook().ifPresent(packetHook -> packetHook.armInteractAnimation(player));
+        GardeningTweaks.getInstance().getPacketHandler().ifPresent(packetHook -> packetHook.armInteractAnimation(player));
 
         World world = block.getWorld();
         Location location = block.getLocation();
-        world.spawnParticle(Particle.VILLAGER_HAPPY, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3);
+        world.spawnParticle(Particle.HAPPY_VILLAGER, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3);
         world.playSound(location, Sound.BLOCK_AMETHYST_BLOCK_CHIME, 2f, 1f);
     }
 }

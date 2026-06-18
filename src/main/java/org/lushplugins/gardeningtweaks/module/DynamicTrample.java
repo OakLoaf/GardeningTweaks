@@ -3,7 +3,6 @@ package org.lushplugins.gardeningtweaks.module;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
-import org.lushplugins.lushlib.module.Module;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -20,14 +19,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.io.File;
 
 public class DynamicTrample extends Module implements Listener {
-    public static final String ID = "DYNAMIC_TRAMPLE";
-
     private Boolean featherFalling;
     private Boolean creativeMode;
-
-    public DynamicTrample() {
-        super(ID);
-    }
 
     @Override
     public void onEnable() {
@@ -73,7 +66,7 @@ public class DynamicTrample extends Module implements Listener {
             ItemStack boots = player.getInventory().getBoots();
             if (boots != null) {
                 ItemMeta bootsMeta = boots.getItemMeta();
-                if (bootsMeta != null && bootsMeta.hasEnchant(Enchantment.PROTECTION_FALL)) {
+                if (bootsMeta != null && bootsMeta.hasEnchant(Enchantment.FEATHER_FALLING)) {
                     event.setCancelled(true);
                 }
             }

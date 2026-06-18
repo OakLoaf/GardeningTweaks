@@ -4,7 +4,6 @@ import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.api.events.ComposterCropGrowEvent;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
 import org.lushplugins.gardeningtweaks.util.ConfigUtils;
-import org.lushplugins.lushlib.module.Module;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
@@ -23,18 +22,12 @@ import java.util.Collection;
 import java.util.HashSet;
 
 public class ComposterSpreader extends Module implements Listener {
-    public static final String ID = "COMPOSTER_SPREADER";
-
     private BukkitTask task;
     private HashSet<Location> composterLocations;
     private int chance;
     private int radius;
     private Collection<Material> blocks;
     private Collection<Material> cropBlocks;
-
-    public ComposterSpreader() {
-        super(ID);
-    }
 
     @Override
     public void onEnable() {

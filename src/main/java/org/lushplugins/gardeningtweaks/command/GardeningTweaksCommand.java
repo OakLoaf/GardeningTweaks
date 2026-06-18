@@ -1,4 +1,4 @@
-package org.lushplugins.gardeningtweaks.commands;
+package org.lushplugins.gardeningtweaks.command;
 
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;

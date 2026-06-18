@@ -3,12 +3,10 @@ package org.lushplugins.gardeningtweaks.module;
 import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
 import org.lushplugins.gardeningtweaks.api.events.TreeSpreadBlockEvent;
-import org.lushplugins.gardeningtweaks.hooks.HookId;
-import org.lushplugins.gardeningtweaks.hooks.RealisticBiomesHook;
+import org.lushplugins.gardeningtweaks.hook.HookId;
+import org.lushplugins.gardeningtweaks.hook.RealisticBiomesHook;
 import org.lushplugins.gardeningtweaks.util.ConfigUtils;
 import org.bukkit.Registry;
-import org.lushplugins.lushlib.module.Module;
-import org.lushplugins.lushlib.registry.RegistryUtils;
 import org.lushplugins.lushlib.utils.RandomCollection;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -22,19 +20,15 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.util.BoundingBox;
+import org.lushplugins.lushlib.utils.registry.RegistryUtils;
 
 import java.io.File;
 import java.util.*;
 
 public class FancyTrees extends Module implements Listener {
-    public static final String ID = "FANCY_TREES";
     private static final EnumSet<BlockFace> HORIZONTAL_BLOCK_FACES = EnumSet.of(BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST);
 
     private HashMap<String, TreeData> treeMap;
-
-    public FancyTrees() {
-        super(ID);
-    }
 
     @Override
     public void onEnable() {
@@ -75,13 +69,13 @@ public class FancyTrees extends Module implements Listener {
                 }
             });
         } else {
-            GardeningTweaks.getInstance().getLogger().warning("There are no valid trees configured, automatically disabling the '" + ID + "' module");
+            GardeningTweaks.getInstance().getLogger().warning("There are no valid trees configured, automatically disabling the '" + ModuleId.FANCY_TREES + "' module");
             disable();
         }
     }
 
     @Override
-    protected void onDisable() {
+    public void onDisable() {
         if (treeMap != null) {
             treeMap.clear();
             treeMap = null;
@@ -167,7 +161,7 @@ public class FancyTrees extends Module implements Listener {
     }
 
     private void setBlockMaterial(Block block, Material material) {
-        GardeningTweaks.getInstance().getHook(HookId.REALISTIC_BIOMES.toString()).ifPresentOrElse(hook -> ((RealisticBiomesHook) hook).setBlockType(block, material), () -> block.setType(material));
+        GardeningTweaks.getInstance().getOptionalHook(HookId.REALISTIC_BIOMES).ifPresentOrElse(hook -> ((RealisticBiomesHook) hook).setBlockType(block, material), () -> block.setType(material));
         if (block.getBlockData() instanceof Directional directional) {
             BlockFace[] blockFaces = HORIZONTAL_BLOCK_FACES.toArray(new BlockFace[0]);
             directional.setFacing(blockFaces[GardeningTweaks.getRandom().nextInt(blockFaces.length)]);

@@ -1,15 +1,10 @@
-package org.lushplugins.gardeningtweaks.hooks.packets;
+package org.lushplugins.gardeningtweaks.hook.packet;
 
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityAnimation;
-import org.lushplugins.gardeningtweaks.hooks.HookId;
 import org.bukkit.entity.Player;
 
-public class PacketEventsHook extends PacketHook {
-
-    public PacketEventsHook() {
-        super(HookId.PACKET_EVENTS.toString());
-    }
+public class PacketEventsPacketHandler implements PacketHandler {
 
     @Override
     public void armInteractAnimation(Player player) {

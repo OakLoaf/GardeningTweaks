@@ -1,20 +1,13 @@
-package org.lushplugins.gardeningtweaks.hooks.packets;
+package org.lushplugins.gardeningtweaks.hook.packet;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
-import org.lushplugins.gardeningtweaks.hooks.HookId;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.InvocationTargetException;
-
-public class ProtocolLibHook extends PacketHook {
+public class ProtocolLibPacketHandler implements PacketHandler {
     private final ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
-
-    public ProtocolLibHook() {
-        super(HookId.PROTOCOL_LIB.toString());
-    }
 
     @Override
     public void armInteractAnimation(Player player) {

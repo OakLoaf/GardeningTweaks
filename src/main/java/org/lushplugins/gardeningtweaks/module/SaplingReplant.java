@@ -3,7 +3,6 @@ package org.lushplugins.gardeningtweaks.module;
 import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
 import org.lushplugins.gardeningtweaks.api.events.SaplingReplantEvent;
-import org.lushplugins.lushlib.module.Module;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -22,7 +21,6 @@ import java.io.File;
 import java.util.EnumSet;
 
 public class SaplingReplant extends Module implements Listener {
-    public static final String ID = "SAPLING_REPLANT";
     private static final int MAXIMUM_ATTEMPTS = 10;
     private static final EnumSet<Material> PLANTABLE_BLOCKS = EnumSet.of(Material.DIRT, Material.COARSE_DIRT, Material.GRASS_BLOCK, Material.MOSS_BLOCK);
 
@@ -30,10 +28,6 @@ public class SaplingReplant extends Module implements Listener {
     private Boolean includeLeafDrops;
     private Integer leafDelay;
     private Double distanceFromOrigin;
-
-    public SaplingReplant() {
-        super(ID);
-    }
 
     @Override
     public void onEnable() {

@@ -1,11 +1,10 @@
 package org.lushplugins.gardeningtweaks.module;
 
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
-import org.lushplugins.gardeningtweaks.hooks.HookId;
-import org.lushplugins.gardeningtweaks.hooks.claims.HuskClaimsHook;
+import org.lushplugins.gardeningtweaks.hook.Hook;
+import org.lushplugins.gardeningtweaks.hook.HookId;
+import org.lushplugins.gardeningtweaks.hook.claim.HuskClaimsHook;
 import org.lushplugins.gardeningtweaks.util.ConfigUtils;
-import org.lushplugins.lushlib.hook.Hook;
-import org.lushplugins.lushlib.module.Module;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -28,14 +27,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class InteractiveHarvest extends Module implements Listener {
-    public static final String ID = "INTERACTIVE_HARVEST";
-
     private final HashSet<UUID> harvestCooldownSet = new HashSet<>();
     private Collection<Material> blocks;
-
-    public InteractiveHarvest() {
-        super(ID);
-    }
 
     @Override
     public void onEnable() {
@@ -73,9 +66,9 @@ public class InteractiveHarvest extends Module implements Listener {
                     event.setCancelled(true);
                 }
 
-                Optional<Hook> huskClaims = GardeningTweaks.getInstance().getHook(HookId.HUSK_CLAIMS.toString());
-                if (huskClaims.isPresent()) {
-                    if (((HuskClaimsHook) huskClaims.get()).isInteractiveHarvestCancelled(player, block.getLocation())) {
+                Hook huskClaims = GardeningTweaks.getInstance().getHook(HookId.HUSK_CLAIMS);
+                if (huskClaims != null) {
+                    if (((HuskClaimsHook) huskClaims).isInteractiveHarvestCancelled(player, block.getLocation())) {
                         return;
                     }
                 } else {
@@ -113,9 +106,9 @@ public class InteractiveHarvest extends Module implements Listener {
                     }
                 }
 
-                GardeningTweaks.getInstance().getPacketHook().ifPresent(packetHook -> packetHook.armInteractAnimation(player));
+                GardeningTweaks.getInstance().getPacketHandler().ifPresent(packetHook -> packetHook.armInteractAnimation(player));
 
-                world.spawnParticle(Particle.BLOCK_DUST, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3, crop);
+                world.spawnParticle(Particle.BLOCK, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3, crop);
                 world.playSound(location, crop.getSoundGroup().getBreakSound(), 1f, 1f);
             }
 

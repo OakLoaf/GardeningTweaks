@@ -3,7 +3,6 @@ package org.lushplugins.gardeningtweaks.module;
 import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
 import org.lushplugins.gardeningtweaks.util.ChunkCoordinate;
-import org.lushplugins.lushlib.module.Module;
 import org.lushplugins.lushlib.utils.BlockPosition;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -27,8 +26,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class FastLeafDecay extends Module implements Listener {
-    public static final String ID = "FAST_LEAF_DECAY";
-
     private final NamespacedKey ignoredKey = new NamespacedKey(GardeningTweaks.getInstance(), "FLD");
     private final FixedMetadataValue ignoredBlockMetaData = new FixedMetadataValue(GardeningTweaks.getInstance(), "ignored");
 
@@ -40,10 +37,6 @@ public class FastLeafDecay extends Module implements Listener {
     private Boolean ignorePersistence;
     private int maxLeavesDecayPerRun;
     private int limitDrops;
-
-    public FastLeafDecay() {
-        super(ID);
-    }
 
     @Override
     public void onEnable() {
@@ -119,7 +112,7 @@ public class FastLeafDecay extends Module implements Listener {
                     world.playSound(location.clone().add(0.5, 0.5, 0.5), blockData.getSoundGroup().getBreakSound(), 1f, 1f);
                 }
                 if (particles) {
-                    world.spawnParticle(Particle.BLOCK_DUST, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3, blockData);
+                    world.spawnParticle(Particle.BLOCK, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3, blockData);
                 }
             });
         }, 3, 3);
@@ -164,13 +157,13 @@ public class FastLeafDecay extends Module implements Listener {
             int currTick = GardeningTweaks.getInstance().getCurrentTick();
             if (blockScheduleMap.containsKey(currTick)) {
                 Deque<BlockPosition> blockSchedule = blockScheduleMap.get(currTick);
-                BlockPosition blockPos = BlockPosition.adapt(block.getLocation());
+                BlockPosition blockPos = BlockPosition.from(block.getLocation());
                 if (!blockSchedule.contains(blockPos)) {
                     blockSchedule.add(blockPos);
                 }
             } else {
                 Deque<BlockPosition> blockSchedule = new ArrayDeque<>();
-                blockSchedule.add(BlockPosition.adapt(block.getLocation()));
+                blockSchedule.add(BlockPosition.from(block.getLocation()));
                 blockScheduleMap.put(currTick, blockSchedule);
             }
         }
@@ -263,8 +256,8 @@ public class FastLeafDecay extends Module implements Listener {
             in.close();
 
             return chunkLocations;
-        } catch (IOException | ClassNotFoundException err) {
-            err.printStackTrace();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
             return new HashSet<>();
         }
     }

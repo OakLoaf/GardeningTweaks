@@ -5,7 +5,6 @@ import org.jetbrains.annotations.Nullable;
 import org.lushplugins.gardeningtweaks.api.events.BlockLumberEvent;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
 import org.lushplugins.gardeningtweaks.util.ConfigUtils;
-import org.lushplugins.lushlib.module.Module;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -22,15 +21,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Lumberjack extends Module implements Listener {
-    public static final String ID = "LUMBERJACK";
-
     private Collection<Material> blocks;
     private String condition;
     private int breakLimit;
-
-    public Lumberjack() {
-        super(ID);
-    }
 
     @Override
     public void onEnable() {
@@ -114,7 +107,7 @@ public class Lumberjack extends Module implements Listener {
             // Handle sounds/particles
             BlockData blockData = breakType.createBlockData();
             world.playSound(location.clone().add(0.5, 0.5, 0.5), blockData.getSoundGroup().getBreakSound(), 1f, 1f);
-            world.spawnParticle(Particle.BLOCK_DUST, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3, blockData);
+            world.spawnParticle(Particle.BLOCK, location.clone().add(0.5, 0.5, 0.5), 50, 0.3, 0.3, 0.3, blockData);
 
             // Extra check ran prior to finding next block to slightly improve performance
             if (blocksBroken >= breakLimit) {

@@ -3,8 +3,6 @@ package org.lushplugins.gardeningtweaks.module;
 import org.bukkit.event.Listener;
 import org.lushplugins.gardeningtweaks.GardeningTweaks;
 import org.bukkit.*;
-import org.lushplugins.lushlib.module.Module;
-import org.lushplugins.lushlib.registry.RegistryUtils;
 import org.lushplugins.lushlib.utils.RandomCollection;
 import org.bukkit.block.BlockState;
 import org.bukkit.configuration.ConfigurationSection;
@@ -14,12 +12,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.inventory.ItemStack;
+import org.lushplugins.lushlib.utils.registry.RegistryUtils;
 
 import java.io.File;
 import java.util.List;
 
 public class GrassDrops extends Module implements Listener {
-    public static final String ID = "GRASS_DROPS";
     private static final Material GRASS_MATERIAL;
 
     static {
@@ -33,10 +31,6 @@ public class GrassDrops extends Module implements Listener {
     }
 
     private RandomCollection<Material> items;
-
-    public GrassDrops() {
-        super(ID);
-    }
 
     @Override
     public void onEnable() {
